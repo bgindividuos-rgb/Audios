@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Desarrollo | Banco Galicia</title>
+    <style>
+        :root {
+            --galicia-orange: #FF6600;
+            --galicia-dark-orange: #E05A00;
+            --neutral-bg: #F4F6F9;
+            --white: #FFFFFF;
+            --text-main: #2D3748;
+            --text-muted: #718096;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--neutral-bg);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        #login-screen {
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #FFF3EB 0%, var(--neutral-bg) 100%);
+        }
+
+        .login-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            border-top: 6px solid var(--galicia-orange);
+        }
+
+        .login-card h2 {
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-size: 24px;
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .login-card input, .login-card select, .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: var(--white);
+        }
+
+        .login-card input:focus, .login-card select:focus, .form-control:focus {
+            outline: none;
+            border-color: var(--galicia-orange);
+            box-shadow: 0 0 0 3px rgba(255,102,0,0.15);
+        }
+
+        .btn-galicia {
+            background-color: var(--galicia-orange);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            margin-top: 10px;
+        }
+
+        .btn-galicia:hover {
+            background-color: var(--galicia-dark-orange);
+        }
+
+        .app-layout {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        aside {
+            width: var(--sidebar-width);
+            background: var(--white);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+        }
+
+        .sidebar-brand {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--galicia-orange);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .sidebar-item {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-item:hover, .sidebar-item.active {
+            background-color: #FFF3EB;
+            color: var(--galicia-orange);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            background-color: var(--neutral-bg);
+        }
+
+        header {
+            background: var(--white);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            font-size: 20px;
+            color: var(--text-main);
+        }
+
+        .user-profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--neutral-bg);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .content-body {
+            padding: 30px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .cat-card-sistemas {
+            background: linear-gradient(135deg, #FF6600 0%, #FF8533 100%);
+            color: var(--white);
+        }
+        .cat-card-proc {
+            background: linear-gradient(135deg, #FFB380 0%, #FF9955 100%);
+            color: var(--white);
+        }
+        .cat-card-gestion {
+            background: linear-gradient(135deg, #FA8072 0%, #E96151 100%);
+            color: var(--white);
+        }
+
+        .dashboard-card {
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .progress-section-container {
+            margin-top: 40px;
+        }
+
+        .progress-section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        .progress-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 150px;
+        }
+
+        .progress-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .progress-card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .progress-badge {
+            background: #FFF3EB;
+            color: var(--galicia-orange);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--galicia-orange);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        .card-container {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .activity-item {
+            background: var(--neutral-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .activity-item label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .row-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .row-controls select {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--white);
+        }
+
+        .feedback-icon {
+            font-size: 18px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .icon-correct { color: var(--success); }
+        .icon-incorrect { color: var(--danger); font-size: 13px; font-weight: 600; }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .audio-selector-box {
+            background: #FFF3EB;
+            border: 1px solid #FFD0B5;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .audio-player-wrapper {
+            margin-top: 15px;
+            background: var(--white);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .audio-player-wrapper audio {
+            width: 100%;
+            height: 40px;
+        }
+
+        .audio-info-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .activity-card-wrapper {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+        }
+
+        .activity-card-inner {
+            cursor: pointer;
+        }
+
+        .activity-status-badge {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .status-completed { background: #D1FAE5; color: #065F46; }
+        .status-pending { background: #FEF3C7; color: #92400E; }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        @media(max-width: 900px) {
+            .analytics-grid { grid-template-columns: 1fr; }
+        }
+
+        .chart-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .precision-bar-container {
+            margin-bottom: 14px;
+        }
+
+        .precision-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .precision-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .precision-bar-fill {
+            height: 100%;
+            background: var(--galicia-orange);
+            border-radius: 5px;
+        }
+
+        .feedback-card {
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFF3EB 100%);
+            border-left: 5px solid var(--galicia-orange);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .feedback-card h4 {
+            color: var(--galicia-orange);
+            font-size: 16px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .feedback-card p {
+            font-size: 14px;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 13px;
+        }
+
+        th {
+            background-color: var(--neutral-bg);
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            display: inline-block;
+        }
+        .bg-dominado { background-color: var(--success); }
+        .bg-oportunidades { background-color: var(--warning); }
+        .bg-refuerzo { background-color: #F97316; }
+        .bg-critico { background-color: var(--danger); }
+
+        .kpi-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .kpi-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .kpi-card span {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .kpi-card h4 {
+            font-size: 22px;
+            color: var(--text-main);
+            margin-top: 5px;
+        }
+
+        .step-option-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .step-option-card:hover {
+            border-color: var(--galicia-orange);
+            background-color: #FFF3EB;
+        }
+
+        .step-option-card.selected-correct {
+            background-color: #D1FAE5;
+            border-color: var(--success);
+            color: #065F46;
+            font-weight: 600;
+        }
+
+        .step-option-card.selected-incorrect {
+            background-color: #FEE2E2;
+            border-color: var(--danger);
+            color: #991B1B;
+            font-weight: 600;
+        }
+
+        .step-order-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--white);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .step-order-row input {
+            width: 70px;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pantalla de Acceso -->
+    <div id="login-screen" class="screen active">
+        <div class="login-card">
+            <h2>Banco Galicia</h2>
+            <p>Plataforma de Desarrollo - Plan de Acción</p>
+            <div class="input-group">
+                <label>Código de Acceso</label>
+                <input type="text" id="access-code" placeholder="Ingrese el código de acceso">
+            </div>
+            <div class="input-group">
+                <label>Seleccione su Nombre y Apellido</label>
+                <select id="advisor-name-select">
+                    <option value="">-- Seleccionar Asesor --</option>
+                </select>
+            </div>
+            <button class="btn-galicia" onclick="validarAcceso()">Ingresar a la Plataforma</button>
+        </div>
+    </div>
+
+    <!-- Aplicación Principal -->
+    <div id="main-app" class="screen">
+        <div class="app-layout">
+            <aside>
+                <div class="sidebar-brand">
+                    <span>Banco Galicia</span>
+                </div>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item active" onclick="cambiarSeccion('dashboard', this)">Dashboard Principal</li>
+                    <li class="sidebar-item" onclick="cambiarSeccion('categories', this)">Categorías / Actividades</li>
+                    <li class="sidebar-item" onclick="cambiarSeccion('results', this)">Resultados y Evolución</li>
+                </ul>
+            </aside>
+
+            <div class="main-content">
+                <header>
+                    <h1 id="page-title">Dashboard Principal</h1>
+                    <div class="user-profile-badge">
+                        <span id="display-user">Asesor</span>
+                    </div>
+                </header>
+
+                <div class="content-body">
+                    
+                    <!-- 1. DASHBOARD PRINCIPAL -->
+                    <div id="sec-dashboard" class="section-view">
+                        <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 15px;">Bienvenido al espacio de prácticas y seguimiento operativo.</p>
+                        
+                        <div class="cards-grid">
+                            <div class="dashboard-card cat-card-sistemas" onclick="cambiarSeccion('categories', document.querySelectorAll('.sidebar-item')[1])">
+                                <div class="card-title">Catálogo de Actividades</div>
+                                <div class="card-desc">Accedé a las prácticas formativas de Calidad de Gestión, Sistemas y Procedimientos.</div>
+                            </div>
+
+                            <div class="dashboard-card cat-card-gestion" onclick="cambiarSeccion('results', document.querySelectorAll('.sidebar-item')[2])">
+                                <div class="card-title">Panel de Resultados</div>
+                                <div class="card-desc">Visualizá el progreso general, métricas detalladas por asesor y gráficos dinámicos de evolución.</div>
+                            </div>
+                        </div>
+
+                        <!-- Tarjetas de Progreso por Categoría -->
+                        <div class="progress-section-container">
+                            <div class="progress-section-title">Progreso por Categoría</div>
+                            <div class="progress-cards-grid">
+                                
+                                <div class="progress-card">
+                                    <div class="progress-card-header">
+                                        <span class="progress-card-title">USO DE SISTEMAS</span>
+                                        <span class="progress-badge" id="val-sistemas-txt">0%</span>
+                                    </div>
+                                    <div class="progress-card-body">
+                                        <div class="progress-stats">
+                                            <span>Completado</span>
+                                            <span id="val-sistemas-det">0 / 2 Actividades</span>
+                                        </div>
+                                        <div class="progress-bar-bg">
+                                            <div class="progress-bar-fill" id="bar-sistemas" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="progress-card">
+                                    <div class="progress-card-header">
+                                        <span class="progress-card-title">CALIDAD DE GESTIÓN</span>
+                                        <span class="progress-badge" id="val-gestion-txt">0%</span>
+                                    </div>
+                                    <div class="progress-card-body">
+                                        <div class="progress-stats">
+                                            <span>Completado</span>
+                                            <span id="val-gestion-det">0 / 3 Actividades</span>
+                                        </div>
+                                        <div class="progress-bar-bg">
+                                            <div class="progress-bar-fill" id="bar-gestion" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="progress-card">
+                                    <div class="progress-card-header">
+                                        <span class="progress-card-title">PROCEDIMIENTOS Y CONDICIONES</span>
+                                        <span class="progress-badge" id="val-proc-txt">0%</span>
+                                    </div>
+                                    <div class="progress-card-body">
+                                        <div class="progress-stats">
+                                            <span>Completado</span>
+                                            <span id="val-proc-det">0 / 2 Actividades</span>
+                                        </div>
+                                        <div class="progress-bar-bg">
+                                            <div class="progress-bar-fill" id="bar-proc" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. CATÁLOGO DE CATEGORÍAS -->
+                    <div id="sec-categories" class="section-view" style="display: none;">
+                        <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 15px;">Seleccioná una categoría para ver sus actividades prácticas:</p>
+                        
+                        <div class="cards-grid">
+                            <div class="dashboard-card cat-card-sistemas" onclick="abrirCategoria('sistemas')">
+                                <div class="card-title">USO DE SISTEMAS</div>
+                                <div class="card-desc">Prácticas de navegación, búsqueda de datos de clientes y simulación de planes de pago.</div>
+                            </div>
+
+                            <div class="dashboard-card cat-card-proc" onclick="abrirCategoria('proc')">
+                                <div class="card-title">PROCEDIMIENTOS Y CONDICIONES GENERALES</div>
+                                <div class="card-desc">Evaluaciones teóricas de herramientas de cobranza y validación de identidad.</div>
+                            </div>
+
+                            <div class="dashboard-card cat-card-gestion" onclick="abrirCategoria('gestion')">
+                                <div class="card-title">CALIDAD DE LA GESTIÓN</div>
+                                <div class="card-desc">Auditoría de audios, casos hipotéticos de reconducción y resolución secuencial de cobros.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. MENÚ DE ACTIVIDADES POR CATEGORÍA -->
+                    <div id="sec-actividades-gestion" class="section-view" style="display: none;">
+                        <div class="card-container" style="background: transparent; box-shadow:none; padding:0; border:none;">
+                            <button class="btn-galicia" style="width: auto; padding: 6px 12px; margin-bottom: 20px; background:transparent; color:var(--text-main); border:1px solid var(--border-color);" onclick="cambiarSeccion('categories', document.querySelectorAll('.sidebar-item')[1])">← Volver a Categorías</button>
+                            <h3 id="titulo-menu-act" style="margin-bottom: 20px; font-size:18px; color:var(--galicia-orange);">Actividades de la Categoría</h3>
+                            <div class="cards-grid" id="grid-tarjetas-act" style="margin-top:0;"></div>
+                        </div>
+                    </div>
+
+                    <!-- ACTIVIDAD 1: AUDITÁ LA GESTIÓN (CALIDAD) -->
+                    <div id="sec-activity-1" class="section-view" style="display: none;">
+                        <div class="card-container">
+                            <button class="btn-galicia" style="width: auto; padding: 6px 12px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color);" onclick="abrirCategoria('gestion')">← Volver a Actividades</button>
+                            <h2>Actividad 1: Auditá la gestión</h2>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Escuchá el audio seleccionado y auditá el cumplimiento de los procedimientos operativos.</p>
+                            
+                            <div class="audio-selector-box">
+                                <label style="font-weight: 600; display: block; margin-bottom: 8px;">Seleccioná el audio a auditar:</label>
+                                <select id="audio-select" class="form-control" style="background: var(--white);" onchange="cambiarAudioActividad1()">
+                                    <option value="audio_1">Audio 1 - Refinanciación (DU: 24017232)</option>
+                                    <option value="audio_2">Audio 2 - Plan V (DU: 29328602)</option>
+                                    <option value="audio_3">Audio 3 - Promesa de pago (DU: 32090812)</option>
+                                </select>
+
+                                <div class="audio-player-wrapper">
+                                    <audio id="platform-audio-player" controls preload="auto">
+                                        <source id="audio-source-element" src="https://raw.githubusercontent.com/bgindividuos-rgb/Audios/cc1d2846e3897deafdedacd10b9437c16a8325dc/0111565688894-242952947-20260907114038.mp3" type="audio/mp3">
+                                        Tu navegador no soporta el elemento de audio.
+                                    </audio>
+                                </div>
+                            </div>
+
+                            <div class="audio-info-card" id="audio-card-info">
+                                <div><b>Gestión:</b> <span id="info-gestion">REFINANCIACIÓN</span></div>
+                                <div><b>DU:</b> <span id="info-du">24017232</span></div>
+                                <div><b>Fecha:</b> <span id="info-fecha">07/09/2026</span></div>
+                            </div>
+
+                            <div id="form-items-container"></div>
+
+                            <button id="btn-finalizar-act" class="btn-galicia" onclick="finalizarActividad1()">Finalizar y Enviar Evaluación</button>
+
+                            <div id="feedback-gestion-container" class="feedback-card" style="display:none; margin-top: 25px;">
+                                <h4>Feedback Final de la Gestión</h4>
+                                <div id="feedback-gestion-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ACTIVIDAD 2: ¿QUÉ RESPONDERÍAS? (CALIDAD) -->
+                    <div id="sec-activity-2" class="section-view" style="display: none;">
+                        <div class="card-container">
+                            <button class="btn-galicia" style="width: auto; padding: 6px 12px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color);" onclick="abrirCategoria('gestion')">← Volver a Actividades</button>
+                            <h2>Actividad 2: ¿Qué responderías?</h2>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Lee atentamente cada caso hipotético del cliente y respondé reconduciendo a la cobranza (contén al cliente y orientalo a la solución).</p>
+                            
+                            <div id="act2-form-container"></div>
+
+                            <button id="btn-finalizar-act2" class="btn-galicia" onclick="finalizarActividad2()">Finalizar y Enviar Respuestas</button>
+
+                            <div id="feedback-act2-container" class="feedback-card" style="display:none; margin-top: 25px;">
+                                <h4>Evaluación de Reconducción a la Cobranza</h4>
+                                <div id="feedback-act2-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ACTIVIDAD 3: ELEGÍ EL CAMINO CORRECTO (CALIDAD) -->
+                    <div id="sec-activity-3" class="section-view" style="display: none;">
+                        <div class="card-container">
+                            <button class="btn-galicia" style="width: auto; padding: 6px 12px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color);" onclick="abrirCategoria('gestion')">← Volver a Actividades</button>
+                            <h2>Actividad 3: Elegí el camino correcto</h2>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Elegí qué decisiones tomarías paso a paso para el siguiente cliente según sus productos y situación de mora.</p>
+                            
+                            <div class="audio-info-card" style="margin-bottom:20px;">
+                                <div><b>Productos y mora:</b></div>
+                                <div style="width:100%; font-weight:normal; margin-top:5px;">
+                                    • Visa: $2.268.000 mín. / $8.563.124 tot. (70 días de mora)<br>
+                                    • Master: $485.260 mín. / $1.843.235 tot. (15 días de mora)<br>
+                                    • Préstamo: $1.420.536 (8 días de mora)<br>
+                                    <i>Contexto: Manifiesta poder abonar una parte, ya pagó otros dos préstamos pero no llega a cancelar todo.</i>
+                                </div>
+                            </div>
+
+                            <div id="act3-steps-container"></div>
+
+                            <button id="btn-finalizar-act3" class="btn-galicia" style="display:none; margin-top:20px;" onclick="finalizarActividad3()">Finalizar Caso Práctico</button>
+
+                            <div id="feedback-act3-container" class="feedback-card" style="display:none; margin-top: 25px;">
+                                <h4>Resultado del Caso Práctico</h4>
+                                <div id="feedback-act3-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROCEDIMIENTOS ACT 1: HERRAMIENTAS DE COBRANZA (MULTIPLE CHOICE) -->
+                    <div id="sec-proc-1" class="section-view" style="display: none;">
+                        <div class="card-container">
+                            <button class="btn-galicia" style="width: auto; padding: 6px 12px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color);" onclick="abrirCategoria('proc')">← Volver a Actividades</button>
+                            <h2>Herramientas de cobranza</h2>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Seleccioná la respuesta correcta para cada enunciado.</p>
+                            
+                            <div id="proc-mc-container"></div>
+
+                            <button id="btn-finalizar-procmc" class="btn-galicia" onclick="finalizarProcMC()">Finalizar y Enviar Respuestas</button>
+
+                            <div id="feedback-procmc-container" class="feedback-card" style="display:none; margin-top: 25px;">
+                                <h4>Resultado de Herramientas de Cobranza</h4>
+                                <div id="feedback-procmc-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROCEDIMIENTOS ACT 2: VALIDACIÓN DE IDENTIDAD (V/F) -->
+                    <div id="sec-proc-2" class="section-view" style="display: none;">
+                        <div class="card-container">
+                            <button class="btn-galicia" style="width: auto; padding: 6px 12px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color);" onclick="abrirCategoria('proc')">← Volver a Actividades</button>
+                            <h2>Validación de Identidad</h2>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Marcá Verdadero o Falso según corresponda.</p>
+                            
+                            <div id="proc-vf-container"></div>
+
+                            <button id="btn-finalizar-procvf" class="btn-galicia" onclick="finalizarProcVF()">Finalizar y Enviar Respuestas</button>
+
+                            <div id="feedback-procvf-container" class="feedback-card" style="display:none; margin-top: 25px;">
+                                <h4>Resultado de Validación de Identidad</h4>
+                                <div id="feedback-procvf-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SISTEMAS ACT 1: INVESTIGÁ AL CLIENTE -->
+                    <div id="sec-sistemas-1" class="section-view" style="display: none;">
+                        <div class="card-container">
+                            <button class="btn-galicia" style="width: auto; padding: 6px 12px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color);" onclick="abrirCategoria('sistemas')">← Volver a Actividades</button>
+                            <h2>Investigá al cliente</h2>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Realizá la búsqueda de la información requerida en sistemas y contestá cada punto.</p>
+                            
+                            <div class="input-group" style="background:#FFF3EB; padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid #FFD0B5;">
+                                <label style="color:var(--galicia-orange);">Documento o Clave cliente provista por staff:</label>
+                                <input type="text" id="sys-search-key" placeholder="Ingrese DU o clave del cliente a investigar..." class="form-control" style="background:var(--white);">
+                            </div>
+
+                            <div id="sys-investiga-container"></div>
+
+                            <button id="btn-finalizar-sys1" class="btn-galicia" onclick="finalizarSys1()">Finalizar Actividad</button>
+
+                            <div id="feedback-sys1-container" class="feedback-card" style="display:none; margin-top: 25px;">
+                                <h4>Estado de la Actividad</h4>
+                                <div id="feedback-sys1-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SISTEMAS ACT 2: PLANES DE PAGO (ORDENAMIENTO) -->
+                    <div id="sec-sistemas-2" class="section-view" style="display: none;">
+                        <div class="card-container">
+                            <button class="btn-galicia" style="width: auto; padding: 6px 12px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color);" onclick="abrirCategoria('sistemas')">← Volver a Actividades</button>
+                            <h2>Planes de pago (Plan V y Plan M)</h2>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Ordená el paso a paso asignando el número de orden correspondiente (1, 2, 3...) para realizar la simulación.</p>
+                            
+                            <h3 style="color:var(--galicia-orange); margin-bottom:15px; font-size:16px;">Simulación Plan V</h3>
+                            <div id="sys-planv-container"></div>
+
+                            <h3 style="color:var(--galicia-orange); margin:25px 0 15px 0; font-size:16px;">Simulación Plan M</h3>
+                            <div id="sys-planm-container"></div>
+
+                            <button id="btn-finalizar-sys2" class="btn-galicia" style="margin-top:20px;" onclick="finalizarSys2()">Enviar Ordenamiento de Pasos</button>
+
+                            <div id="feedback-sys2-container" class="feedback-card" style="display:none; margin-top: 25px;">
+                                <h4>Resultado de Planes de Pago</h4>
+                                <div id="feedback-sys2-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. PANEL DE RESULTADOS Y EVOLUCIÓN -->
+                    <div id="sec-results" class="section-view" style="display: none;">
+                        <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                            <div>
+                                <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px;">Filtrar por Asesor:</label>
+                                <select id="filter-advisor" class="form-control" style="min-width: 280px;" onchange="renderizarAnalytics()">
+                                    <option value="ALL">-- Ver Resultados Globales --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- KPIs Superiores -->
+                        <div class="kpi-container">
+                            <div class="kpi-card">
+                                <span>Total Evaluaciones</span>
+                                <h4 id="kpi-total">0</h4>
+                            </div>
+                            <div class="kpi-card">
+                                <span>Puntaje Promedio</span>
+                                <h4 id="kpi-promedio">0 pts</h4>
+                            </div>
+                            <div class="kpi-card">
+                                <span>Desempeño Global</span>
+                                <h4 id="kpi-estado">Sin datos</h4>
+                            </div>
+                        </div>
+
+                        <!-- Gráficos Estilo Referencia SaaS -->
+                        <div class="analytics-grid">
+                            
+                            <!-- Gráfico 1: Actividades completadas por categoría -->
+                            <div class="chart-card">
+                                <div class="chart-title">
+                                    <span>Actividades Completadas por Categoría</span>
+                                    <span style="font-size: 12px; color: var(--text-muted);">Progreso</span>
+                                </div>
+                                <div style="margin-top: 15px;">
+                                    <div class="precision-bar-container">
+                                        <div class="precision-info">
+                                            <span>Calidad de la Gestión</span>
+                                            <span id="stat-cat-gestion">0 / 3</span>
+                                        </div>
+                                        <div class="precision-bar-bg">
+                                            <div class="precision-bar-fill" id="bar-cat-gestion" style="width: 0%; background: #FA8072;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="precision-bar-container">
+                                        <div class="precision-info">
+                                            <span>Procedimientos y Condiciones</span>
+                                            <span id="stat-cat-proc">0 / 2</span>
+                                        </div>
+                                        <div class="precision-bar-bg">
+                                            <div class="precision-bar-fill" id="bar-cat-proc" style="width: 0%; background: #FFB380;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="precision-bar-container">
+                                        <div class="precision-info">
+                                            <span>Uso de Sistemas</span>
+                                            <span id="stat-cat-sistemas">0 / 2</span>
+                                        </div>
+                                        <div class="precision-bar-bg">
+                                            <div class="precision-bar-fill" id="bar-cat-sistemas" style="width: 0%; background: #FF6600;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Gráfico 2: Resultados de precisión por actividad -->
+                            <div class="chart-card">
+                                <div class="chart-title">
+                                    <span>Precisión Promedio por Actividad</span>
+                                    <span style="font-size: 12px; color: var(--text-muted);">Efectividad</span>
+                                </div>
+                                <div style="margin-top: 15px;" id="chart-precision-list">
+                                    <!-- Dinámico -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Módulo 3: Feedback con aspectos a mejorar -->
+                        <div class="feedback-card">
+                            <h4>Feedback y Aspectos a Mejorar</h4>
+                            <p id="feedback-text">Complete al menos una actividad para generar el análisis de oportunidades de mejora y recomendaciones operativas.</p>
+                        </div>
+
+                        <!-- Historial en Tabla -->
+                        <div class="card-container" style="margin-top: 25px;">
+                            <h3>Historial Detallado de Registros</h3>
+                            <table>
+                               <thead>
+                                   <tr>
+                                       <th>Fecha</th>
+                                       <th>Asesor</th>
+                                       <th>Actividad</th>
+                                       <th>Puntaje</th>
+                                       <th>Clasificación</th>
+                                   </tr>
+                               </thead>
+                               <tbody id="tabla-resultados-body">
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const listaAsesores = [
+            "AGÜERO, MELANIE MARIANELLA", "ALDECO,  EZEQUIEL", "AVELLA, PAMELA VICTORIA", 
+            "BAIGORRIA, CLAUDIA GISELLE", "BUGLIARELLO,  VALENTINA NICOLE", "BUTTIGLIERO, SATYA", 
+            "CARDOZO, MACARENA LUCERO ERIKA", "Caro, Emanuel", "CARUSO DAFGAL, DIEGO EMANUEL", 
+            "CHUNFLIN, AGUSTINA ARIANA", "CONCI, SOFIA", "CORDOBA, JOSEFINA GUADALUPE", 
+            "CORNELLANA, DIEGO LUCIANO", "COSSIO, MAMANI, PAOLA GISELA", "ECHENIQUE, LAUTARO ANDRES", 
+            "Echeveste, Sandra Paola", "Funes, Ines María", "GOMEZ, SONIA MARICEL DEL VALLE", 
+            "LEGUIZAMON, FLORENCIA DAIANA", "LEHUE, ORIANA MAYBE", "LINDON, MICAELA DEL VALLE", 
+            "LUCERO, LEONEL AGUSTIN", "MARCUZZI,  SOFIA BELEN", "MASMAN, FLORENCIA HUILEN", 
+            "Murua , Amira Guadalupe ", "Ordoñez, Jana", "PATIÑO, LUCAS MAXIMILIANO", 
+            "Peralta, Marcela Luana", "QUINTEROS MOLINA, ENZO ARIEL", "Rappa, Mariana", 
+            "REALES, GISELA BELEN", "Rodriguez, Romina Elena", "ROMERO, NATALIA BELEN", 
+            "RYBAN, NICOLAS EMMANUEL", "SALUSSO,  MARIA FLORENCIA  ", "SUAREZ, FABIOLA EDITH", 
+            "TOLEDO, FLORENCIA EVELIN ", "VIDELA GONZALEZ,  WENCESLAO IMANOL", "Bril, Rocio Micaela", 
+            "Carranza, Flavia Milena", "Galeano, Enzo Agustín", "Gonzalez, Maria Julieta", 
+            "Iriarte, Abril", "López, Ezequiel", "Macchiavello, Barbara Mora", "Indo, Nicolas", 
+            "Gonzalez, Ohiris", "Leiva, Sabrina Magdalena", "Sivilotti, Sofía Valentina", 
+            "Bonafé, Agustín", "Esteban Diaz, Emiliano", "Amuchastegui, Francisco", 
+            "Sanchez verzini, Lorenzo", "Grosso, Luca Joaquín", "Rios, Mauricio Dario", 
+            "Montenegro, Tomas", "Maggiore, Tomás", "Tita, Camila", "Bello, Juan Manuel", 
+            "Nievas, Aldana", "Chacon, Camila", "Cabrera, Nazarena", "Pamich, Sofia Marianela", 
+            "Alfonzo, Sol Agostina", "Cravero Iarza, Valentina Abril", "Conci, Priscila Agostina", 
+            "Mentzel, Alí Gaspar", "Pagán, Luciana", "Bianchi, Natalia", "Navia, Nicolas Andres", 
+            "Zingg, Facundo", "GONZALEZ, MARTIN", "REY, SOFIA", "ALVAREZ, VALENTINA", 
+            "OLIVA, MICAELA LIHUEN DEL VALLE", "CAGLIERO, ROCIO DE LOURDES", "VILTES, MARIANA", 
+            "DIAZ, JESUS ALEJANDRO"
+        ];
+
+        const claveAudio1 = [
+            "CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO", 
+            "NO CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", 
+            "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"
+        ];
+
+        const claveAudio2 = [
+            "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO APLICA", 
+            "NO CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "NO APLICA", 
+            "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO"
+        ];
+
+        const claveAudio3 = [
+            "CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", 
+            "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", 
+            "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"
+        ];
+
+        const feedbackTextoAudio2 = `
+            <b>Resumen de la Gestión:</b> Cliente con Visa en mora - 14 ddm.<br>
+            • Presentación ok, presentación de deuda ok. Puede abonar post 20 del mes, solo puede cubrir Master.<br>
+            • Ofrece financiar Visa por producto causante.<br>
+            • Da elección de promesa por Visa o Plan V.<br>
+            • No se indaga sobre la situación económica del cliente.<br>
+            • Informa condiciones del plan y presenta propuesta.<br>
+            • Asesora sobre fechas de pago al acceder al plan.<br>
+            • <b>Validación de identidad:</b> Responde mal numeración de domicilio y adicionales en Visa (debía rechazar la propuesta).<br>
+            • Cierre legal correcto, finaliza asesoramiento correspondiente.
+        `;
+
+        const feedbackTextoAudio3 = `
+            <b>Resumen de la Gestión:</b> Cliente con 14 ddm, multiproducto.<br>
+            • Consulta pregunta sobre posibilidad de pago hoy. Manifiesta baja en ventas en su comercio, entre el día del contacto y próximo jueves lo cubre.<br>
+            • Especifica productos en mora, asegura cobertura de todos.<br>
+            • Toma compromiso por el plazo estimado por el cliente, asegura montos de cada producto, realiza cierre con repaso.
+        `;
+
+        const casosActividad2 = [
+            'No tengo plata', 'Ya me llamaron un montón de veces',
+            'Ya dije la semana pasada que iba a pagar', 'Decime cuanto tengo que pagar y listo',
+            'A vos no te importa por que me atrasé', 'No quiero ningún plan de pagos, es mucho interés',
+            'Dejá escrito ahí que no me llamen más', 'Más que eso no te puedo pagar',
+            'No voy a hacer parciales porque con eso solo pago intereses', 'Dejá que pase a un estudio jurídico, no me importa'
+        ];
+
+        const pasosActividad3 = [
+            {
+                titulo: "Paso 1: ¿Qué haces primero?",
+                opciones: [
+                    { texto: "A- Proponer Plan V + Plan M.", correcta: false },
+                    { texto: "B- Indagar motivo de atraso y capacidad de pago actual.", correcta: true },
+                    { texto: "C- Proponer refinanciación de todos los productos.", correcta: false },
+                    { texto: "D- Mencionar consecuencias de no abonar.", correcta: false }
+                ]
+            },
+            {
+                titulo: "Paso 2: Cliente responde que se quedó sin unos trabajos, está buscando nuevos clientes. ¿Qué necesitas conocer para negociar?",
+                opciones: [
+                    { texto: "A- Como trabaja y cada cuanto tiene ingresos.", correcta: true },
+                    { texto: "B- Si cobra fondo o seguro de desempleo.", correcta: false },
+                    { texto: "C- Si recibe ayuda familiar.", correcta: false },
+                    { texto: "D- Si tiene algo en venta.", correcta: false },
+                    { texto: "E- Si tiene los números de cobranzas para llamar cuando pueda pagar.", correcta: false }
+                ]
+            },
+            {
+                titulo: "Paso 3: Cliente menciona que trabaja independiente y todos los viernes sus clientes le abonan, pero perdió unos clientes importantes y disminuyó su ingreso anterior. ¿Cómo seguís?",
+                opciones: [
+                    { texto: "A- Propuesta de plan de pagos.", correcta: false },
+                    { texto: "B- Propuesta de promesa de pago.", correcta: true },
+                    { texto: "C- Indagar sobre capacidad de pago actual sobre los productos que tiene", correcta: false },
+                    { texto: "D- Pedirle que cuando cobre a principio de mes llame para dar fecha de pago.", correcta: false }
+                ]
+            },
+            {
+                titulo: "Paso 4: Cliente indica poder destinar $1.000.000 cada viernes a la cuenta para que se vaya cancelando todo. Actualmente en los 3 préstamos debe destinar 3.500.000 ¿Qué proponés?",
+                opciones: [
+                    { texto: "A- Promesa de pago por mínimo anterior de visa.", correcta: false },
+                    { texto: "B- Plan V + Plan M + Promesa por el préstamo", correcta: false },
+                    { texto: "C- Refinanciación UVA de todos los productos.", correcta: true },
+                    { texto: "D- Refinanciación solo por tarjetas.", correcta: false }
+                ]
+            },
+            {
+                titulo: "Paso 5: Cliente no quiere refinanciación por el interés. ¿Qué mencionás?",
+                opciones: [
+                    { texto: "A- Que haga un pago parcial para disminuir días de mora.", correcta: false },
+                    { texto: "B- Que esperamos a que junte la plata para cancelar.", correcta: false },
+                    { texto: "C- Que si no cancela hoy va a pasar a legales.", correcta: false },
+                    { texto: "D- Comparás tasas de interés de productos.", correcta: true }
+                ]
+            },
+            {
+                titulo: "Paso 6: Cliente accede al plan pero quiere solo 6 cuotas. ¿Qué le explicás?",
+                opciones: [
+                    { texto: "A- Que no le podemos dar ese plazo y que tiene que pagar 1 x 1 las cuotas", correcta: false },
+                    { texto: "B- Que no le podemos dar ese plazo, pero puede adelantar cuotas si dispone del dinero.", correcta: true },
+                    { texto: "C- Que a modo excepcional le brindamos 6 cuotas.", correcta: false }
+                ]
+            },
+            {
+                titulo: "Paso 7: ¿Cómo finalizás la gestión?",
+                opciones: [
+                    { texto: "A- Realizo validación de identidad + lectura de contrato.", correcta: false },
+                    { texto: "B- Indico que cargo el plan en sistemas y me despido.", correcta: false },
+                    { texto: "C- Realizo validación de identidad + lectura de contrato + validación de datos", correcta: true },
+                    { texto: "D- Doy de alta el plan y valido datos.", correcta: false }
+                ]
+            }
+        ];
+
+        const preguntasProcMC = [
+            {
+                enunciado: "¿Cuál es la única cobranza que se puede hacer con cónyuge o encargado de pagos?",
+                opciones: ["Refinanciación", "Plan M / Plan V", "Promesa de pago"],
+                correcta: 2
+            },
+            {
+                enunciado: "En una refinanciación de UVA, ¿cómo se determina el monto en pesos de cada cuota?",
+                opciones: [
+                    "Multiplicando el valor UVA en la cuota por la cotización UVA en la fecha de vencimiento.",
+                    "Multiplicando el monto original del préstamo por una comisión fija del 16%.",
+                    "Utilizando el valor UVA desde la fecha en que se firmó el acuerdo de refinanciamiento"
+                ],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Cuáles son los plazos y tasas de refi tradicional?",
+                opciones: [
+                    "12 a 36 cuotas - TNA 16%",
+                    "6 a 48 cuotas - TNA 49% -90ddm / TNA 46% +90 ddm",
+                    "12 a 36 cuotas - TNA 63% -90 ddm / TNA 54% +90 ddm",
+                    "24 a 36 cuotas - TNA 35%"
+                ],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué es la refinanciación?",
+                opciones: ["Un préstamo cancelatorio de deuda", "Un único pago que cancela todos los productos", "Un préstamo que se saca desde ONB"],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Qué deudas incluye el Plan V en un único plan de cuotas?",
+                opciones: ["La deuda total de Visa o Amex del cliente", "Únicamente adelantos de efectivo recientes", "Solo compras en un solo comercio adherido", "Gastos de mantenimiento y comisiones bancarias"],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Cuáles de las siguientes son condiciones generales para la refinanciación? (Múltiple)",
+                opciones: [
+                    "El titular debe ser menor de 80 años.",
+                    "La refinanciación solo puede realizarse con el titular de la cuenta.",
+                    "Los préstamos garantizados con garantías prendarias o hipotecas pueden ser refinanciados.",
+                    "El cliente no debe tener embargos ni bloqueos de débito."
+                ],
+                tipo: "multiple",
+                correctas: [0, 1, 3]
+            },
+            {
+                enunciado: "Identifica los tres tipos de promesa mencionados.",
+                opciones: ["Promesa inmediata, diferida y contingente", "Promesa flexible, escalonada y con garantía", "Promesa total, por producto y monto cliente", "Promesa total, prioritaria y parcial"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Cómo sabemos si el cliente aplica a refi caba?",
+                opciones: ["Revisamos si el domicilio registrado es en CABA", "Tiene que tener el banner en las campañas de gamora", "Le preguntamos si le llegó el mail con el ofrecimiento"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Cuándo se paga la primera cuota del Plan V?",
+                opciones: ["En el próximo cierre de la tarjeta", "En el mismo día de adhesión", "Al segundo cierre posterior"],
+                correcta: 0
+            },
+            {
+                enunciado: "El plazo máximo para pactar una promesa depende principalmente de:",
+                opciones: ["La tasa de interés vigente", "La cantidad de productos contratados", "El monto original del contrato", "El tramo de mora del cliente"],
+                correcta: 3
+            },
+            {
+                enunciado: "¿Cuál es el objetivo principal al priorizar productos con mayor cantidad de días en mora al negociar una promesa?",
+                opciones: ["Que deje de aplicarse interés a la deuda", "Reducir la cantidad de días en mora y bajar de tramo", "Seleccionar productos con menor deuda para cerrar rápido"],
+                correcta: 1
+            },
+            {
+                enunciado: "Selecciona la afirmación correcta sobre el Plan V.",
+                opciones: ["La tarjeta no se da de baja al activarse el plan", "La tarjeta se bloquea hasta cancelar todo", "La tarjeta pierde su línea disponible", "La tarjeta migra a otra marca bancaria"],
+                correcta: 0
+            },
+            {
+                enunciado: "En el sistema Gamora, ¿para qué sirve la verificación del estado de las promesas?",
+                opciones: ["Corroborar si promesas están cumplidas, pendientes o quebradas", "Calcular intereses automáticos del préstamo", "Para ver si ya hizo un compromiso y ofrecer un plan de pagos directamente"],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Cuál es el objetivo principal al ofrecer Plan V Consolidado?",
+                opciones: ["Financiar la deuda manteniendo el producto activo", "Reducir la tasa de interés de la tarjeta", "Aumentar el límite de compras de la tarjeta"],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Cómo se determina la primer cuota de refi?",
+                opciones: ["Con el calendario a 45 días, priorizando el ofrecimiento el 5 del mes siguiente", "La primer fecha es en 45 días", "Del 5 al 20 del mes siguiente"],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Qué pasa con el saldo en dólares de tarjeta MasterCard cuando hago plan M?",
+                opciones: ["Queda por fuera del plan y se abona en el próximo resumen", "Se incluye en el plan, pesificando el monto con el tipo de cambio del día", "Se tiene que pagar primero y después podemos hacer el plan"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué productos NO son refinanciables?",
+                opciones: ["Hipotecarios / Prendarios / Refinanciaciones activas", "Hipotecarios / Préstamos UVA", "Cuenta continuadora / Cuenta deudora"],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Qué pasa con la cuenta corriente si hago refi?",
+                opciones: ["Se incluye sí o sí para darse de baja", "No es un producto refinanciable", "Si no tiene saldo pendiente el cliente puede elegir incluirla o no"],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Cuál es el plazo de cuotas de Plan M?",
+                opciones: ["12 a 36", "6 a 36", "6 a 48"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Por qué productos se puede hacer gestión multiproducto?",
+                opciones: ["Promesa de préstamos o tarjetas + Plan V/Plan M", "Promesa de préstamos + Refinanciación de tarjetas", "Promesa de tarjetas + Refinanciación"],
+                correcta: 0
+            }
+        ];
+
+        const preguntasProcVF = [
+            { texto: "Si el cliente se equivoca en su nombre completo, no podemos reemplazar la pregunta.", respuesta: "FALSO" },
+            { texto: "Si el cliente informa un domicilio incorrecto, podemos pedirle que brinde el actualizado.", respuesta: "FALSO" },
+            { texto: "Si responde bien las primeras 4 preguntas, no es necesario realizar la 5ta.", respuesta: "VERDADERO" },
+            { texto: "Cliente posee caja de ahorro con Tarjeta de Débito dada de baja, solicito el 3er grupo de la Tarjeta de Crédito activa.", respuesta: "VERDADERO" },
+            { texto: "Si el cliente se equivoca en una pregunta, le digo qué dato nos figura para que pueda corregirlo desde la app.", respuesta: "FALSO" },
+            { texto: "Si solo refinancio préstamos y el cliente no posee CA con Tarjeta de Débito, realizo 2 preguntas sobre producto.", respuesta: "VERDADERO" },
+            { texto: "Si realizo 5ta pregunta sobre producto y el cliente responde 'NO ME ACUERDO', puedo reemplazarla realizando una 6ta pregunta.", respuesta: "FALSO" },
+            { texto: "Si el cliente es mayor y no entiende las consultas, puedo realizar validación de identidad con un Encargado de Pagos.", respuesta: "FALSO" },
+            { texto: "En casos que el cliente brinde el 4to grupo de la Tarjeta de Débito, puedo corregirlo indicando que necesito el grupo anterior.", respuesta: "VERDADERO" },
+            { texto: "Si refinancio Tarjetas de Crédito cerradas y no tiene vigente una Tarjeta de Débito, no puedo avanzar con la validación. Derivo al cliente a solicitar CA con TD asociada.", respuesta: "VERDADERO" }
+        ];
+
+        const itemsSys1 = [
+            "¿Cómo se llama el cliente?",
+            "¿Cuál es el cuil del cliente?",
+            "¿En qué tramo se encuentra?",
+            "¿Cuántos días de mora tiene la cuenta?",
+            "¿Cuántos días de mora tiene el producto no causante?",
+            "¿Qué productos presentan mora?",
+            "¿Cuál es el número de operación de la caja de ahorro que el cliente utiliza?",
+            "¿Cuál es la fecha de vencimiento del plástico de cada tarjeta de crédito vigente?",
+            "¿Cuál es el último consumo que ingresó en su tarjeta de crédito visa?",
+            "¿El cliente abonó alguna vez dolar con dolar?",
+            "¿Cuántas promesas de pago le han registrado al cliente?",
+            "¿Cuántas promesas de pago le han registrado al cliente el último mes?",
+            "¿Cuándo fue la última gestión con contacto de asesor que se registra en sistemas?",
+            "¿Qué pago debería realizar el cliente para restar días de mora?",
+            "¿Cuál es el último pago que se registra en Mastercard? Especificá fecha y monto",
+            "¿Cuál es el último reclamo que tiene realizado el cliente?"
+        ];
+
+        const pasosPlanVOriginal = [
+            "Verificar que cumpla con las condiciones para acceder al plan.",
+            "Ingresar en BC10 con el DU y copiar el N° de plástico (16 dígitos)",
+            "Pegar ese número en un bloc de notas para tenerlo a mano.",
+            "Ingresar en visa/amex con usuario y contraseña correspondiente.",
+            "Seleccionar opción 22",
+            "Seleccionar opción 18 (menos 15 ddm) / 19 (más 15ddm)",
+            "Pegar el número del plástico + INTRO",
+            "Corroborar que la opción ingresada (18/19) es correcta.",
+            "Ingresar cantidad de cuotas + INTRO",
+            "Calcular el Pago extraordinario (restando monto total - monto financiado)",
+            "Click f6 para ver cuotas",
+            "En caso de tener que recalcular cuotas, volver a la selección 18/19 y repetir el procedimiento",
+            "Confirmar el plan post validación de identidad + lectura de contrato con f9+f9"
+        ];
+
+        const pasosPlanMOriginal = [
+            "Verificar que cumpla con las condiciones para acceder al plan.",
+            "Ingresar en BC10 con el DU y copiar el N° de plástico (16 dígitos)",
+            "Pegar ese número en un bloc de notas para tenerlo a mano.",
+            "Ingresar en mastercard con usuario y contraseña correspondiente.",
+            "Ingresar en la opción 19 para corroborar estado de inhibición.",
+            "Ingresar en la primer opción: ACTUALIZACIÓN DE MARCAS DE INHIBICIÓN con INTRO.",
+            "Tabular hasta Numero de tarjeta y pegar los 16 dígitos + intro",
+            "Corroborar estado actual: si dice SI modificar en estado nuevo escribiendo NO + intro.",
+            "Vovler al menú principal con f3",
+            "Ingresar en la opción 09 para simular el plan --> Pegar número de tarjeta",
+            "Realizar caida de cuotas a futuro: F1 (seleccionar los consumos con 'S', confirmar con F12+intro",
+            "Volver con f3 a la página anterior",
+            "Ingresar en la opción F2 - Seleccionar con 'S' Plan M Consolidado + intro",
+            "Confirmar calculo deuda con INTRO e ingresar cantidad de cuotas con 3 dígitos + intro",
+            "En caso de tener que recalcular cuotas, volver con f3 a página anterior, ingresar cuotas + intro.",
+            "Si das de alta: agregá fecha de vencimiento de plastico (MM/AA) + F12",
+            "Si no das de alta: caida de cuotas (volver al menú inicial con F3 - Ingresar opción F4= F12 + Shift-F2)",
+            "Si no das de alta: volver a inhibir si inhibiste (opción 19 completo - estado nuevo SI)"
+        ];
+
+        let pasosPlanVMezclados = [];
+        let pasosPlanMMezclados = [];
+
+        function mezclarArray(array) {
+            let originalConIndices = array.map((texto, originalIdx) => ({ texto, originalIdx }));
+            originalConIndices.sort(() => Math.random() - 0.5);
+            return originalConIndices;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const selectAsesor = document.getElementById('advisor-name-select');
+            listaAsesores.sort().forEach(nombre => {
+                let opt = document.createElement('option');
+                opt.value = nombre;
+                opt.textContent = nombre;
+                selectAsesor.appendChild(opt);
+            });
+
+            // Calidad Act 1
+            const formContainer = document.getElementById('form-items-container');
+            const itemsGestionMod = [
+                "Se presenta correctamente.", "Presenta la deuda de manera clara.", "Realiza una pregunta por vez.",
+                "Retoma gestiones anteriores.", "Profundiza en situación económica del cliente.", "Aplica negociación según el tramo de mora.",
+                "Asesora correctamente al cliente sobre condiciones de lo ofrecido.", "Responde adecuadamente objeciones.",
+                "Mantiene gestión de cobranzas ante negativa del cliente.", "Aplica todo el procedimiento requerido de la gestión.",
+                "Respeta confidencialidad de datos.", "Realiza cierre correcto."
+            ];
+            formContainer.innerHTML = itemsGestionMod.map((texto, idx) => `
+                <div class="activity-item">
+                    <label>${idx + 1}. ${texto}</label>
+                    <div class="row-controls">
+                        <select id="item_status_${idx}" onchange="toggleObsRequired(${idx})">
+                            <option value="CUMPLIDO">CUMPLIDO</option>
+                            <option value="NO CUMPLIDO">NO CUMPLIDO</option>
+                            <option value="NO APLICA">NO APLICA</option>
+                        </select>
+                        <span id="feedback_icon_${idx}" class="feedback-icon" style="display:none;"></span>
+                    </div>
+                    <textarea class="form-control" id="item_obs_${idx}" placeholder="Oportunidad de mejora (Obligatorio en NO CUMPLIDO)"></textarea>
+                </div>
+            `).join('');
+
+            // Calidad Act 2
+            const act2Container = document.getElementById('act2-form-container');
+            act2Container.innerHTML = casosActividad2.map((caso, idx) => `
+                <div class="activity-item">
+                    <label><b>Caso ${idx + 1}:</b> "${caso}"</label>
+                    <textarea class="form-control" id="act2_resp_${idx}" placeholder="Escribí tu respuesta reconduciendo a la cobranza..."></textarea>
+                </div>
+            `).join('');
+
+            // Calidad Act 3
+            const act3Container = document.getElementById('act3-steps-container');
+            act3Container.innerHTML = pasosActividad3.map((paso, pIdx) => `
+                <div class="activity-item" id="act3_step_box_${pIdx}" style="${pIdx > 0 ? 'display:none;' : ''}">
+                    <label style="font-size:15px; color:var(--galicia-orange); margin-bottom:12px;">${paso.titulo}</label>
+                    ${paso.opciones.map((opt, oIdx) => `
+                        <div class="step-option-card" id="act3_opt_${pIdx}_${oIdx}" onclick="seleccionarOpcionAct3(${pIdx}, ${oIdx}, ${opt.correcta})">
+                            ${opt.texto}
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+
+            // Procedimientos Act 1 (MC)
+            const procMcContainer = document.getElementById('proc-mc-container');
+            procMcContainer.innerHTML = preguntasProcMC.map((p, pIdx) => `
+                <div class="activity-item">
+                    <label><b>${pIdx + 1}.</b> ${p.enunciado}</label>
+                    <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+                        ${p.opciones.map((op, oIdx) => `
+                            <label style="font-weight:normal; cursor:pointer; display:flex; align-items:center; gap:8px;">
+                                <input type="${p.tipo === 'multiple' ? 'checkbox' : 'radio'}" name="proc_mc_${pIdx}" value="${oIdx}">
+                                <span>${op}</span>
+                                <span id="icon_mc_${pIdx}_${oIdx}" class="feedback-icon" style="display:none; font-size:14px;"></span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Procedimientos Act 2 (V/F)
+            const procVfContainer = document.getElementById('proc-vf-container');
+            procVfContainer.innerHTML = preguntasProcVF.map((p, pIdx) => `
+                <div class="activity-item">
+                    <label><b>${pIdx + 1}.</b> ${p.texto}</label>
+                    <div style="display:flex; gap:20px; margin-top:8px; align-items:center;">
+                        <label style="font-weight:normal; cursor:pointer;"><input type="radio" name="proc_vf_${pIdx}" value="VERDADERO"> Verdadero</label>
+                        <label style="font-weight:normal; cursor:pointer;"><input type="radio" name="proc_vf_${pIdx}" value="FALSO"> Falso</label>
+                        <span id="icon_vf_${pIdx}" class="feedback-icon" style="display:none;"></span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Sistemas Act 1
+            const sys1Container = document.getElementById('sys-investiga-container');
+            sys1Container.innerHTML = itemsSys1.map((item, idx) => `
+                <div class="activity-item">
+                    <label>${idx + 1}. ${item}</label>
+                    <input type="text" class="form-control" id="sys1_resp_${idx}" placeholder="Respuesta obtenida en sistemas...">
+                </div>
+            `).join('');
+
+            // Sistemas Act 2
+            pasosPlanVMezclados = mezclarArray(pasosPlanVOriginal);
+            pasosPlanMMezclados = mezclarArray(pasosPlanMOriginal);
+
+            const sysVContainer = document.getElementById('sys-planv-container');
+            sysVContainer.innerHTML = pasosPlanVMezclados.map((item, idx) => `
+                <div class="step-order-row">
+                    <input type="number" min="1" max="${pasosPlanVOriginal.length}" class="form-control" id="orden_v_${idx}" data-original="${item.originalIdx}" placeholder="#">
+                    <span style="font-size:14px; flex:1;">${item.texto}</span>
+                    <span id="feedback_v_${idx}" class="feedback-icon" style="display:none;"></span>
+                </div>
+            `).join('');
+
+            const sysMContainer = document.getElementById('sys-planm-container');
+            sysMContainer.innerHTML = pasosPlanMMezclados.map((item, idx) => `
+                <div class="step-order-row">
+                    <input type="number" min="1" max="${pasosPlanMOriginal.length}" class="form-control" id="orden_m_${idx}" data-original="${item.originalIdx}" placeholder="#">
+                    <span style="font-size:14px; flex:1;">${item.texto}</span>
+                    <span id="feedback_m_${idx}" class="feedback-icon" style="display:none;"></span>
+                </div>
+            `).join('');
+        });
+
+        let usuarioActual = "";
+
+        function validarAcceso() {
+            const codigo = document.getElementById('access-code').value.trim();
+            const nombre = document.getElementById('advisor-name-select').value;
+
+            if (codigo.toLowerCase() !== "bg.individuos") {
+                alert("Código de acceso incorrecto.");
+                return;
+            }
+            if (!nombre) {
+                alert("Por favor seleccione su Nombre y Apellido de la lista.");
+                return;
+            }
+
+            usuarioActual = nombre;
+            document.getElementById('display-user').innerText = usuarioActual;
+            
+            document.getElementById('login-screen').classList.remove('active');
+            document.getElementById('main-app').classList.add('active');
+            actualizarProgresosDashboard();
+        }
+
+        function cambiarSeccion(seccion, elementoMenu) {
+            document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+
+            if(elementoMenu) elementoMenu.classList.add('active');
+
+            if(seccion === 'dashboard') {
+                document.getElementById('sec-dashboard').style.display = 'block';
+                document.getElementById('page-title').innerText = 'Dashboard Principal';
+                actualizarProgresosDashboard();
+            } else if(seccion === 'categories') {
+                document.getElementById('sec-categories').style.display = 'block';
+                document.getElementById('page-title').innerText = 'Categorías / Catálogo de Actividades';
+            } else if(seccion === 'results') {
+                document.getElementById('sec-results').style.display = 'block';
+                document.getElementById('page-title').innerText = 'Resultados y Evolución';
+                actualizarFiltros();
+                renderizarAnalytics();
+            }
+        }
+
+        function abrirCategoria(cat) {
+            document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
+            let grid = document.getElementById('grid-tarjetas-act');
+            let titulo = document.getElementById('titulo-menu-act');
+            grid.innerHTML = "";
+
+            if(cat === 'gestion') {
+                titulo.innerText = "CALIDAD DE LA GESTIÓN - Actividades";
+                grid.innerHTML = `
+                    <div class="activity-card-wrapper">
+                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-activity-1', 'Actividad 1: Auditá la gestión')">
+                            <div class="card-title" style="color: #E96151; font-size: 20px;">Actividad 1: Auditá la gestión</div>
+                            <div class="card-desc" style="color: var(--text-main);">Evaluación interactiva de cumplimiento de procesos sobre auditoría de audios reales.</div>
+                        </div>
+                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-act-1" class="status-pill status-pending">Pendiente</span></div>
+                    </div>
+                    <div class="activity-card-wrapper">
+                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-activity-2', 'Actividad 2: ¿Qué responderías?')">
+                            <div class="card-title" style="color: #E96151; font-size: 20px;">Actividad 2: ¿Qué responderías?</div>
+                            <div class="card-desc" style="color: var(--text-main);">Casos hipotéticos orientados a la reconducción de objeciones hacia la cobranza efectiva.</div>
+                        </div>
+                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-act-2" class="status-pill status-pending">Pendiente</span></div>
+                    </div>
+                    <div class="activity-card-wrapper">
+                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-activity-3', 'Actividad 3: Elegí el camino correcto')">
+                            <div class="card-title" style="color: #E96151; font-size: 20px;">Actividad 3: Elegí el camino correcto</div>
+                            <div class="card-desc" style="color: var(--text-main);">Resolución secuencial de casos prácticos complejos con múltiples variables.</div>
+                        </div>
+                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-act-3" class="status-pill status-pending">Pendiente</span></div>
+                    </div>
+                `;
+            } else if(cat === 'proc') {
+                titulo.innerText = "PROCEDIMIENTOS Y CONDICIONES GENERALES - Actividades";
+                grid.innerHTML = `
+                    <div class="activity-card-wrapper">
+                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-proc-1', 'Herramientas de cobranza')">
+                            <div class="card-title" style="color: #FF9955; font-size: 20px;">Actividad 1: Herramientas de cobranza</div>
+                            <div class="card-desc" style="color: var(--text-main);">Multiple choice sobre condiciones generales y herramientas de cobranza.</div>
+                        </div>
+                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-proc-1" class="status-pill status-pending">Pendiente</span></div>
+                    </div>
+                    <div class="activity-card-wrapper">
+                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-proc-2', 'Validación de Identidad')">
+                            <div class="card-title" style="color: #FF9955; font-size: 20px;">Actividad 2: Validación de Identidad</div>
+                            <div class="card-desc" style="color: var(--text-main);">Evaluación de verdadero o falso sobre los protocolos de validación de identidad.</div>
+                        </div>
+                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-proc-2" class="status-pill status-pending">Pendiente</span></div>
+                    </div>
+                `;
+            } else if(cat === 'sistemas') {
+                titulo.innerText = "USO DE SISTEMAS - Actividades";
+                grid.innerHTML = `
+                    <div class="activity-card-wrapper">
+                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-sistemas-1', 'Investigá al cliente')">
+                            <div class="card-title" style="color: #FF6600; font-size: 20px;">Actividad 1: Investigá al cliente</div>
+                            <div class="card-desc" style="color: var(--text-main);">Búsqueda y extracción de datos básicos del cliente en los sistemas operativos.</div>
+                        </div>
+                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-sys-1" class="status-pill status-pending">Pendiente</span></div>
+                    </div>
+                    <div class="activity-card-wrapper">
+                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-sistemas-2', 'Planes de pago')">
+                            <div class="card-title" style="color: #FF6600; font-size: 20px;">Actividad 2: Planes de pago (Plan V - Plan M)</div>
+                            <div class="card-desc" style="color: var(--text-main);">Ordenamiento secuencial del paso a paso para simular planes de pago en sistemas.</div>
+                        </div>
+                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-sys-2" class="status-pill status-pending">Pendiente</span></div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('sec-actividades-gestion').style.display = 'block';
+            document.getElementById('page-title').innerText = 'Catálogo de Actividades';
+            actualizarBadgesActividades();
+        }
+
+        function abrirSeccionUnica(seccionId, titulo) {
+            document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
+            document.getElementById(seccionId).style.display = 'block';
+            document.getElementById('page-title').innerText = titulo;
+        }
+
+        function cambiarAudioActividad1() {
+            let val = document.getElementById('audio-select').value;
+            let audioSource = document.getElementById('audio-source-element');
+            let player = document.getElementById('platform-audio-player');
+
+            if(val === 'audio_1') {
+                document.getElementById('info-gestion').innerText = "REFINANCIACIÓN";
+                document.getElementById('info-du').innerText = "24017232";
+                document.getElementById('info-fecha').innerText = "07/09/2026";
+                audioSource.src = "https://raw.githubusercontent.com/bgindividuos-rgb/Audios/cc1d2846e3897deafdedacd10b9437c16a8325dc/0111565688894-242952947-20260907114038.mp3";
+            } else if(val === 'audio_2') {
+                document.getElementById('info-gestion').innerText = "PLAN V";
+                document.getElementById('info-du').innerText = "29328602";
+                document.getElementById('info-fecha').innerText = "04/09/2026";
+                audioSource.src = "https://raw.githubusercontent.com/bgindividuos-rgb/Audios/1ac480e3ec15696fc71ee820aa60fd1e37f90ce0/Plan%20V%20DU-29328602.mp3";
+            } else {
+                document.getElementById('info-gestion').innerText = "PROMESA DE PAGO";
+                document.getElementById('info-du').innerText = "32090812";
+                document.getElementById('info-fecha').innerText = "15/09/2026";
+                audioSource.src = "https://raw.githubusercontent.com/bgindividuos-rgb/Audios/1ac480e3ec15696fc71ee820aa60fd1e37f90ce0/Promesa%20de%20pago%20DU-32090812.mp3";
+            }
+            player.load();
+
+            for(let i=0; i<12; i++) {
+                document.getElementById(`feedback_icon_${i}`).style.display = 'none';
+            }
+            document.getElementById('feedback-gestion-container').style.display = 'none';
+        }
+
+        function toggleObsRequired(idx) {
+            let status = document.getElementById(`item_status_${idx}`).value;
+            let txtArea = document.getElementById(`item_obs_${idx}`);
+            if(status === 'NO CUMPLIDO') {
+                txtArea.style.borderColor = varCss('--danger');
+            } else {
+                txtArea.style.borderColor = varCss('--border-color');
+            }
+        }
+
+        function varCss(name) {
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        }
+
+        function actualizarBadgesActividades() {
+            let registros = JSON.parse(localStorage.getItem('galicia_resultados_v2') || '[]');
+            let regsAsesor = registros.filter(r => r.asesor === usuarioActual);
+
+            const mapBadges = [
+                { id: 'badge-act-1', key: 'Auditá' },
+                { id: 'badge-act-2', key: 'responderías' },
+                { id: 'badge-act-3', key: 'camino' },
+                { id: 'badge-proc-1', key: 'Herramientas de cobranza' },
+                { id: 'badge-proc-2', key: 'Validación de Identidad' },
+                { id: 'badge-sys-1', key: 'Investigá' },
+                { id: 'badge-sys-2', key: 'Planes de pago' }
+            ];
+
+            mapBadges.forEach(b => {
+                let el = document.getElementById(b.id);
+                if(el) {
+                    let completada = regsAsesor.some(r => r.actividad.includes(b.key));
+                    el.innerText = completada ? "Completado" : "Pendiente";
+                    el.className = completada ? "status-pill status-completed" : "status-pill status-pending";
+                }
+            });
+        }
+
+        function actualizarProgresosDashboard() {
+            let registros = JSON.parse(localStorage.getItem('galicia_resultados_v2') || '[]');
+            let regsAsesor = registros.filter(r => r.asesor === usuarioActual);
+
+            let gestionComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino")).length, 3);
+            let procComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad")).length, 2);
+            let sysComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Investigá") || r.actividad.includes("Planes de pago")).length, 2);
+
+            let pctGestion = Math.round((gestionComp / 3) * 100);
+            let pctProc = Math.round((procComp / 2) * 100);
+            let pctSys = Math.round((sysComp / 2) * 100);
+
+            document.getElementById('val-gestion-txt').innerText = `${pctGestion}%`;
+            document.getElementById('val-gestion-det').innerText = `${gestionComp} / 3 Actividades`;
+            document.getElementById('bar-gestion').style.width = `${pctGestion}%`;
+
+            document.getElementById('val-proc-txt').innerText = `${pctProc}%`;
+            document.getElementById('val-proc-det').innerText = `${procComp} / 2 Actividades`;
+            document.getElementById('bar-proc').style.width = `${pctProc}%`;
+
+            document.getElementById('val-sistemas-txt').innerText = `${pctSys}%`;
+            document.getElementById('val-sistemas-det').innerText = `${sysComp} / 2 Actividades`;
+            document.getElementById('bar-sistemas').style.width = `${pctSys}%`;
+        }
+
+        // Finalizar Actividad 1 Calidad (Soporta Audios 1, 2 y 3)
+        function finalizarActividad1() {
+            let audioSeleccionado = document.getElementById('audio-select').value;
+            let claveActiva = audioSeleccionado === 'audio_1' ? claveAudio1 : (audioSeleccionado === 'audio_2' ? claveAudio2 : claveAudio3);
+
+            for(let i = 0; i < 12; i++) {
+                let status = document.getElementById(`item_status_${i}`).value;
+                let obs = document.getElementById(`item_obs_${i}`).value.trim();
+                if(status === 'NO CUMPLIDO' && obs === '') {
+                    alert(`Por favor complete la oportunidad de mejora en el ítem ${i + 1}, ya que seleccionó NO CUMPLIDO.`);
+                    document.getElementById(`item_obs_${i}`).focus();
+                    return;
+                }
+            }
+
+            let aciertos = 0;
+            for(let i = 0; i < 12; i++) {
+                let status = document.getElementById(`item_status_${i}`).value;
+                let iconoSpan = document.getElementById(`feedback_icon_${i}`);
+                iconoSpan.style.display = "inline-block";
+                if(status === claveActiva[i]) {
+                    aciertos++;
+                    iconoSpan.innerHTML = "✔"; iconoSpan.className = "feedback-icon icon-correct";
+                } else {
+                    iconoSpan.innerHTML = "✖"; iconoSpan.className = "feedback-icon icon-incorrect";
+                }
+            }
+            let puntaje = Math.round((aciertos / 12) * 100);
+            registrarResultado("Auditá la gestión", puntaje);
+
+            let feedbackHtml = audioSeleccionado === 'audio_1' ? 
+                `<b>Evaluación procesada con éxito.</b> Puntaje obtenido: ${puntaje}/100 pts.<br>Se marcaron con tilde verde las respuestas correctas según la auditoría operativa.` :
+                (audioSeleccionado === 'audio_2' ? feedbackTextoAudio2 + `<br><br><b>Puntaje Final:</b> ${puntaje}/100 pts` : feedbackTextoAudio3 + `<br><br><b>Puntaje Final:</b> ${puntaje}/100 pts`);
+
+            document.getElementById('feedback-gestion-content').innerHTML = feedbackHtml;
+            document.getElementById('feedback-gestion-container').style.display = 'block';
+            alert(`Evaluación procesada. Puntaje: ${puntaje}/100`);
+        }
+
+        // Finalizar Actividad 2 Calidad (Validación estricta de reconducción a cobranza)
+        function finalizarActividad2() {
+            let respondidos = 0, validas = 0;
+            for(let i = 0; i < casosActividad2.length; i++) {
+                let txt = document.getElementById(`act2_resp_${i}`).value.trim();
+                if(txt.length > 0) {
+                    respondidos++;
+                    let l = txt.toLowerCase();
+                    let esEvasivo = l.includes("no sé") || l.includes("no se") || l.includes("nose") || l.length < 10;
+                    let contieneOrientacion = l.includes("entiend") || l.includes("solución") || l.includes("resolver") || l.includes("pago") || l.includes("cuota") || l.includes("plan") || l.includes("ayudar") || l.includes("veamos") || l.includes("prop") || l.includes("hoy") || l.includes("cuenta");
+
+                    if(!esEvasivo && contieneOrientacion) {
+                        validas++;
+                    }
+                }
+            }
+            if(respondidos < casosActividad2.length) { 
+                alert("Por favor complete todos los escenarios con una respuesta orientada a reconducir al cliente."); 
+                return; 
+            }
+            let puntaje = Math.round((validas / casosActividad2.length) * 100);
+            registrarResultado("Actividad 2: ¿Qué responderías?", puntaje);
+            alert(`Actividad 2 finalizada. Puntaje: ${puntaje}/100`);
+        }
+
+        // Finalizar Actividad 3 Calidad
+        let respuestasAct3Usuario = [];
+        function seleccionarOpcionAct3(pIdx, oIdx, esCorrecta) {
+            pasosActividad3[pIdx].opciones.forEach((opt, idx) => {
+                document.getElementById(`act3_opt_${pIdx}_${idx}`).className = "step-option-card";
+            });
+            let sel = document.getElementById(`act3_opt_${pIdx}_${oIdx}`);
+            if(esCorrecta) { sel.classList.add('selected-correct'); respuestasAct3Usuario[pIdx] = true; }
+            else { sel.classList.add('selected-incorrect'); respuestasAct3Usuario[pIdx] = false; }
+            setTimeout(() => {
+                if(pIdx + 1 < pasosActividad3.length) document.getElementById(`act3_step_box_${pIdx + 1}`).style.display = 'block';
+                else document.getElementById('btn-finalizar-act3').style.display = 'block';
+            }, 300);
+        }
+        function finalizarActividad3() {
+            let aciertos = respuestasAct3Usuario.filter(Boolean).length;
+            let puntaje = Math.round((aciertos / pasosActividad3.length) * 100);
+            registrarResultado("Actividad 3: Elegí el camino correcto", puntaje);
+            alert(`Actividad 3 finalizada. Puntaje: ${puntaje}/100`);
+        }
+
+        // Finalizar Procedimientos Act 1 (MC)
+        function finalizarProcMC() {
+            let aciertos = 0;
+            preguntasProcMC.forEach((p, pIdx) => {
+                if(p.tipo === 'multiple') {
+                    let checkboxes = document.querySelectorAll(`input[name="proc_mc_${pIdx}"]:checked`);
+                    let marcados = Array.from(checkboxes).map(cb => parseInt(cb.value));
+                    let correctas = p.correctas;
+                    let esIgual = marcados.length === correctas.length && marcados.every(v => correctas.includes(v));
+                    if(esIgual) aciertos++;
+                    correctas.forEach(cIdx => {
+                        let icon = document.getElementById(`icon_mc_${pIdx}_${cIdx}`);
+                        if(icon) { icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct"; icon.style.display = "inline"; }
+                    });
+                } else {
+                    let seleccionado = document.querySelector(`input[name="proc_mc_${pIdx}"]:checked`);
+                    if(seleccionado && parseInt(seleccionado.value) === p.correcta) {
+                        aciertos++;
+                    }
+                    let icon = document.getElementById(`icon_mc_${pIdx}_${p.correcta}`);
+                    if(icon) { icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct"; icon.style.display = "inline"; }
+                }
+            });
+            let puntaje = Math.round((aciertos / preguntasProcMC.length) * 100);
+            registrarResultado("Herramientas de cobranza", puntaje);
+            document.getElementById('feedback-procmc-content').innerHTML = `Se marcaron con tilde verde las respuestas correctas de cada enunciado.<br><b>Puntaje Final:</b> ${puntaje} / 100 pts`;
+            document.getElementById('feedback-procmc-container').style.display = 'block';
+            alert(`Herramientas de cobranza finalizada. Puntaje: ${puntaje}/100`);
+        }
+
+        // Finalizar Procedimientos Act 2 (V/F)
+        function finalizarProcVF() {
+            let aciertos = 0;
+            preguntasProcVF.forEach((p, pIdx) => {
+                let sel = document.querySelector(`input[name="proc_vf_${pIdx}"]:checked`);
+                let icon = document.getElementById(`icon_vf_${pIdx}`);
+                icon.style.display = "inline-block";
+                if(sel && sel.value === p.respuesta) {
+                    aciertos++;
+                    icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct";
+                } else {
+                    icon.innerHTML = "✖"; icon.className = "feedback-icon icon-incorrect";
+                }
+            });
+            let puntaje = Math.round((aciertos / preguntasProcVF.length) * 100);
+            registrarResultado("Validación de Identidad", puntaje);
+            alert(`Validación de Identidad finalizada. Puntaje: ${puntaje}/100`);
+        }
+
+        // Finalizar Sistemas Act 1 (Investigá)
+        function finalizarSys1() {
+            let clave = document.getElementById('sys-search-key').value.trim();
+            if(!clave) { alert("Por favor ingrese el documento o clave del cliente proporcionada por staff."); return; }
+            registrarResultado("Investigá al cliente", 100);
+            document.getElementById('feedback-sys1-content').innerHTML = `Búsqueda procesada correctamente con clave/DU: <b>${clave}</b>. Actividad registrada con éxito.`;
+            document.getElementById('feedback-sys1-container').style.display = 'block';
+            alert("Actividad 'Investigá al cliente' registrada con éxito.");
+        }
+
+        // Finalizar Sistemas Act 2 (Planes de Pago)
+        function finalizarSys2() {
+            let aciertosV = 0;
+            pasosPlanVMezclados.forEach((item, idx) => {
+                let val = parseInt(document.getElementById(`orden_v_${idx}`).value);
+                let correctNum = item.originalIdx + 1;
+                let icon = document.getElementById(`feedback_v_${idx}`);
+                icon.style.display = "inline-block";
+                if(val === correctNum) {
+                    aciertosV++;
+                    icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct";
+                } else {
+                    icon.innerHTML = `✖ (Correcto: ${correctNum})`; icon.className = "feedback-icon icon-incorrect";
+                }
+            });
+
+            let aciertosM = 0;
+            pasosPlanMMezclados.forEach((item, idx) => {
+                let val = parseInt(document.getElementById(`orden_m_${idx}`).value);
+                let correctNum = item.originalIdx + 1;
+                let icon = document.getElementById(`feedback_m_${idx}`);
+                icon.style.display = "inline-block";
+                if(val === correctNum) {
+                    aciertosM++;
+                    icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct";
+                } else {
+                    icon.innerHTML = `✖ (Correcto: ${correctNum})`; icon.className = "feedback-icon icon-incorrect";
+                }
+            });
+
+            let totalPasos = pasosPlanVOriginal.length + pasosPlanMOriginal.length;
+            let totalAciertos = aciertosV + aciertosM;
+            let puntaje = Math.round((totalAciertos / totalPasos) * 100);
+
+            registrarResultado("Planes de pago", puntaje);
+            document.getElementById('feedback-sys2-content').innerHTML = `Ordenamiento verificado.<br>• Plan V: ${aciertosV}/${pasosPlanVOriginal.length} correctos<br>• Plan M: ${aciertosM}/${pasosPlanMOriginal.length} correctos<br><b>Puntaje Final:</b> ${puntaje}/100`;
+            document.getElementById('feedback-sys2-container').style.display = 'block';
+            alert(`Planes de pago finalizado. Puntaje: ${puntaje}/100`);
+        }
+
+        function registrarResultado(actividadNombre, puntaje) {
+            let clasificacion = puntaje >= 90 ? "DOMINADO" : puntaje >= 65 ? "PRESENTA OPORTUNIDADES" : puntaje >= 40 ? "REQUIERE REFUERZO" : "CRÍTICO";
+            let claseCss = puntaje >= 90 ? "bg-dominado" : puntaje >= 65 ? "bg-oportunidades" : puntaje >= 40 ? "bg-refuerzo" : "bg-critico";
+
+            let nuevoRegistro = {
+                fecha: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(),
+                asesor: usuarioActual,
+                actividad: actividadNombre,
+                puntaje: puntaje,
+                clasificacion: clasificacion,
+                claseCss: claseCss
+            };
+
+            let registros = JSON.parse(localStorage.getItem('galicia_resultados_v2') || '[]');
+            registros.push(nuevoRegistro);
+            localStorage.setItem('galicia_resultados_v2', JSON.stringify(registros));
+        }
+
+        function actualizarFiltros() {
+            let registros = JSON.parse(localStorage.getItem('galicia_resultados_v2') || '[]');
+            let asesores = [...new Set(registros.map(r => r.asesor))];
+            let select = document.getElementById('filter-advisor');
+            select.innerHTML = '<option value="ALL">-- Ver Resultados Globales --</option>';
+            asesores.forEach(a => { select.innerHTML += `<option value="${a}">${a}</option>`; });
+        }
+
+        function renderizarAnalytics() {
+            let registros = JSON.parse(localStorage.getItem('galicia_resultados_v2') || '[]');
+            let filtro = document.getElementById('filter-advisor').value;
+            let filtrados = filtro === "ALL" ? registros : registros.filter(r => r.asesor === filtro);
+
+            document.getElementById('kpi-total').innerText = filtrados.length;
+            if(filtrados.length === 0) {
+                document.getElementById('kpi-promedio').innerText = "0 pts";
+                document.getElementById('kpi-estado').innerText = "Sin datos";
+                document.getElementById('stat-cat-gestion').innerText = "0 / 3";
+                document.getElementById('stat-cat-proc').innerText = "0 / 2";
+                document.getElementById('stat-cat-sistemas').innerText = "0 / 2";
+                document.getElementById('chart-precision-list').innerHTML = `<p style="font-size:13px; color:var(--text-muted);">Sin datos registrados.</p>`;
+                document.getElementById('feedback-text').innerText = "Complete actividades para visualizar el feedback.";
+                document.getElementById('tabla-resultados-body').innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No hay registros disponibles.</td></tr>`;
+                return;
+            }
+
+            let suma = filtrados.reduce((acc, curr) => acc + curr.puntaje, 0);
+            let promedio = Math.round(suma / filtrados.length);
+            document.getElementById('kpi-promedio').innerText = promedio + " pts";
+            document.getElementById('kpi-estado').innerText = promedio >= 90 ? "DOMINADO" : promedio >= 65 ? "OPORTUNIDADES" : "REFUERZO";
+
+            let gestionCount = Math.min(filtrados.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino")).length, 3);
+            let procCount = Math.min(filtrados.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad")).length, 2);
+            let sysCount = Math.min(filtrados.filter(r => r.actividad.includes("Investigá") || r.actividad.includes("Planes de pago")).length, 2);
+
+            document.getElementById('stat-cat-gestion').innerText = `${gestionCount} / 3`;
+            document.getElementById('bar-cat-gestion').style.width = `${Math.min((gestionCount/3)*100, 100)}%`;
+
+            document.getElementById('stat-cat-proc').innerText = `${procCount} / 2`;
+            document.getElementById('bar-cat-proc').style.width = `${Math.min((procCount/2)*100, 100)}%`;
+
+            document.getElementById('stat-cat-sistemas').innerText = `${sysCount} / 2`;
+            document.getElementById('bar-cat-sistemas').style.width = `${Math.min((sysCount/2)*100, 100)}%`;
+
+            const listadoActividades = [
+                "Auditá la gestión", "Actividad 2: ¿Qué responderías?", "Actividad 3: Elegí el camino correcto",
+                "Herramientas de cobranza", "Validación de Identidad", "Investigá al cliente", "Planes de pago"
+            ];
+
+            let htmlPrec = "";
+            listadoActividades.forEach(actName => {
+                let actRegs = filtrados.filter(r => r.actividad.includes(actName));
+                let promAct = actRegs.length > 0 ? Math.round(actRegs.reduce((a, c) => a + c.puntaje, 0) / actRegs.length) : 0;
+                htmlPrec += `
+                    <div class="precision-bar-container">
+                        <div class="precision-info"><span>${actName}</span><span>${promAct}%</span></div>
+                        <div class="precision-bar-bg"><div class="precision-bar-fill" style="width: ${promAct}%;"></div></div>
+                    </div>
+                `;
+            });
+            document.getElementById('chart-precision-list').innerHTML = htmlPrec;
+
+            document.getElementById('feedback-text').innerHTML = promedio >= 90 ? 
+                "<b>Fortaleza:</b> Excelente desempeño global en procedimientos, sistemas y calidad de gestión." :
+                "<b>Aspecto a mejorar:</b> Se sugiere repasar los flujos de simulación de planes de pago y las condiciones generales de refinanciación.";
+
+            let tbody = document.getElementById('tabla-resultados-body');
+            tbody.innerHTML = "";
+            filtrados.forEach(r => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${r.fecha}</td>
+                        <td><b>${r.asesor}</b></td>
+                        <td>${r.actividad}</td>
+                        <td><b>${r.puntaje} pts</b></td>
+                        <td><span class="badge ${r.claseCss}">${r.clasificacion}</span></td>
+                    </tr>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
