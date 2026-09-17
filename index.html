@@ -1174,7 +1174,7 @@
                     { texto: "A- Propuesta de plan de pagos.", correcta: false },
                     { texto: "B- Propuesta de promesa de pago.", correcta: true },
                     { texto: "C- Indagar sobre capacidad de pago actual sobre los productos que tiene", correcta: false },
-                    { texto: "D- Pedirle que когда cobre a principio de mes llame para dar fecha de pago.", correcta: false }
+                    { texto: "D- Pedirle que cuando cobre a principio de mes llame para dar fecha de pago.", correcta: false }
                 ]
             },
             {
@@ -1782,7 +1782,7 @@
             alert(`Evaluación procesada. Puntaje: ${puntaje}/100`);
         }
 
-        // Finalizar Actividad 2 Calidad (Validación estricta de reconducción a cobranza)
+        // Finalizar Actividad 2 Calidad
         function finalizarActividad2() {
             let respondidos = 0, validas = 0;
             for(let i = 0; i < casosActividad2.length; i++) {
@@ -1952,9 +1952,13 @@
                 fetch(urlGoogleSheet, {
                     method: "POST",
                     mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify(nuevoRegistro)
-                }).catch(error => console.error("Error al sincronizar con Google Sheet:", error));
+                }).then(() => {
+                    console.log("Datos sincronizados con Google Sheet");
+                }).catch(error => {
+                    console.error("Error al sincronizar con Google Sheet:", error);
+                });
             }
         }
 
@@ -2039,7 +2043,5 @@
             });
         }
     </script>
-</body>
-</html>
 </body>
 </html>
