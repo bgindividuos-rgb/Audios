@@ -1174,7 +1174,7 @@
                     { texto: "A- Propuesta de plan de pagos.", correcta: false },
                     { texto: "B- Propuesta de promesa de pago.", correcta: true },
                     { texto: "C- Indagar sobre capacidad de pago actual sobre los productos que tiene", correcta: false },
-                    { texto: "D- Pedirle que cuando cobre a principio de mes llame para dar fecha de pago.", correcta: false }
+                    { texto: "D- Pedirle que когда cobre a principio de mes llame para dar fecha de pago.", correcta: false }
                 ]
             },
             {
@@ -1940,9 +1940,22 @@
                 claseCss: claseCss
             };
 
+            // 1. Guardado local (para visualización inmediata del asesor)
             let registros = JSON.parse(localStorage.getItem('galicia_resultados_v2') || '[]');
             registros.push(nuevoRegistro);
             localStorage.setItem('galicia_resultados_v2', JSON.stringify(registros));
+
+            // 2. Envío automático a tu Google Sheet centralizada
+            const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbxKjEk9swVoQyjqIHKK5DwkgXQIw7w4QlvERdIicGV6RYZIEkbyCYRP8Bmzw-IU4PI/exec";
+            
+            if (urlGoogleSheet) {
+                fetch(urlGoogleSheet, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(nuevoRegistro)
+                }).catch(error => console.error("Error al sincronizar con Google Sheet:", error));
+            }
         }
 
         function actualizarFiltros() {
@@ -2026,5 +2039,7 @@
             });
         }
     </script>
+</body>
+</html>
 </body>
 </html>
