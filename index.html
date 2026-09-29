@@ -816,7 +816,7 @@
                     <!-- 3. MENÚ DE ACTIVIDADES POR CATEGORÍA -->
                     <div id="sec-actividades-gestion" class="section-view" style="display: none;">
                         <div class="card-container" style="background: transparent; box-shadow:none; padding:0; border:none;">
-                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 20px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="cambiarSeccion('categories', document.querySelectorAll('.sidebar-item')[1])">⬅️️ Volver a Categorías</button>
+                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 20px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="cambiarSeccion('categories', document.querySelectorAll('.sidebar-item')[1])">⬅️ Volver a Categorías</button>
                             <h3 id="titulo-menu-act" style="margin-bottom: 20px; font-size:18px; color:var(--galicia-orange);">Actividades de la Categoría</h3>
                             <div class="cards-grid" id="grid-tarjetas-act" style="margin-top:0;"></div>
                         </div>
@@ -972,7 +972,7 @@
                         <div class="card-container">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('sistemas')">⬅️ Volver a Actividades</button>
                             <h2>⚙️ Planes de pago (Plan V y Plan M)</h2>
-                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Ordená el paso a paso asignando el número de orden correspondiente (1, 2, 3...).</p>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Ordená el paso a paso a seguir en cada plan de pagos para realizar la simulación.</p>
                             
                             <h3 style="color:var(--galicia-orange); margin-bottom:15px; font-size:16px;">🔸 Simulación Plan V</h3>
                             <div id="sys-planv-container"></div>
@@ -998,7 +998,6 @@
                                     <option value="ALL">🌟 Ver Resultados Globales (Todo el Equipo)</option>
                                 </select>
                             </div>
-                            <button class="btn-galicia" style="width: auto; padding: 10px 18px; margin-top: 18px;" onclick="sincronizarResultadosRemotos()">🔄 Sincronizar con Google Sheet</button>
                         </div>
 
                         <!-- KPIs Superiores -->
@@ -1200,7 +1199,7 @@
                     { texto: "A- Propuesta de plan de pagos.", correcta: false },
                     { texto: "B- Propuesta de promesa de pago.", correcta: true },
                     { texto: "C- Indagar sobre capacidad de pago actual sobre los productos que tiene", correcta: false },
-                    { texto: "D- Pedirle que cuando cobre a principio de mes llame para dar fecha de pago.", correcta: false }
+                    { texto: "D- Pedirle que когда cobre a principio de mes llame para dar fecha de pago.", correcta: false }
                 ]
             },
             {
@@ -1366,7 +1365,7 @@
             { texto: "Si el cliente se equivoca en una pregunta, le digo qué dato nos figura para que pueda corregirlo desde la app.", respuesta: "FALSO" },
             { texto: "Si solo refinancio préstamos y el cliente no posee CA con Tarjeta de Débito, realizo 2 preguntas sobre producto.", respuesta: "VERDADERO" },
             { texto: "Si realizo 5ta pregunta sobre producto y el cliente responde 'NO ME ACUERDO', puedo reemplazarla realizando una 6ta pregunta.", respuesta: "FALSO" },
-            { texto: "Si el cliente is mayor y no entiende las consultas, puedo realizar validación de identidad con un Encargado de Pagos.", respuesta: "FALSO" },
+            { texto: "Si el cliente es mayor y no entiende las consultas, puedo realizar validación de identidad con un Encargado de Pagos.", respuesta: "FALSO" },
             { texto: "En casos que el cliente brinde el 4to grupo de la Tarjeta de Débito, puedo corregirlo indicando que necesito el grupo anterior.", respuesta: "VERDADERO" },
             { texto: "Si refinancio Tarjetas de Crédito cerradas y no tiene vigente una Tarjeta de Débito, no puedo avanzar con la validación. Derivo al cliente a solicitar CA con TD asociada.", respuesta: "VERDADERO" }
         ];
@@ -1390,11 +1389,11 @@
             "¿Cuál es el último reclamo que tiene realizado el cliente?"
         ];
 
+        // Pasos exactos Plan V
         const pasosPlanVOriginal = [
             "Verificar que cumpla con las condiciones para acceder al plan.",
             "Ingresar en BC10 con el DU y copiar el N° de plástico (16 dígitos)",
-            "Pegar ese número en un bloc de notas para tenerlo a mano.",
-            "Ingresar en visa/amex con usuario y contraseña correspondiente.",
+            "Ingresar in visa/amex con usuario y contraseña correspondiente.",
             "Seleccionar opción 22",
             "Seleccionar opción 18 (menos 15 ddm) / 19 (más 15ddm)",
             "Pegar el número del plástico + INTRO",
@@ -1406,32 +1405,27 @@
             "Confirmar el plan post validación de identidad + lectura de contrato con f9+f9"
         ];
 
+        // Pasos exactos Plan M
         const pasosPlanMOriginal = [
             "Verificar que cumpla con las condiciones para acceder al plan.",
             "Ingresar en BC10 con el DU y copiar el N° de plástico (16 dígitos)",
-            "Pegar ese número en un bloc de notas para tenerlo a mano.",
             "Ingresar en mastercard con usuario y contraseña correspondiente.",
             "Ingresar en la opción 19 para corroborar estado de inhibición.",
-            "Ingresar en la primer opción: ACTUALIZACIÓN DE MARCAS DE INHIBICIÓN con INTRO.",
-            "Tabular hasta Numero de tarjeta y pegar los 16 dígitos + intro",
-            "Corroborar estado actual: si dice SI modificar en estado nuevo escribiendo NO + intro.",
-            "Vovler al menú principal con f3",
+            "Ingresar en la primer opción: ACTUALIZACIÓN DE MARCAS DE INHIBICIÓN con INTRO - Tabular hasta Numero de tarjeta y pegar los 16 dígitos + intro",
+            "Corroborar estado actual: si dice SI modificar en estado nuevo escribiendo NO + intro - Volver al menú principal con f3",
             "Ingresar en la opción 09 para simular el plan --> Pegar número de tarjeta",
-            "Realizar caida de cuotas a futuro: F1 (seleccionar los consumos con 'S', confirmar con F12+intro",
-            "Volver con f3 a la página anterior",
+            "Realizar caida de cuotas a futuro: F1 (seleccionar los consumos con 'S', confirmar con F12+intro - Volver con f3 a la página anterior",
             "Ingresar en la opción F2 - Seleccionar con 'S' Plan M Consolidado + intro",
             "Confirmar calculo deuda con INTRO e ingresar cantidad de cuotas con 3 dígitos + intro",
             "En caso de tener que recalcular cuotas, volver con f3 a página anterior, ingresar cuotas + intro.",
             "Si das de alta: agregá fecha de vencimiento de plastico (MM/AA) + F12",
-            "Si no das de alta: caida de cuotas (volver al menú inicial con F3 - Ingresar opción F4= F12 + Shift-F2)",
-            "Si no das de alta: volver a inhibir si inhibiste (opción 19 completo - estado nuevo SI)"
+            "Si no das de alta: anular caida de cuotas (Menú inicial- Ingresar opción F4= F12 + Shift-F2) - Volver a inhibir (opción 19 completo - estado nuevo SI)"
         ];
 
         let pasosPlanVMezclados = [];
         let pasosPlanMMezclados = [];
         let registrosGlobales = []; 
 
-        // URL actualizada de tu Google Apps Script
         const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbzGklIx6MbIpgkohFNyEGFGxgZ7GpRZPdc_LnN9KbbnXozzqIoqciGMc_YKOCcAXow/exec";
 
         function mezclarArray(array) {
@@ -1478,7 +1472,7 @@
             act2Container.innerHTML = casosActividad2.map((caso, idx) => `
                 <div class="activity-item">
                     <label><b>💬 Caso ${idx + 1}:</b> "${caso}"</label>
-                    <textarea class="form-control" id="act2_resp_${idx}" placeholder="✍️️ Escribí tu respuesta reconduciendo activamente a la cobranza..."></textarea>
+                    <textarea class="form-control" id="act2_resp_${idx}" placeholder="✍️ Escribí tu respuesta reconduciendo activamente a la cobranza..."></textarea>
                 </div>
             `).join('');
 
@@ -1534,7 +1528,7 @@
                 </div>
             `).join('');
 
-            // Sistemas Act 2
+            // Sistemas Act 2 (Plan V y Plan M mezclados)
             pasosPlanVMezclados = mezclarArray(pasosPlanVOriginal);
             pasosPlanMMezclados = mezclarArray(pasosPlanMOriginal);
 
@@ -1592,7 +1586,7 @@
                 sincronizarResultadosRemotos();
             } else if(seccion === 'categories') {
                 document.getElementById('sec-categories').style.display = 'block';
-                document.getElementById('page-title').innerText = '📂 Categorías / Catálogo de Actividades';
+                document.getElementById('page-title').innerText = '📂 Categorías / Actividades';
             } else if(seccion === 'results') {
                 document.getElementById('sec-results').style.display = 'block';
                 document.getElementById('page-title').innerText = '📈 Resultados y Evolución';
@@ -1914,7 +1908,7 @@
             alert("🎉 Actividad 'Investigá al cliente' registrada con éxito.");
         }
 
-        // Finalizar Sistemas Act 2
+        // Finalizar Sistemas Act 2 (Planes de Pago)
         function finalizarSys2() {
             let aciertosV = 0;
             pasosPlanVMezclados.forEach((item, idx) => {
@@ -1967,7 +1961,6 @@
                 claseCss: claseCss
             };
 
-            // Envío a Google Sheet en tiempo real
             if (urlGoogleSheet) {
                 fetch(urlGoogleSheet, {
                     method: "POST",
@@ -1983,7 +1976,6 @@
             }
         }
 
-        // Función para leer directamente desde la Google Sheet (en tiempo real)
         function sincronizarResultadosRemotos() {
             if(!urlGoogleSheet) return;
             
