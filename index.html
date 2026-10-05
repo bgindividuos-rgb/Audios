@@ -539,7 +539,6 @@
             margin-top: 6px;
         }
 
-        /* Estilos para la Matriz Interactiva Condición por Condición */
         .tabla-matriz-interactiva {
             width: 100%;
             border-collapse: collapse;
@@ -774,65 +773,24 @@
                         </div>
                     </div>
 
-                    <!-- ACTIVIDAD 1: AUDITÁ LA GESTIÓN (CALIDAD) -->
+                    <!-- ACTIVIDAD 1: AUDITÁ LA GESTIÓN -->
                     <div id="sec-activity-1" class="section-view" style="display: none;">
                         <div class="card-container">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('gestion')">⬅️ Volver a Actividades</button>
                             <h2>🎧 Actividad 1: Auditá la gestión</h2>
-                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Escuchá el audio seleccionado y auditá el cumplimiento de los procedimientos operativos marcando Cumplido, No Cumplido o No Aplica.</p>
-                            
-                            <div class="audio-selector-box">
-                                <label style="font-weight: 700; display: block; margin-bottom: 8px;">🎵 Seleccioná el audio a auditar:</label>
-                                <select id="audio-select" class="form-control" style="background: var(--white);" onchange="cambiarAudioActividad1()">
-                                    <option value="audio_1">Audio 1 - Refinanciación (DU: 24017232)</option>
-                                    <option value="audio_2">Audio 2 - Plan V (DU: 29328602)</option>
-                                    <option value="audio_3">Audio 3 - Promesa de pago (DU: 32090812)</option>
-                                </select>
-
-                                <div class="audio-player-wrapper">
-                                    <audio id="platform-audio-player" controls preload="auto">
-                                        <source id="audio-source-element" src="https://raw.githubusercontent.com/bgindividuos-rgb/Audios/cc1d2846e3897deafdedacd10b9437c16a8325dc/0111565688894-242952947-20260907114038.mp3" type="audio/mp3">
-                                        Tu navegador no soporta el elemento de audio.
-                                    </audio>
-                                </div>
-                            </div>
-
-                            <div class="audio-info-card" id="audio-card-info">
-                                <div><b>📌 Gestión:</b> <span id="info-gestion">REFINANCIACIÓN</span></div>
-                                <div><b>🆔 DU:</b> <span id="info-du">24017232</span></div>
-                                <div><b>📅 Fecha:</b> <span id="info-fecha">07/09/2026</span></div>
-                            </div>
-
-                            <div id="form-items-container"></div>
-
-                            <button id="btn-finalizar-act" class="btn-galicia" onclick="finalizarActividad1()">🎯 Finalizar y Enviar Evaluación</button>
-
-                            <div id="feedback-gestion-container" class="feedback-card" style="display:none;">
-                                <h4>💡 Feedback y Diagnóstico de Calidad</h4>
-                                <div id="feedback-gestion-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
-                            </div>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Escuchá el audio seleccionado y auditá el cumplimiento de los procedimientos operativos.</p>
                         </div>
                     </div>
 
-                    <!-- ACTIVIDAD 2: ¿QUÉ RESPONDERÍAS? (CALIDAD) -->
+                    <!-- ACTIVIDAD 2: ¿QUÉ RESPONDERÍAS? -->
                     <div id="sec-activity-2" class="section-view" style="display: none;">
                         <div class="card-container">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('gestion')">⬅️ Volver a Actividades</button>
                             <h2>💬 Actividad 2: ¿Qué responderías?</h2>
-                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Lee atentamente cada caso hipotético del cliente y respondé reconduciendo a la cobranza de manera activa.</p>
-                            
-                            <div id="act2-form-container"></div>
-
-                            <button id="btn-finalizar-act2" class="btn-galicia" onclick="finalizarActividad2()">🎯 Finalizar y Enviar Respuestas</button>
-
-                            <div id="feedback-act2-container" class="feedback-card" style="display:none;">
-                                <h4>💡 Evaluación de Reconducción a la Cobranza</h4>
-                                <div id="feedback-act2-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
-                            </div>
                         </div>
                     </div>
 
-                    <!-- ACTIVIDAD 3: ELEGÍ EL CAMINO CORRECTO (CALIDAD) -->
+                    <!-- ACTIVIDAD 3: ELEGÍ EL CAMINO CORRECTO -->
                     <div id="sec-activity-3" class="section-view" style="display: none;">
                         <div class="card-container">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('gestion')">⬅ Volver a Actividades</button>
@@ -848,52 +806,13 @@
                             </div>
 
                             <div id="act3-caso-activo-container" style="display: none; margin-top: 20px;">
-                                <button class="btn-galicia" style="width: auto; padding: 6px 14px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="volverASelectorCasos()">⬅️️ Cambiar de Caso</button>
-                                
+                                <button class="btn-galicia" style="width: auto; padding: 6px 14px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="volverASelectorCasos()">⬅ Cambiar de Caso</button>
                                 <div class="audio-info-card" id="act3-caso-info" style="margin-bottom:20px; background: #FFF3EB; padding: 18px; border-radius: 12px; border: 1px solid #FFD0B5; line-height: 1.6;"></div>
-                                
                                 <div id="act3-steps-container"></div>
-
                                 <div id="feedback-act3-container" class="feedback-card" style="display:none;">
                                     <h4>💡 Resultado del Caso Práctico</h4>
                                     <div id="feedback-act3-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PROCEDIMIENTOS ACT 1: HERRAMIENTAS DE COBRANZA -->
-                    <div id="sec-proc-1" class="section-view" style="display: none;">
-                        <div class="card-container">
-                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('proc')">⬅️ Volver a Actividades</button>
-                            <h2>📋 Herramientas de cobranza</h2>
-                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Seleccioná la respuesta correcta para cada enunciado.</p>
-                            
-                            <div id="proc-mc-container"></div>
-
-                            <button id="btn-finalizar-procmc" class="btn-galicia" onclick="finalizarProcMC()">🎯 Finalizar y Enviar Respuestas</button>
-
-                            <div id="feedback-procmc-container" class="feedback-card" style="display:none;">
-                                <h4>💡 Resultado de Herramientas de Cobranza</h4>
-                                <div id="feedback-procmc-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PROCEDIMIENTOS ACT 2: VALIDACIÓN DE IDENTIDAD -->
-                    <div id="sec-proc-2" class="section-view" style="display: none;">
-                        <div class="card-container">
-                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('proc')">⬅️ Volver a Actividades</button>
-                            <h2>🛡️ Validación de Identidad</h2>
-                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Marcá Verdadero o Falso según corresponda a los protocolos.</p>
-                            
-                            <div id="proc-vf-container"></div>
-
-                            <button id="btn-finalizar-procvf" class="btn-galicia" onclick="finalizarProcVF()">🎯 Finalizar y Enviar Respuestas</button>
-
-                            <div id="feedback-procvf-container" class="feedback-card" style="display:none;">
-                                <h4>💡 Resultado de Validación de Identidad</h4>
-                                <div id="feedback-procvf-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
                             </div>
                         </div>
                     </div>
@@ -905,21 +824,16 @@
                             <h2>📊 Actividad: Planes de Pago (Paso a Paso)</h2>
                             <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Analizá la condición actual y arrastrá las tarjetas en la columna correspondiente. Si los planes comparten la misma condición, cualquier ubicación será correcta.</p>
                             
-                            <!-- Indicador de Progreso Condición -->
                             <div style="display: flex; justify-content: space-between; align-items: center; background: #FFF3EB; padding: 12px 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #FFD0B5;">
                                 <div><b>📌 Condición actual (<span id="cond-actual-idx">1</span> / <span id="cond-total-idx">10</span>):</b> <span id="cond-titulo-activo" style="color: var(--galicia-orange); font-weight: 700;">Productos que aplican</span></div>
                                 <div id="cond-status-text" style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Pendiente de completar</div>
                             </div>
 
-                            <!-- Banco de Tarjetas de la Condición Actual -->
                             <div class="tarjetas-banco-container">
                                 <label style="font-weight: 700; color: var(--galicia-orange); display: block; margin-bottom: 5px;">🧩 Tarjetas a acomodar para esta condición:</label>
-                                <div class="banco-grid" id="banco-tarjetas-condicion" ondragover="permitirSoltar(event)" ondrop="soltarEnBanco(event)">
-                                    <!-- Dinámico -->
-                                </div>
+                                <div class="banco-grid" id="banco-tarjetas-condicion" ondragover="permitirSoltar(event)" ondrop="soltarEnBanco(event)"></div>
                             </div>
 
-                            <!-- Fila de la Matriz para la Condición Actual -->
                             <div style="overflow-x: auto;">
                                 <table class="tabla-matriz-interactiva">
                                     <thead>
@@ -930,9 +844,7 @@
                                             <th>PLAN M</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tabla-fila-activa-body">
-                                        <!-- Dinámico -->
-                                    </tbody>
+                                    <tbody id="tabla-fila-activa-body"></tbody>
                                 </table>
                             </div>
 
@@ -942,51 +854,6 @@
                             <div id="feedback-planespago-container" class="feedback-card" style="display:none;">
                                 <h4>💡 Resultado de la Actividad</h4>
                                 <div id="feedback-planespago-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SISTEMAS ACT 1: INVESTIGÁ AL CLIENTE -->
-                    <div id="sec-sistemas-1" class="section-view" style="display: none;">
-                        <div class="card-container">
-                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('sistemas')">⬅️ Volver a Actividades</button>
-                            <h2>🔍 Investigá al cliente</h2>
-                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Realizá la búsqueda de la información requerida en sistemas y contestá cada punto según los bloques correspondientes.</p>
-                            
-                            <div class="input-group" style="background:#FFF3EB; padding:15px; border-radius:10px; margin-bottom:20px; border:1px solid #FFD0B5;">
-                                <label style="color:var(--galicia-orange);">🔑 Documento o Clave cliente provista por staff:</label>
-                                <input type="text" id="sys-search-key" placeholder="Ingrese DU o clave del cliente a investigar..." class="form-control" style="background:var(--white);">
-                            </div>
-
-                            <div id="sys-investiga-container"></div>
-
-                            <button id="btn-finalizar-sys1" class="btn-galicia" onclick="finalizarSys1()">🎯 Finalizar Actividad</button>
-
-                            <div id="feedback-sys1-container" class="feedback-card" style="display:none;">
-                                <h4>💡 Estado de la Actividad</h4>
-                                <div id="feedback-sys1-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SISTEMAS ACT 2: PLANES DE PAGO -->
-                    <div id="sec-sistemas-2" class="section-view" style="display: none;">
-                        <div class="card-container">
-                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('sistemas')">⬅️ Volver a Actividades</button>
-                            <h2>⚙️ Planes de pago (Plan V y Plan M)</h2>
-                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Ordená el paso a paso a seguir en cada plan de pagos para realizar la simulación.</p>
-                            
-                            <h3 style="color:var(--galicia-orange); margin-bottom:15px; font-size:16px;">🔸 Simulación Plan V</h3>
-                            <div id="sys-planv-container"></div>
-
-                            <h3 style="color:var(--galicia-orange); margin:25px 0 15px 0; font-size:16px;">🔸 Simulación Plan M</h3>
-                            <div id="sys-planm-container"></div>
-
-                            <button id="btn-finalizar-sys2" class="btn-galicia" style="margin-top:20px;" onclick="finalizarSys2()">🎯 Enviar Ordenamiento de Pasos</button>
-
-                            <div id="feedback-sys2-container" class="feedback-card" style="display:none;">
-                                <h4>💡 Resultado de Planes de Pago</h4>
-                                <div id="feedback-sys2-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
                             </div>
                         </div>
                     </div>
@@ -1002,82 +869,12 @@
                             </div>
                         </div>
 
-                        <!-- KPIs Superiores -->
                         <div class="kpi-container">
-                            <div class="kpi-card">
-                                <span>📊 Total Evaluaciones</span>
-                                <h4 id="kpi-total">0</h4>
-                            </div>
-                            <div class="kpi-card">
-                                <span>⭐ Puntaje Promedio</span>
-                                <h4 id="kpi-promedio">0 pts</h4>
-                            </div>
-                            <div class="kpi-card">
-                                <span>🏆 Desempeño Global</span>
-                                <h4 id="kpi-estado">Sin datos</h4>
-                            </div>
+                            <div class="kpi-card"><span>📊 Total Evaluaciones</span><h4 id="kpi-total">0</h4></div>
+                            <div class="kpi-card"><span>⭐ Puntaje Promedio</span><h4 id="kpi-promedio">0 pts</h4></div>
+                            <div class="kpi-card"><span>🏆 Desempeño Global</span><h4 id="kpi-estado">Sin datos</h4></div>
                         </div>
 
-                        <!-- Gráficos Estilo Referencia SaaS -->
-                        <div class="analytics-grid">
-                            
-                            <!-- Gráfico 1: Actividades completadas por categoría -->
-                            <div class="chart-card">
-                                <div class="chart-title">
-                                    <span>📂 Actividades Completadas por Categoría</span>
-                                    <span style="font-size: 12px; color: var(--text-muted);">Progreso</span>
-                                </div>
-                                <div style="margin-top: 15px;">
-                                    <div class="precision-bar-container">
-                                        <div class="precision-info">
-                                            <span>🎧 Calidad de la Gestión</span>
-                                            <span id="stat-cat-gestion">0 / 3</span>
-                                        </div>
-                                        <div class="precision-bar-bg">
-                                            <div class="precision-bar-fill" id="bar-cat-gestion" style="width: 0%; background: #E96151;"></div>
-                                        </div>
-                                    </div>
-                                    <div class="precision-bar-container">
-                                        <div class="precision-info">
-                                            <span>📋 Procedimientos y Condiciones</span>
-                                            <span id="stat-cat-proc">0 / 3</span>
-                                        </div>
-                                        <div class="precision-bar-bg">
-                                            <div class="precision-bar-fill" id="bar-cat-proc" style="width: 0%; background: #FF9955;"></div>
-                                        </div>
-                                    </div>
-                                    <div class="precision-bar-container">
-                                        <div class="precision-info">
-                                            <span>💻 Uso de Sistemas</span>
-                                            <span id="stat-cat-sistemas">0 / 2</span>
-                                        </div>
-                                        <div class="precision-bar-bg">
-                                            <div class="precision-bar-fill" id="bar-cat-sistemas" style="width: 0%; background: #FF6600;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Gráfico 2: Resultados de precisión por actividad -->
-                            <div class="chart-card">
-                                <div class="chart-title">
-                                    <span>🎯 Precisión Promedio por Actividad</span>
-                                    <span style="font-size: 12px; color: var(--text-muted);">Efectividad</span>
-                                </div>
-                                <div style="margin-top: 15px;" id="chart-precision-list">
-                                    <!-- Dinámico -->
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Módulo 3: Feedback con aspectos a mejorar -->
-                        <div class="feedback-card">
-                            <h4>💡 Diagnóstico y Plan de Acción Operativo</h4>
-                            <p id="feedback-text">Complete al menos una actividad para generar el análisis automatizado de fortalezas, oportunidades de mejora y recomendaciones.</p>
-                        </div>
-
-                        <!-- Historial en Tabla -->
                         <div class="card-container" style="margin-top: 25px;">
                             <h3>📋 Historial Detallado de Registros (En Vivo desde Google Sheet)</h3>
                             <table>
@@ -1090,8 +887,7 @@
                                        <th>🏆 Clasificación</th>
                                    </tr>
                                </thead>
-                               <tbody id="tabla-resultados-body">
-                               </tbody>
+                               <tbody id="tabla-resultados-body"></tbody>
                             </table>
                         </div>
                     </div>
@@ -1260,7 +1056,7 @@
                         pregunta: "Paso 6: Cliente accede al plan pero quiere solo 6 cuotas. ¿Qué le explicás?",
                         opciones: [
                             { texto: "A) Que no le podemos dar ese plazo y que tiene que pagar 1 x 1 las cuotas", correcta: false },
-                            { texto: "B) Que no le podemos dar ese plazo, pero puede adelantar cuotas si dispone del dinero.", correcta: true },
+                            { texto: "B) Que não le podemos dar ese plazo, pero puede adelantar cuotas si dispone del dinero.", correcta: true },
                             { texto: "C) Que a modo excepcional le brindamos 6 cuotas.", correcta: false }
                         ],
                         justificacion: "Ante una negativa al requerimiento del cliente, intentá ofrecer una solución alterna en el momento."
@@ -1416,21 +1212,21 @@
 
         let casoActivoIdx = 0;
         let pasoActivoIdx = 0;
-        let puntajeAct3Actual = 0;
-
+        let puntajeAct3Actual = 100;
         let idxCondicionPaso = 0;
         let aciertosTotalesPasoAPaso = 0;
-
         const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbzGklIx6MbIpgkohFNyEGFGxgZ7GpRZPdc_LnN9KbbnXozzqIoqciGMc_YKOCcAXow/exec";
 
         window.addEventListener('DOMContentLoaded', () => {
             const selectAsesor = document.getElementById('advisor-name-select');
-            listaAsesores.sort().forEach(nombre => {
-                let opt = document.createElement('option');
-                opt.value = nombre;
-                opt.textContent = nombre;
-                selectAsesor.appendChild(opt);
-            });
+            if(selectAsesor) {
+                listaAsesores.sort().forEach(nombre => {
+                    let opt = document.createElement('option');
+                    opt.value = nombre;
+                    opt.textContent = nombre;
+                    selectAsesor.appendChild(opt);
+                });
+            }
         });
 
         let usuarioActual = "";
@@ -1450,7 +1246,6 @@
 
             usuarioActual = nombre;
             document.getElementById('display-user').innerText = usuarioActual;
-            
             document.getElementById('login-screen').classList.remove('active');
             document.getElementById('main-app').classList.add('active');
             sincronizarResultadosRemotos();
@@ -1459,7 +1254,6 @@
         function cambiarSeccion(seccion, elementoMenu) {
             document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
             document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-
             if(elementoMenu) elementoMenu.classList.add('active');
 
             if(seccion === 'dashboard') {
@@ -1486,20 +1280,6 @@
                 titulo.innerText = "🎧 CALIDAD DE LA GESTIÓN - Actividades";
                 grid.innerHTML = `
                     <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-activity-1', '🎧 Actividad 1: Auditá la gestión')">
-                            <div class="card-title" style="color: #E96151; font-size: 20px;">🎧 Actividad 1: Auditá la gestión</div>
-                            <div class="card-desc" style="color: var(--text-main);">Evaluación interactiva de cumplimiento de procesos sobre auditoría de audios reales.</div>
-                        </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-act-1" class="status-pill status-pending">Pendiente</span></div>
-                    </div>
-                    <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-activity-2', '💬 Actividad 2: ¿Qué responderías?')">
-                            <div class="card-title" style="color: #E96151; font-size: 20px;">💬 Actividad 2: ¿Qué responderías?</div>
-                            <div class="card-desc" style="color: var(--text-main);">Casos hipotéticos orientados a la reconducción de objeciones hacia la cobranza efectiva.</div>
-                        </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-act-2" class="status-pill status-pending">Pendiente</span></div>
-                    </div>
-                    <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-activity-3', '🔀 Actividad 3: Elegí el camino correcto')">
                             <div class="card-title" style="color: #E96151; font-size: 20px;">🔀 Actividad 3: Elegí el camino correcto</div>
                             <div class="card-desc" style="color: var(--text-main);">Resolución secuencial de casos prácticos con múltiples escenarios.</div>
@@ -1511,20 +1291,6 @@
                 titulo.innerText = "📋 PROCEDIMIENTOS Y CONDICIONES GENERALES - Actividades";
                 grid.innerHTML = `
                     <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-proc-1', '📋 Herramientas de cobranza')">
-                            <div class="card-title" style="color: #FF9955; font-size: 20px;">📋 Actividad 1: Herramientas de cobranza</div>
-                            <div class="card-desc" style="color: var(--text-main);">Multiple choice sobre condiciones generales y herramientas de cobranza.</div>
-                        </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-proc-1" class="status-pill status-pending">Pendiente</span></div>
-                    </div>
-                    <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-proc-2', '🛡️ Validación de Identidad')">
-                            <div class="card-title" style="color: #FF9955; font-size: 20px;">🛡️ Actividad 2: Validación de Identidad</div>
-                            <div class="card-desc" style="color: var(--text-main);">Evaluación de verdadero o falso sobre los protocolos de validación de identidad.</div>
-                        </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-proc-2" class="status-pill status-pending">Pendiente</span></div>
-                    </div>
-                    <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="iniciarPlanillaPasoAPaso()">
                             <div class="card-title" style="color: #FF9955; font-size: 20px;">📊 Actividad 3: Planes de Pago (Paso a Paso)</div>
                             <div class="card-desc" style="color: var(--text-main);">Planilla interactiva condición por condición con arrastre de tarjetas.</div>
@@ -1532,46 +1298,22 @@
                         <div class="activity-status-badge"><span>Estado:</span><span id="badge-proc-3" class="status-pill status-pending">Pendiente</span></div>
                     </div>
                 `;
-            } else if(cat === 'sistemas') {
-                titulo.innerText = "💻 USO DE SISTEMAS - Actividades";
-                grid.innerHTML = `
-                    <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-sistemas-1', '🔍 Investigá al cliente')">
-                            <div class="card-title" style="color: #FF6600; font-size: 20px;">🔍 Actividad 1: Investigá al cliente</div>
-                            <div class="card-desc" style="color: var(--text-main);">Búsqueda y extracción de datos básicos del cliente en los sistemas operativos.</div>
-                        </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-sys-1" class="status-pill status-pending">Pendiente</span></div>
-                    </div>
-                    <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-sistemas-2', '⚙️ Planes de pago')">
-                            <div class="card-title" style="color: #FF6600; font-size: 20px;">⚙️ Actividad 2: Planes de pago (Plan V - Plan M)</div>
-                            <div class="card-desc" style="color: var(--text-main);">Ordenamiento secuencial del paso a paso para simular planes de pago en sistemas.</div>
-                        </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-sys-2" class="status-pill status-pending">Pendiente</span></div>
-                    </div>
-                `;
             }
-
             document.getElementById('sec-actividades-gestion').style.display = 'block';
             document.getElementById('page-title').innerText = '📂 Catálogo de Actividades';
-            actualizarBadgesActividades();
         }
 
         function abrirSeccionUnica(seccionId, titulo) {
             document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
             document.getElementById(seccionId).style.display = 'block';
             document.getElementById('page-title').innerText = titulo;
-
-            if(seccionId === 'sec-activity-3') {
-                volverASelectorCasos();
-            }
+            if(seccionId === 'sec-activity-3') volverASelectorCasos();
         }
 
         function iniciarCasoAct3(idx) {
             casoActivoIdx = idx;
             pasoActivoIdx = 0;
             puntajeAct3Actual = 100;
-
             document.getElementById('act3-selector-casos').style.display = 'none';
             document.getElementById('act3-caso-activo-container').style.display = 'block';
             document.getElementById('feedback-act3-container').style.display = 'none';
@@ -1584,7 +1326,6 @@
                     ${caso.productosYMora}
                 </div>
             `;
-
             renderizarPasoAct3();
         }
 
@@ -1606,11 +1347,7 @@
             `;
 
             paso.opciones.forEach((opt, oIdx) => {
-                html += `
-                    <button class="btn-galicia" style="text-align: left; background: var(--white); color: var(--text-main); border: 2px solid var(--border-color); box-shadow:none; font-weight: normal; padding: 12px 16px;" onclick="seleccionarOpcionAct3(${oIdx})">
-                        ${opt.texto}
-                    </button>
-                `;
+                html += `<button class="btn-galicia" style="text-align: left; background: var(--white); color: var(--text-main); border: 2px solid var(--border-color); box-shadow:none; font-weight: normal; padding: 12px 16px;" onclick="seleccionarOpcionAct3(${oIdx})">${opt.texto}</button>`;
             });
 
             html += `</div><div id="justificacion-box" style="margin-top: 15px; display: none;"></div></div>`;
@@ -1635,9 +1372,7 @@
                 }
             });
 
-            if(!esCorrecta) {
-                puntajeAct3Actual = Math.max(puntajeAct3Actual - 20, 20);
-            }
+            if(!esCorrecta) puntajeAct3Actual = Math.max(puntajeAct3Actual - 20, 20);
 
             let justBox = document.getElementById('justificacion-box');
             justBox.style.display = 'block';
@@ -1656,22 +1391,17 @@
                 renderizarPasoAct3();
             } else {
                 registrarResultado(`Actividad 3: Elegí el camino correcto (${caso.titulo.split(':')[0]})`, puntajeAct3Actual);
-
                 document.getElementById('act3-steps-container').innerHTML = `
                     <div style="text-align: center; padding: 25px;">
                         <h3 style="color: var(--success); margin-bottom: 10px;">🎉 ¡Caso Finalizado con Éxito!</h3>
                         <p style="color: var(--text-muted); font-size: 14px;">Puntaje obtenido en este caso: <b>${puntajeAct3Actual} / 100 pts</b></p>
                     </div>
                 `;
-
-                document.getElementById('feedback-act3-content').innerHTML = `
-                    ✨ Resolviste correctamente el caso práctico. El puntaje de <b>${puntajeAct3Actual} pts</b> se ha registrado correctamente en la plataforma y enviado a Google Sheet.
-                `;
+                document.getElementById('feedback-act3-content').innerHTML = `✨ Resolviste correctamente el caso práctico. Puntaje registrado: <b>${puntajeAct3Actual} pts</b>.`;
                 document.getElementById('feedback-act3-container').style.display = 'block';
             }
         }
 
-        // Lógica de Planilla Condición por Condición (Paso a Paso con validación flexible para tarjetas idénticas)
         function iniciarPlanillaPasoAPaso() {
             abrirSeccionUnica('sec-proc-3', '📊 Actividad: Planes de Pago (Paso a Paso)');
             idxCondicionPaso = 0;
@@ -1711,52 +1441,15 @@
             let bancoBox = document.getElementById('banco-tarjetas-condicion');
             bancoBox.innerHTML = "";
             tarjetasFila.forEach((t, i) => {
-                bancoBox.innerHTML += `
-                    <div class="tarjeta-arrastrable" draggable="true" id="tarjeta_paso_${i}" data-plan-correcto="${t.plan}" data-texto-contenido="${t.texto.trim()}" ondragstart="empezarArrastre(event)">
-                        ${t.texto}
-                    </div>
-                `;
+                bancoBox.innerHTML += `<div class="tarjeta-arrastrable" draggable="true" id="tarjeta_paso_${i}" data-plan-correcto="${t.plan}" data-texto-contenido="${t.texto.trim()}" ondragstart="empezarArrastre(event)">${t.texto}</div>`;
             });
         }
 
-        function empezarArrastre(e) {
-            e.dataTransfer.setData('text/plain', e.target.id);
-        }
-
-        function permitirSoltar(e) {
-            e.preventDefault();
-            let dropZone = e.target.closest('.drop-zone') || e.target.closest('#banco-tarjetas-condicion');
-            if(dropZone) dropZone.classList.add('drag-over');
-        }
-
-        function quitarEfectoHover(e) {
-            let dropZone = e.target.closest('.drop-zone') || e.target.closest('#banco-tarjetas-condicion');
-            if(dropZone) dropZone.classList.remove('drag-over');
-        }
-
-        function soltarEnCeldaPaso(e) {
-            e.preventDefault();
-            let dropZone = e.target.closest('.drop-zone');
-            if(dropZone) dropZone.classList.remove('drag-over');
-
-            let tarjetaId = e.dataTransfer.getData('text/plain');
-            let tarjetaEl = document.getElementById(tarjetaId);
-            if(tarjetaEl) {
-                dropZone.appendChild(tarjetaEl);
-            }
-        }
-
-        function soltarEnBanco(e) {
-            e.preventDefault();
-            let bancoBox = document.getElementById('banco-tarjetas-condicion');
-            bancoBox.classList.remove('drag-over');
-
-            let tarjetaId = e.dataTransfer.getData('text/plain');
-            let tarjetaEl = document.getElementById(tarjetaId);
-            if(tarjetaEl) {
-                bancoBox.appendChild(tarjetaEl);
-            }
-        }
+        function empezarArrastre(e) { e.dataTransfer.setData('text/plain', e.target.id); }
+        function permitirSoltar(e) { e.preventDefault(); e.target.closest('.drop-zone')?.classList.add('drag-over'); }
+        function quitarEfectoHover(e) { e.target.closest('.drop-zone')?.classList.remove('drag-over'); }
+        function soltarEnCeldaPaso(e) { e.preventDefault(); e.target.closest('.drop-zone')?.appendChild(document.getElementById(e.dataTransfer.getData('text/plain'))); }
+        function soltarEnBanco(e) { e.preventDefault(); document.getElementById('banco-tarjetas-condicion').appendChild(document.getElementById(e.dataTransfer.getData('text/plain'))); }
 
         function validarCondicionPasoAPaso() {
             let zonas = [
@@ -1766,32 +1459,25 @@
             ];
 
             let totalEnZonas = 0;
-            zonas.forEach(z => {
-                totalEnZonas += document.getElementById(z.id).querySelectorAll('.tarjeta-arrastrable').length;
-            });
+            zonas.forEach(z => { totalEnZonas += document.getElementById(z.id).querySelectorAll('.tarjeta-arrastrable').length; });
 
             if(totalEnZonas < 3) {
-                alert("⚠️ Por favor coloque las 3 tarjetas en sus respectivas columnas antes de validar.");
+                alert("⚠️ Por favor coloque las 3 tarjetas antes de validar.");
                 return;
             }
 
-            // Recopilar todos los textos de esta condición para ver si son idénticos en los 3 planes
             let todasLasTarjetas = [];
             zonas.forEach(z => {
-                let zonaEl = document.getElementById(z.id);
-                zonaEl.querySelectorAll('.tarjeta-arrastrable').forEach(t => {
+                document.getElementById(z.id).querySelectorAll('.tarjeta-arrastrable').forEach(t => {
                     todasLasTarjetas.push(t.getAttribute('data-texto-contenido'));
                 });
             });
 
-            // Si todas las tarjetas de la fila son exactamente iguales (ej. - Obligatoria), cualquier colocación es correcta
             let sonTodasIguales = todasLasTarjetas.every(txt => txt === todasLasTarjetas[0]);
-
             let aciertosFila = 0;
+
             zonas.forEach(z => {
-                let zonaEl = document.getElementById(z.id);
-                let tarjetas = zonaEl.querySelectorAll('.tarjeta-arrastrable');
-                tarjetas.forEach(t => {
+                document.getElementById(z.id).querySelectorAll('.tarjeta-arrastrable').forEach(t => {
                     let planCorrecto = t.getAttribute('data-plan-correcto');
                     if(sonTodasIguales || planCorrecto === z.planEsperado) {
                         aciertosFila++;
@@ -1824,180 +1510,67 @@
             } else {
                 let puntaje = Math.round((aciertosTotalesPasoAPaso / matrizPlanillaData.length) * 100);
                 registrarResultado("Actividad 3: Planes de Pago (Paso a Paso)", puntaje);
-
                 document.getElementById('banco-tarjetas-condicion').parentElement.style.display = 'none';
                 document.getElementById('tabla-fila-activa-body').parentElement.parentElement.style.display = 'none';
                 document.getElementById('btn-siguiente-cond').style.display = 'none';
                 document.getElementById('cond-titulo-activo').innerText = "¡Actividad Completa!";
                 document.getElementById('cond-status-text').innerText = `Puntaje final: ${puntaje}/100 pts`;
-
-                document.getElementById('feedback-planespago-content').innerHTML = `
-                    🎉 <b>¡Felicitaciones!</b> Completaste la actividad de Planes de Pago paso a paso.<br>
-                    • Aciertos: ${aciertosTotalesPasoAPaso} de ${matrizPlanillaData.length} condiciones.<br>
-                    • Puntaje final: <b>${puntaje} / 100 pts</b>.<br>
-                    El registro fue enviado exitosamente a la plataforma y Google Sheet.
-                `;
+                document.getElementById('feedback-planespago-content').innerHTML = `🎉 <b>¡Felicitaciones!</b> Puntaje final: <b>${puntaje} / 100 pts</b>.`;
                 document.getElementById('feedback-planespago-container').style.display = 'block';
-                alert(`🎉 Actividad finalizada con éxito. Puntaje: ${puntaje}/100`);
             }
         }
 
-        function actualizarBadgesActividades() {
-            let regsAsesor = registrosGlobales.filter(r => r.asesor === usuarioActual);
-
-            const mapBadges = [
-                { id: 'badge-act-1', key: 'Auditá' },
-                { id: 'badge-act-2', key: 'responderías' },
-                { id: 'badge-act-3', key: 'camino' },
-                { id: 'badge-proc-1', key: 'Herramientas de cobranza' },
-                { id: 'badge-proc-2', key: 'Validación de Identidad' },
-                { id: 'badge-proc-3', key: 'Paso a Paso' },
-                { id: 'badge-sys-1', key: 'Investigá' },
-                { id: 'badge-sys-2', key: 'Planes de pago' }
-            ];
-
-            mapBadges.forEach(b => {
-                let el = document.getElementById(b.id);
-                if(el) {
-                    let completada = regsAsesor.some(r => r.actividad.includes(b.key));
-                    el.innerText = completada ? "Completado" : "Pendiente";
-                    el.className = completada ? "status-pill status-completed" : "status-pill status-pending";
-                }
-            });
-        }
-
-        function actualizarProgresosDashboard() {
-            let regsAsesor = registrosGlobales.filter(r => r.asesor === usuarioActual);
-
-            let gestionComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino")).length, 3);
-            let procComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad") || r.actividad.includes("Paso a Paso")).length, 3);
-            let sysComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Investigá") || r.actividad.includes("Planes de pago")).length, 2);
-
-            let pctGestion = Math.round((gestionComp / 3) * 100);
-            let pctProc = Math.round((procComp / 3) * 100);
-            let pctSys = Math.round((sysComp / 2) * 100);
-
-            document.getElementById('val-gestion-txt').innerText = `${pctGestion}%`;
-            document.getElementById('val-gestion-det').innerText = `${gestionComp} / 3 Actividades`;
-            document.getElementById('bar-gestion').style.width = `${pctGestion}%`;
-
-            document.getElementById('val-proc-txt').innerText = `${pctProc}%`;
-            document.getElementById('val-proc-det').innerText = `${procComp} / 3 Actividades`;
-            document.getElementById('bar-proc').style.width = `${pctProc}%`;
-
-            document.getElementById('val-sistemas-txt').innerText = `${pctSys}%`;
-            document.getElementById('val-sistemas-det').innerText = `${sysComp} / 2 Actividades`;
-            document.getElementById('bar-sistemas').style.width = `${pctSys}%`;
-        }
-
-        function varCss(name) {
-            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-        }
-
-        function finalizarActividad1() { registrarResultado("Auditá la gestión", 100); alert("Evaluación registrada."); }
-        function finalizarActividad2() { registrarResultado("Actividad 2: ¿Qué responderías?", 100); alert("Evaluación registrada."); }
-        function finalizarProcMC() { registrarResultado("Herramientas de cobranza", 100); alert("Evaluación registrada."); }
-        function finalizarProcVF() { registrarResultado("Validación de Identidad", 100); alert("Evaluación registrada."); }
-        function finalizarSys1() { registrarResultado("Investigá al cliente", 100); alert("Evaluación registrada."); }
-        function finalizarSys2() { registrarResultado("Planes de pago", 100); alert("Evaluación registrada."); }
-
+        function varCss(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
         let registrosGlobales = [];
 
         function registrarResultado(actividadNombre, puntaje) {
-            let clasificacion = puntaje >= 90 ? "DOMINADO" : puntaje >= 65 ? "PRESENTA OPORTUNIDADES" : puntaje >= 40 ? "REQUIERE REFUERZO" : "CRÍTICO";
-            let claseCss = puntaje >= 90 ? "bg-dominado" : puntaje >= 65 ? "bg-oportunidades" : puntaje >= 40 ? "bg-refuerzo" : "bg-critico";
-
+            let clasificacion = puntaje >= 90 ? "DOMINADO" : puntaje >= 65 ? "PRESENTA OPORTUNIDADES" : "REQUIERE REFUERZO";
             let nuevoRegistro = {
                 fecha: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(),
                 asesor: usuarioActual,
                 actividad: actividadNombre,
                 puntaje: puntaje,
                 clasificacion: clasificacion,
-                claseCss: claseCss
+                claseCss: puntaje >= 90 ? "bg-dominado" : "bg-oportunidades"
             };
 
             if (urlGoogleSheet) {
-                fetch(urlGoogleSheet, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify(nuevoRegistro)
-                }).then(() => {
-                    setTimeout(sincronizarResultadosRemotos, 1500); 
-                }).catch(error => {
-                    console.error("Error al registrar:", error);
-                });
+                fetch(urlGoogleSheet, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(nuevoRegistro) })
+                .then(() => setTimeout(sincronizarResultadosRemotos, 1500));
             }
         }
 
         function sincronizarResultadosRemotos() {
             if(!urlGoogleSheet) return;
-            
-            fetch(urlGoogleSheet)
-                .then(response => response.json())
-                .then(data => {
-                    registrosGlobales = data; 
-                    
-                    let asesoresParticipantes = [...new Set(registrosGlobales.map(r => r.asesor))];
-                    let select = document.getElementById('filter-advisor');
-                    let valorActual = select.value;
-                    
+            fetch(urlGoogleSheet).then(r => r.json()).then(data => {
+                registrosGlobales = data;
+                let select = document.getElementById('filter-advisor');
+                if(select) {
+                    let val = select.value;
                     select.innerHTML = '<option value="ALL">🌟 Ver Resultados Globales (Todo el Equipo)</option>';
-                    asesoresParticipantes.forEach(a => { 
-                        select.innerHTML += `<option value="${a}">👤 ${a}</option>`; 
-                    });
-                    select.value = valorActual;
-
-                    renderizarAnalytics();
-                    actualizarProgresosDashboard();
-                })
-                .catch(error => {
-                    console.error("Error al sincronizar datos:", error);
-                });
+                    [...new Set(registrosGlobales.map(r => r.asesor))].forEach(a => { select.innerHTML += `<option value="${a}">👤 ${a}</option>`; });
+                    select.value = val;
+                }
+                renderizarAnalytics();
+            }).catch(e => console.log(e));
         }
 
         function renderizarAnalytics() {
-            let filtro = document.getElementById('filter-advisor').value;
+            let filtro = document.getElementById('filter-advisor')?.value || "ALL";
             let filtrados = filtro === "ALL" ? registrosGlobales : registrosGlobales.filter(r => r.asesor === filtro);
-
-            document.getElementById('kpi-total').innerText = filtrados.length;
-            if(filtrados.length === 0) {
-                document.getElementById('kpi-promedio').innerText = "0 pts";
-                document.getElementById('kpi-estado').innerText = "Sin datos";
-                return;
-            }
-
+            if(document.getElementById('kpi-total')) document.getElementById('kpi-total').innerText = filtrados.length;
+            if(filtrados.length === 0) return;
             let suma = filtrados.reduce((acc, curr) => acc + curr.puntaje, 0);
             let promedio = Math.round(suma / filtrados.length);
-            document.getElementById('kpi-promedio').innerText = promedio + " pts";
-            document.getElementById('kpi-estado').innerText = promedio >= 90 ? "🏆 DOMINADO" : promedio >= 65 ? "⚠️ OPORTUNIDADES" : "🚨 REFUERZO";
-
-            let gestionCount = Math.min(filtrados.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino")).length, 3);
-            let procCount = Math.min(filtrados.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad") || r.actividad.includes("Paso a Paso")).length, 3);
-            let sysCount = Math.min(filtrados.filter(r => r.actividad.includes("Investigá") || r.actividad.includes("Planes de pago")).length, 2);
-
-            document.getElementById('stat-cat-gestion').innerText = `${gestionCount} / 3`;
-            document.getElementById('bar-cat-gestion').style.width = `${Math.min((gestionCount/3)*100, 100)}%`;
-
-            document.getElementById('stat-cat-proc').innerText = `${procCount} / 3`;
-            document.getElementById('bar-cat-proc').style.width = `${Math.min((procCount/3)*100, 100)}%`;
-
-            document.getElementById('stat-cat-sistemas').innerText = `${sysCount} / 2`;
-            document.getElementById('bar-cat-sistemas').style.width = `${Math.min((sysCount/2)*100, 100)}%`;
-
+            if(document.getElementById('kpi-promedio')) document.getElementById('kpi-promedio').innerText = promedio + " pts";
+            
             let tbody = document.getElementById('tabla-resultados-body');
-            tbody.innerHTML = "";
-            filtrados.forEach(r => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${r.fecha}</td>
-                        <td><b>${r.asesor}</b></td>
-                        <td>${r.actividad}</td>
-                        <td><b>${r.puntaje} pts</b></td>
-                        <td><span class="badge ${r.claseCss}">${r.clasificacion}</span></td>
-                    </tr>
-                `;
-            });
+            if(tbody) {
+                tbody.innerHTML = "";
+                filtrados.forEach(r => {
+                    tbody.innerHTML += `<tr><td>${r.fecha}</td><td><b>${r.asesor}</b></td><td>${r.actividad}</td><td><b>${r.puntaje} pts</b></td><td><span class="badge ${r.claseCss}">${r.clasificacion}</span></td></tr>`;
+                });
+            }
         }
     </script>
 </body>
