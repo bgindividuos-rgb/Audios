@@ -832,13 +832,12 @@
                         </div>
                     </div>
 
-                    <!-- ACTIVIDAD 3: ELEGÍ EL CAMINO CORRECTO (CALIDAD - MODULAR CON CASOS) -->
+                    <!-- ACTIVIDAD 3: ELEGÍ EL CAMINO CORRECTO (CALIDAD) -->
                     <div id="sec-activity-3" class="section-view" style="display: none;">
                         <div class="card-container">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('gestion')">⬅ Volver a Actividades</button>
                             <h2>🔀 Actividad 3: Elegí el camino correcto</h2>
                             
-                            <!-- Selector de Casos -->
                             <div id="act3-selector-casos" style="margin-top: 15px;">
                                 <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 14px;">🎯 Seleccioná el caso que deseás resolver:</p>
                                 <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -848,11 +847,10 @@
                                 </div>
                             </div>
 
-                            <!-- Contenedor del Caso Activo -->
                             <div id="act3-caso-activo-container" style="display: none; margin-top: 20px;">
-                                <button class="btn-galicia" style="width: auto; padding: 6px 14px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="volverASelectorCasos()">⬅️ Cambiar de Caso</button>
+                                <button class="btn-galicia" style="width: auto; padding: 6px 14px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="volverASelectorCasos()">⬅️️ Cambiar de Caso</button>
                                 
-                                <div class="audio-info-card" id="act3-caso-info" style="margin-bottom:20px;"></div>
+                                <div class="audio-info-card" id="act3-caso-info" style="margin-bottom:20px; background: #FFF3EB; padding: 18px; border-radius: 12px; border: 1px solid #FFD0B5; line-height: 1.6;"></div>
                                 
                                 <div id="act3-steps-container"></div>
 
@@ -900,12 +898,12 @@
                         </div>
                     </div>
 
-                    <!-- NUEVA ACTIVIDAD PROCEDIMIENTOS ACT 3: PLANES DE PAGO PASO A PASO CONDICIÓN POR CONDICIÓN -->
+                    <!-- PROCEDIMIENTOS ACT 3: PLANES DE PAGO PASO A PASO -->
                     <div id="sec-proc-3" class="section-view" style="display: none;">
                         <div class="card-container" style="max-width: 1300px; margin: 0 auto;">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('proc')">⬅️ Volver a Actividades</button>
                             <h2>📊 Actividad: Planes de Pago (Paso a Paso)</h2>
-                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Analizá la condición actual y arrastrá las tarjetas en la columna correspondiente. Al validar, se habilitará la siguiente condición.</p>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Analizá la condición actual y arrastrá las tarjetas en la columna correspondiente. Si los planes comparten la misma condición, cualquier ubicación será correcta.</p>
                             
                             <!-- Indicador de Progreso Condición -->
                             <div style="display: flex; justify-content: space-between; align-items: center; background: #FFF3EB; padding: 12px 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #FFD0B5;">
@@ -974,7 +972,7 @@
                     <!-- SISTEMAS ACT 2: PLANES DE PAGO -->
                     <div id="sec-sistemas-2" class="section-view" style="display: none;">
                         <div class="card-container">
-                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('sistemas')">⬅ Volver a Actividades</button>
+                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('sistemas')">⬅️ Volver a Actividades</button>
                             <h2>⚙️ Planes de pago (Plan V y Plan M)</h2>
                             <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Ordená el paso a paso a seguir en cada plan de pagos para realizar la simulación.</p>
                             
@@ -1195,6 +1193,231 @@
             }
         ];
 
+        const casosAct3Data = [
+            {
+                titulo: "Caso 1: Cliente con intenciones de pago, pero baja de ingresos",
+                consigna: "Elegí qué decisiones tomarías para el siguiente cliente:",
+                productosYMora: `
+                    <b>Productos y días de mora:</b><br>
+                    • Visa $2.268.000 pago mínimo / $8.563.124 pago total - 70 días de mora<br>
+                    • Master $485.260 pago mínimo / $1.843.235 pago total - 15 días de mora<br>
+                    • Préstamo Personal $1.420.536 - 8 días de mora<br>
+                    <i>Manifiesta poder abonar una parte de la deuda, ya pagó los otros 2 préstamos que debía pero no llega a cancelar todo.</i>
+                `,
+                pasos: [
+                    {
+                        pregunta: "Paso 1: ¿Qué haces primero?",
+                        opciones: [
+                            { texto: "A) Proponer Plan V + Plan M.", correcta: false },
+                            { texto: "B) Indagar motivo de atraso y capacidad de pago actual.", correcta: true },
+                            { texto: "C) Proponer refinanciación de todos los productos.", correcta: false },
+                            { texto: "D) Mencionar consecuencias de no abonar.", correcta: false }
+                        ],
+                        justificacion: "Antes de bajar una propuesta, debemos de conocer la situación del cliente para analizar qué alternativa se adapta mejor."
+                    },
+                    {
+                        pregunta: "Paso 2: Cliente responde que se quedó sin unos trabajos, está buscando nuevos clientes. ¿Qué necesitas conocer para negociar?",
+                        opciones: [
+                            { texto: "A) Como trabaja y cada cuanto tiene ingresos.", correcta: true },
+                            { texto: "B) Si cobra fondo o seguro de desempleo.", correcta: false },
+                            { texto: "C) Si recibe ayuda familiar.", correcta: false },
+                            { texto: "D) Si tiene algo en venta.", correcta: false },
+                            { texto: "E) Si tiene los números de cobranzas para llamar cuando pueda pagar.", correcta: false }
+                        ],
+                        justificacion: "Es importante determinar los ingresos actuales para entender cuáles son sus posibilidades hoy."
+                    },
+                    {
+                        pregunta: "Paso 3: Cliente menciona que trabaja independiente y todos los viernes sus clientes le abonan, pero perdió unos clientes importantes y disminuyó su ingreso anterior. ¿Cómo seguís?",
+                        opciones: [
+                            { texto: "A) Propuesta de plan de pagos.", correcta: false },
+                            { texto: "B) Propuesta de promesa de pago.", correcta: true },
+                            { texto: "C) Indagar sobre capacidad de pago actual sobre los productos que tiene", correcta: false },
+                            { texto: "D) Pedirle que cuando cobre a principio de mes llame para dar fecha de pago.", correcta: false }
+                        ],
+                        justificacion: "Ya que posee ingresos en un corto plazo, avanzo con la primera opción en la negociación."
+                    },
+                    {
+                        pregunta: "Paso 4: Cliente indica poder destinar $1.000.000 cada viernes a la cuenta para que se vaya cancelando todo. Actualmente en los 3 préstamos debe destinar 3.500.000 ¿Qué proponés?",
+                        opciones: [
+                            { texto: "A) Promesa de pago por mínimo anterior de visa.", correcta: false },
+                            { texto: "B) Plan V + Plan M + Promesa por el préstamo", correcta: false },
+                            { texto: "C) Refinanciación UVA de todos los productos.", correcta: true },
+                            { texto: "D) Refinanciación solo por tarjetas.", correcta: false }
+                        ],
+                        justificacion: "Debido a los montos de sus productos, conviene unificar la deuda y ofrecer algo que se adapte realmente a su capacidad de pago actual."
+                    },
+                    {
+                        pregunta: "Paso 5: Cliente no quiere refinanciación por el interés. ¿Qué mencionás?",
+                        opciones: [
+                            { texto: "A) Que haga un pago parcial para disminuir días de mora.", correcta: false },
+                            { texto: "B) Que esperamos a que junte la plata para cancelar.", correcta: false },
+                            { texto: "C) Que si no cancela hoy va a pasar a legales.", correcta: false },
+                            { texto: "D) Comparás tasas de interés de productos.", correcta: true }
+                        ],
+                        justificacion: "Siempre que un cliente desestima una propuesta por alguna condición, es importante rebatir objeciones con comparaciones/información beneficiosa para convencerlo."
+                    },
+                    {
+                        pregunta: "Paso 6: Cliente accede al plan pero quiere solo 6 cuotas. ¿Qué le explicás?",
+                        opciones: [
+                            { texto: "A) Que no le podemos dar ese plazo y que tiene que pagar 1 x 1 las cuotas", correcta: false },
+                            { texto: "B) Que no le podemos dar ese plazo, pero puede adelantar cuotas si dispone del dinero.", correcta: true },
+                            { texto: "C) Que a modo excepcional le brindamos 6 cuotas.", correcta: false }
+                        ],
+                        justificacion: "Ante una negativa al requerimiento del cliente, intentá ofrecer una solución alterna en el momento."
+                    },
+                    {
+                        pregunta: "Paso 7: ¿Cómo finalizás la gestión?",
+                        opciones: [
+                            { texto: "A) Realizo validación de identidad + lectura de contrato.", correcta: false },
+                            { texto: "B) Indico que cargo el plan en sistemas y me despido.", correcta: false },
+                            { texto: "C) Realizo validación de identidad + lectura de contrato + validación de datos", correcta: true },
+                            { texto: "D) Doy de alta el plan y valido datos.", correcta: false }
+                        ],
+                        justificacion: "Cierre operativo completo conforme a protocolo."
+                    }
+                ]
+            },
+            {
+                titulo: "Caso 2: Cliente quiere quita de intereses",
+                consigna: "Elegí qué decisiones tomarías para el siguiente cliente:",
+                productosYMora: `
+                    <b>Productos y días de mora:</b><br>
+                    • Visa $4.150.000 pago mínimo / $9.800.000 pago total - 95 días de mora<br>
+                    • Préstamo Personal $0 (al día)<br>
+                    <i>Atiende molesto, dice que no puede pagar el mínimo ya que no tiene trabajo y exige quita de interés.</i>
+                `,
+                pasos: [
+                    {
+                        pregunta: "Paso 1: ¿Qué haces primero?",
+                        opciones: [
+                            { texto: "A) Indico que no nos permite realizar quita de interés, que espere el pase a legales para que se lo hagan.", correcta: false },
+                            { texto: "B) Derivo a atención al cliente para que reclame intereses.", correcta: false },
+                            { texto: "C) Empatizo con la situación e indago sobre situación actual.", correcta: true }
+                        ],
+                        justificacion: "Ante enojos/molestias del cliente, recordá mencionar alguna frase empática que transmita entendimiento y cercanía, sin perder nuestro foco principal."
+                    },
+                    {
+                        pregunta: "Paso 2: Menciona que hace changas en la semana, pero no llega a cubrir mínimo de la tarjeta. ¿Qué información necesitás?",
+                        opciones: [
+                            { texto: "A) Conocer cada cuánto percibe ingresos actualmente", correcta: false },
+                            { texto: "B) Saber si cuenta con otros ingresos en su domicilio", correcta: false },
+                            { texto: "C) Saber de qué son las changas y cuánto cobra por ellas", correcta: false },
+                            { texto: "D) Todas son correctas.", correcta: true }
+                        ],
+                        justificacion: "Si un cliente se encuentra sin trabajo, es importante conocer a fondo la situación de ingresos para poder negociar con todos ellos una alternativa de pago."
+                    },
+                    {
+                        pregunta: "Paso 3: Cobra semanalmente $350.000 aproximadamente, y comparte los gastos con su esposa que es bancaria. ¿Qué me conviene ofrecer?",
+                        opciones: [
+                            { texto: "A) Insistir para que realice el pago mínimo", correcta: false },
+                            { texto: "B) Ofrecer Plan V", correcta: true },
+                            { texto: "C) Ofrecer Refinanciación para dar de baja la tarjeta porque no tiene ingreso estable.", correcta: false }
+                        ],
+                        justificacion: "Con sus ingresos actuales, teniendo en cuenta que su esposa ayuda con los pagos y tiene trabajo estable, optemos por el plan prioritario."
+                    },
+                    {
+                        pregunta: "Paso 4: Al ofrecer el plan, se enoja por incrementar aún más los intereses con la TNA del 41%. ¿Cómo manejo la situación?",
+                        opciones: [
+                            { texto: "A) Explico que los intereses ya generados fueron por falta de pago y no es posible quitarlos, pero sí congelar eso generando un plan con una TNA más baja", correcta: false },
+                            { texto: "B) Comparo TNA por plan y TNA por mora: por mora es mayor", correcta: false },
+                            { texto: "C) Menciono más beneficios del plan, como la precancelación y la posibilidad de continuar con la cuenta activa", correcta: false },
+                            { texto: "D) Todas son correctas", correcta: true }
+                        ],
+                        justificacion: "Siempre que el cliente presenta una objeción a la propuesta, es importante mencionar aspectos positivos para convencerlo de que es la mejor opción."
+                    },
+                    {
+                        pregunta: "Paso 5: Acepta el plan, pero quiere que le den de baja la tarjeta para no generar más gastos administrativos. ¿Cómo resolvés?",
+                        opciones: [
+                            { texto: "A) Ofrezco refinanciación para que se dé de baja la tarjeta.", correcta: false },
+                            { texto: "B) Indico que no va a poder dar de baja la tarjeta y sigo con el cierre del plan.", correcta: false },
+                            { texto: "C) Le indico que, tras el alta del plan, solicite la baja con atención al cliente.", correcta: true }
+                        ],
+                        justificacion: "Una vez que el plan está activo, el cliente puede solicitar la baja y seguir recibiendo mensualmente el resumen para abonar las cuotas que resten a futuro."
+                    },
+                    {
+                        pregunta: "Paso 6: ¿Cómo finalizás la gestión?",
+                        opciones: [
+                            { texto: "A) Realizo validación de identidad + lectura de contrato.", correcta: false },
+                            { texto: "B) Indico que cargo el plan en sistemas y me despido.", correcta: false },
+                            { texto: "C) Realizo validación de identidad + lectura de contrato + validación de datos", correcta: true },
+                            { texto: "D) Doy de alta el plan y valido datos.", correcta: false }
+                        ],
+                        justificacion: "Cierre operativo completo conforme a protocolo."
+                    }
+                ]
+            },
+            {
+                titulo: "Caso 3: Cliente dice que ya arregló antes",
+                consigna: "Elegí qué decisiones tomarías para el siguiente cliente:",
+                productosYMora: `
+                    <b>Productos y días de mora:</b><br>
+                    • Préstamo de refinanciación: $2.632.000 - 117 días de mora<br>
+                    <i>Atiende enojado, dice que antes de llamar revisemos que ya tiene un acuerdo.</i>
+                `,
+                pasos: [
+                    {
+                        pregunta: "Paso 1: ¿Qué haces primero?",
+                        opciones: [
+                            { texto: "A) Indicarle que la mora continúa y por eso lo llamamos", correcta: false },
+                            { texto: "B) Reviso que acordó en la gestión anterior para retomar esa información", correcta: true },
+                            { texto: "C) Pido disculpas y me despido.", correcta: false }
+                        ],
+                        justificacion: "Es importante darle continuidad cuando el cliente ya viene con gestiones previas, para retomar información y evitar volver a preguntar datos que ya dio."
+                    },
+                    {
+                        pregunta: "Paso 2: Al revisar las gestiones, vemos que había pactado realizar un pago parcial sobre la refinanciación de $200.000 a fin del mes anterior. ¿Cómo sigo?",
+                        opciones: [
+                            { texto: "A) Le indico que visualizo esa información y corroboro si el pago se realizó", correcta: false },
+                            { texto: "B) Le pido un nuevo pago para esta semana", correcta: false },
+                            { texto: "C) Corroboro el pago y vuelvo a consultar sobre la situación actual.", correcta: true }
+                        ],
+                        justificacion: "Cuando el cliente acordó pagos, es importante revisar dentro del sistema si ya impactó y desde ahí continuar con la actualización de la cuenta y la posibilidad de nuevas alternativas."
+                    },
+                    {
+                        pregunta: "Paso 3: Dentro de las gestiones anteriores la clienta informó que se le rompió el auto y por eso no llegó a cubrir las cuotas del plan, ya que estuvo destinando su sueldo a esos gastos. ¿Qué información necesitarías para volver a negociar?",
+                        opciones: [
+                            { texto: "A) Conocer si sigue teniendo el mismo ingreso mensual.", correcta: false },
+                            { texto: "B) Consulto si ya terminó con los gastos del arreglo del auto.", correcta: false },
+                            { texto: "C) Consultar por otros ingresos.", correcta: false },
+                            { texto: "D) Todas son correctas", correcta: true }
+                        ],
+                        justificacion: "Es importante traer nuevamente a la conversación lo informado con anterioridad, para generar nuevas consultas en base a eso."
+                    },
+                    {
+                        pregunta: "Paso 4: La clienta menciona que los gastos ya se cubrieron, por lo que puede comenzar a abonar cuando cobre su sueldo con normalidad. ¿Qué proponés?",
+                        opciones: [
+                            { texto: "A) Volver a refinanciar la deuda", correcta: false },
+                            { texto: "B) Ofrezco promesa de pago por todo lo vencido", correcta: true },
+                            { texto: "C) Indico que cuando pueda realizar el pago se comunique", correcta: false }
+                        ],
+                        justificacion: "Al disponer de ingresos para volver a abonar, es importante comenzar con la negociación escalonada completa."
+                    },
+                    {
+                        pregunta: "Paso 5: Rechaza la alternativa porque no llega a cubrir todas las cuotas vencidas. ¿Cómo seguís?",
+                        opciones: [
+                            { texto: "A) Ofrezco cubrir al menos 1 cuota vencida para empezar a disminuir días de mora.", correcta: true },
+                            { texto: "B) Ofrezco refinanciación CABA.", correcta: false },
+                            { texto: "C) Le pido que cuando junte todo el dinero nos llame para pagar.", correcta: false }
+                        ],
+                        justificacion: "Al no poder cancelar la totalidad de lo vencido, es importante conducir a que el cliente realice pagos significativos en la cuenta, sobre todo reduciendo días de mora."
+                    },
+                    {
+                        pregunta: "Paso 6: Cliente accede a ese pago, ¿cómo finalizás la gestión?",
+                        opciones: [
+                            { texto: "A) Registro la promesa de pago e informo que se comunique el mes próximo", correcta: false },
+                            { texto: "B) Registro la promesa y solicito nuevo contacto posterior a ese pago, para informar próximos", correcta: true },
+                            { texto: "C) Registro la promesa y valido datos.", correcta: false }
+                        ],
+                        justificacion: "Cuando un cliente realiza un pago parcial, se registra como promesa de pago y se solicita un futuro contacto posterior a ese pago, para poder darle continuidad al resto de la deuda."
+                    }
+                ]
+            }
+        ];
+
+        let casoActivoIdx = 0;
+        let pasoActivoIdx = 0;
+        let puntajeAct3Actual = 0;
+
         let idxCondicionPaso = 0;
         let aciertosTotalesPasoAPaso = 0;
 
@@ -1338,9 +1561,117 @@
             document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
             document.getElementById(seccionId).style.display = 'block';
             document.getElementById('page-title').innerText = titulo;
+
+            if(seccionId === 'sec-activity-3') {
+                volverASelectorCasos();
+            }
         }
 
-        // Lógica de Planilla Condición por Condición (Paso a Paso)
+        function iniciarCasoAct3(idx) {
+            casoActivoIdx = idx;
+            pasoActivoIdx = 0;
+            puntajeAct3Actual = 100;
+
+            document.getElementById('act3-selector-casos').style.display = 'none';
+            document.getElementById('act3-caso-activo-container').style.display = 'block';
+            document.getElementById('feedback-act3-container').style.display = 'none';
+
+            let caso = casosAct3Data[casoActivoIdx];
+            document.getElementById('act3-caso-info').innerHTML = `
+                <h3 style="color: var(--galicia-orange); margin-bottom: 8px; font-size: 16px;">📂 ${caso.titulo}</h3>
+                <p style="margin-bottom: 8px; font-size: 13px;"><b>Consigna:</b> ${caso.consigna}</p>
+                <div style="background: var(--white); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 13px;">
+                    ${caso.productosYMora}
+                </div>
+            `;
+
+            renderizarPasoAct3();
+        }
+
+        function volverASelectorCasos() {
+            document.getElementById('act3-selector-casos').style.display = 'block';
+            document.getElementById('act3-caso-activo-container').style.display = 'none';
+        }
+
+        function renderizarPasoAct3() {
+            let caso = casosAct3Data[casoActivoIdx];
+            let paso = caso.pasos[pasoActivoIdx];
+            let container = document.getElementById('act3-steps-container');
+
+            let html = `
+                <div style="background: var(--neutral-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 12px; font-weight: 700; color: var(--galicia-orange); margin-bottom: 6px;">PASO ${pasoActivoIdx + 1} DE ${caso.pasos.length}</div>
+                    <h4 style="color: var(--text-main); margin-bottom: 15px; font-size: 15px;">${paso.pregunta}</h4>
+                    <div style="display: flex; flex-direction: column; gap: 10px;" id="opciones-paso-box">
+            `;
+
+            paso.opciones.forEach((opt, oIdx) => {
+                html += `
+                    <button class="btn-galicia" style="text-align: left; background: var(--white); color: var(--text-main); border: 2px solid var(--border-color); box-shadow:none; font-weight: normal; padding: 12px 16px;" onclick="seleccionarOpcionAct3(${oIdx})">
+                        ${opt.texto}
+                    </button>
+                `;
+            });
+
+            html += `</div><div id="justificacion-box" style="margin-top: 15px; display: none;"></div></div>`;
+            container.innerHTML = html;
+        }
+
+        function seleccionarOpcionAct3(opcionIdx) {
+            let caso = casosAct3Data[casoActivoIdx];
+            let paso = caso.pasos[pasoActivoIdx];
+            let esCorrecta = paso.opciones[opcionIdx].correcta;
+
+            let botones = document.querySelectorAll('#opciones-paso-box button');
+            botones.forEach((btn, idx) => {
+                btn.disabled = true;
+                if(paso.opciones[idx].correcta) {
+                    btn.style.borderColor = varCss('--success');
+                    btn.style.backgroundColor = '#D1FAE5';
+                    btn.style.fontWeight = 'bold';
+                } else if(idx === opcionIdx && !esCorrecta) {
+                    btn.style.borderColor = varCss('--danger');
+                    btn.style.backgroundColor = '#FEE2E2';
+                }
+            });
+
+            if(!esCorrecta) {
+                puntajeAct3Actual = Math.max(puntajeAct3Actual - 20, 20);
+            }
+
+            let justBox = document.getElementById('justificacion-box');
+            justBox.style.display = 'block';
+            justBox.innerHTML = `
+                <div style="background: #FFF3EB; border-left: 4px solid var(--galicia-orange); padding: 12px; border-radius: 8px; font-size: 13px; color: var(--text-main);">
+                    <b>💡 Justificación:</b> ${paso.justificacion}
+                </div>
+                <button class="btn-galicia" style="margin-top: 12px; width: auto; padding: 10px 20px;" onclick="avanzarSiguientePasoAct3()">Continuar al siguiente paso ➡️</button>
+            `;
+        }
+
+        function avanzarSiguientePasoAct3() {
+            let caso = casosAct3Data[casoActivoIdx];
+            pasoActivoIdx++;
+            if(pasoActivoIdx < caso.pasos.length) {
+                renderizarPasoAct3();
+            } else {
+                registrarResultado(`Actividad 3: Elegí el camino correcto (${caso.titulo.split(':')[0]})`, puntajeAct3Actual);
+
+                document.getElementById('act3-steps-container').innerHTML = `
+                    <div style="text-align: center; padding: 25px;">
+                        <h3 style="color: var(--success); margin-bottom: 10px;">🎉 ¡Caso Finalizado con Éxito!</h3>
+                        <p style="color: var(--text-muted); font-size: 14px;">Puntaje obtenido en este caso: <b>${puntajeAct3Actual} / 100 pts</b></p>
+                    </div>
+                `;
+
+                document.getElementById('feedback-act3-content').innerHTML = `
+                    ✨ Resolviste correctamente el caso práctico. El puntaje de <b>${puntajeAct3Actual} pts</b> se ha registrado correctamente en la plataforma y enviado a Google Sheet.
+                `;
+                document.getElementById('feedback-act3-container').style.display = 'block';
+            }
+        }
+
+        // Lógica de Planilla Condición por Condición (Paso a Paso con validación flexible para tarjetas idénticas)
         function iniciarPlanillaPasoAPaso() {
             abrirSeccionUnica('sec-proc-3', '📊 Actividad: Planes de Pago (Paso a Paso)');
             idxCondicionPaso = 0;
@@ -1361,7 +1692,6 @@
             document.getElementById('btn-validar-cond').style.display = 'block';
             document.getElementById('btn-siguiente-cond').style.display = 'none';
 
-            // Dibujar la fila de la tabla para esta condición
             let tbody = document.getElementById('tabla-fila-activa-body');
             tbody.innerHTML = `
                 <tr>
@@ -1372,7 +1702,6 @@
                 </tr>
             `;
 
-            // Crear las 3 tarjetas de esta condición y mezclarlas
             let tarjetasFila = [
                 { texto: filaData.refinanciacion, plan: 'ref' },
                 { texto: filaData.planv, plan: 'planv' },
@@ -1383,7 +1712,7 @@
             bancoBox.innerHTML = "";
             tarjetasFila.forEach((t, i) => {
                 bancoBox.innerHTML += `
-                    <div class="tarjeta-arrastrable" draggable="true" id="tarjeta_paso_${i}" data-plan-correcto="${t.plan}" ondragstart="empezarArrastre(event)">
+                    <div class="tarjeta-arrastrable" draggable="true" id="tarjeta_paso_${i}" data-plan-correcto="${t.plan}" data-texto-contenido="${t.texto.trim()}" ondragstart="empezarArrastre(event)">
                         ${t.texto}
                     </div>
                 `;
@@ -1446,13 +1775,25 @@
                 return;
             }
 
+            // Recopilar todos los textos de esta condición para ver si son idénticos en los 3 planes
+            let todasLasTarjetas = [];
+            zonas.forEach(z => {
+                let zonaEl = document.getElementById(z.id);
+                zonaEl.querySelectorAll('.tarjeta-arrastrable').forEach(t => {
+                    todasLasTarjetas.push(t.getAttribute('data-texto-contenido'));
+                });
+            });
+
+            // Si todas las tarjetas de la fila son exactamente iguales (ej. - Obligatoria), cualquier colocación es correcta
+            let sonTodasIguales = todasLasTarjetas.every(txt => txt === todasLasTarjetas[0]);
+
             let aciertosFila = 0;
             zonas.forEach(z => {
                 let zonaEl = document.getElementById(z.id);
                 let tarjetas = zonaEl.querySelectorAll('.tarjeta-arrastrable');
                 tarjetas.forEach(t => {
                     let planCorrecto = t.getAttribute('data-plan-correcto');
-                    if(planCorrecto === z.planEsperado) {
+                    if(sonTodasIguales || planCorrecto === z.planEsperado) {
                         aciertosFila++;
                         t.style.borderColor = varCss('--success');
                         t.style.backgroundColor = '#D1FAE5';
@@ -1468,7 +1809,7 @@
                 document.getElementById('cond-status-text').innerText = "✅ ¡Condición correcta!";
                 document.getElementById('cond-status-text').style.color = varCss('--success');
             } else {
-                document.getElementById('cond-status-text').innerText = `❌ ${aciertosFila}/3 correctas en esta condición.`;
+                document.getElementById('cond-status-text').innerText = `❌ Revisa la ubicación de las tarjetas.`;
                 document.getElementById('cond-status-text').style.color = varCss('--danger');
             }
 
@@ -1481,7 +1822,6 @@
             if(idxCondicionPaso < matrizPlanillaData.length) {
                 renderizarFilaCondicionPaso();
             } else {
-                // Finalizó toda la actividad
                 let puntaje = Math.round((aciertosTotalesPasoAPaso / matrizPlanillaData.length) * 100);
                 registrarResultado("Actividad 3: Planes de Pago (Paso a Paso)", puntaje);
 
@@ -1554,7 +1894,6 @@
             return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
         }
 
-        // Finalizar Actividades Restantes
         function finalizarActividad1() { registrarResultado("Auditá la gestión", 100); alert("Evaluación registrada."); }
         function finalizarActividad2() { registrarResultado("Actividad 2: ¿Qué responderías?", 100); alert("Evaluación registrada."); }
         function finalizarProcMC() { registrarResultado("Herramientas de cobranza", 100); alert("Evaluación registrada."); }
