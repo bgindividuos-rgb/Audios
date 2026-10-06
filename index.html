@@ -1068,7 +1068,7 @@
                     <!-- SISTEMAS ACT 1: INVESTIGÁ AL CLIENTE -->
                     <div id="sec-sistemas-1" class="section-view" style="display: none;">
                         <div class="card-container">
-                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('sistemas')">⬅️ Volver a Actividades</button>
+                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('sistemas')">⬅️️ Volver a Actividades</button>
                             <h2>🔍 Investigá al cliente</h2>
                             <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Realizá la búsqueda de la información requerida en sistemas y contestá cada punto según los bloques correspondientes.</p>
                             
@@ -1677,7 +1677,7 @@
             {
                 categoria: "📋 Preguntas de refi",
                 preguntas: [
-                    "¿Tiene una refinanciación activa? ¿En UVA o tasa fija?",
+                    "¿Tiene una refinanciación activa? ¿In UVA o tasa fija?",
                     "¿La refinanciación es un préstamo? Justificar",
                     "¿Cuándo se dió de alta?",
                     "¿Qué productos están incluidos?",
@@ -1749,7 +1749,7 @@
         let idxCondicionPaso = 0;
         let aciertosTotalesPasoAPaso = 0;
 
-        const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbzGklIx6MbIpgkohFNyEGFGxgZ7GpRZPdc_LnN9KbbnXozzqIoqciGMc_YKOCcAXow/exec";
+        const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbx9rn8vurkac7cMhUsbtUXcI2Bg-GK6geUTUaThopFSLnHkcHw2ALyCi6GbUTyYPTE/exec";
 
         function mezclarArray(array) {
             let originalConIndices = array.map((texto, originalIdx) => ({ texto, originalIdx }));
@@ -2136,14 +2136,12 @@
         }
 
         function seleccionarOpcionCasoAct3(pIdx, oIdx, esCorrecta) {
-            // Si el paso ya fue completado exitosamente, no hacer nada
             if(respuestasCasoAct3Usuario[pIdx] === true) return;
 
             let sel = document.getElementById(`act3_opt_${pIdx}_${oIdx}`);
             let justificacionDiv = document.getElementById(`act3_justificacion_${pIdx}`);
 
             if(esCorrecta) {
-                // Marcar todas las opciones de este paso como inhabilitadas y resaltar la correcta
                 casoActualAct3.pasos[pIdx].opciones.forEach((opt, idx) => {
                     let card = document.getElementById(`act3_opt_${pIdx}_${idx}`);
                     card.style.pointerEvents = 'none';
@@ -2160,10 +2158,18 @@
                     if(pIdx + 1 < casoActualAct3.pasos.length) {
                         document.getElementById(`act3_step_box_${pIdx + 1}`).style.display = 'block';
                     } else {
-                        // Fin del caso
                         let totalPasos = casoActualAct3.pasos.length;
                         let puntaje = Math.round((aciertosCasoAct3 / totalPasos) * 100);
-                        registrarResultado(`Actividad 3: ${casoActualAct3.titulo}`, puntaje);
+                        
+                        let detallePasosCaso = {};
+                        casoActualAct3.pasos.forEach((p, index) => {
+                            detallePasosCaso[`Paso_${index+1}`] = {
+                                enunciado: p.titulo,
+                                resultado: respuestasCasoAct3Usuario[index] ? "Correcto" : "Incorrecto"
+                            };
+                        });
+
+                        registrarResultado(`Actividad 3: ${casoActualAct3.titulo}`, puntaje, detallePasosCaso);
 
                         document.getElementById('feedback-act3-content').innerHTML = `🎉 <b>¡Caso completado con éxito!</b><br>• Puntaje obtenido: ${puntaje}/100 pts.<br>• Todas las decisiones operativas fueron correctas.`;
                         document.getElementById('feedback-act3-container').style.display = 'block';
@@ -2171,7 +2177,6 @@
                     }
                 }, 400);
             } else {
-                // Marcar en rojo para permitir reintentar y cambiar la selección
                 sel.classList.add('selected-incorrect');
                 setTimeout(() => {
                     sel.classList.remove('selected-incorrect');
@@ -2240,7 +2245,7 @@
             zonas.forEach(z => { totalEnZonas += document.getElementById(z.id).querySelectorAll('.tarjeta-arrastrable').length; });
 
             if(totalEnZonas < 3) {
-                alert("⚠️ Por favor coloca las 3 tarjetas antes de validar.");
+                alert("⚠️️ Por favor coloca las 3 tarjetas antes de validar.");
                 return;
             }
 
@@ -2277,7 +2282,15 @@
                 renderizarFilaCondicionPaso();
             } else {
                 let puntaje = Math.round((aciertosTotalesPasoAPaso / matrizPlanillaData.length) * 100);
-                registrarResultado("Procedimientos: Planes de Pago (Paso a Paso)", puntaje);
+                
+                let detallePlanillaArrastre = {
+                    condicionesEvaluadas: matrizPlanillaData.map(m => m.condicion),
+                    aciertosTotales: aciertosTotalesPasoAPaso,
+                    totalCondiciones: matrizPlanillaData.length
+                };
+
+                registrarResultado("Procedimientos: Planes de Pago (Paso a Paso)", puntaje, detallePlanillaArrastre);
+
                 document.getElementById('banco-tarjetas-condicion').parentElement.style.display = 'none';
                 document.getElementById('tabla-fila-activa-body').parentElement.parentElement.style.display = 'none';
                 document.getElementById('btn-siguiente-cond').style.display = 'none';
@@ -2292,6 +2305,8 @@
         function finalizarActividad1() {
             let audioSeleccionado = document.getElementById('audio-select').value;
             let claveActiva = audioSeleccionado === 'audio_1' ? claveAudio1 : (audioSeleccionado === 'audio_2' ? claveAudio2 : claveAudio3);
+            let detalleItems = {};
+            let aciertos = 0;
 
             for(let i = 0; i < 12; i++) {
                 let status = document.getElementById(`item_status_${i}`).value;
@@ -2301,22 +2316,24 @@
                     document.getElementById(`item_obs_${i}`).focus();
                     return;
                 }
-            }
+                detalleItems[`Item_${i+1}`] = {
+                    respuestaAsesor: status,
+                    esperado: claveActiva[i],
+                    observacion: obs,
+                    esCorrecto: status === claveActiva[i]
+                };
+                if(status === claveActiva[i]) aciertos++;
 
-            let aciertos = 0;
-            for(let i = 0; i < 12; i++) {
-                let status = document.getElementById(`item_status_${i}`).value;
                 let iconoSpan = document.getElementById(`feedback_icon_${i}`);
                 iconoSpan.style.display = "inline-block";
                 if(status === claveActiva[i]) {
-                    aciertos++;
                     iconoSpan.innerHTML = "✔"; iconoSpan.className = "feedback-icon icon-correct";
                 } else {
                     iconoSpan.innerHTML = "✖"; iconoSpan.className = "feedback-icon icon-incorrect";
                 }
             }
             let puntaje = Math.round((aciertos / 12) * 100);
-            registrarResultado("Auditá la gestión", puntaje);
+            registrarResultado("Auditá la gestión", puntaje, detalleItems);
 
             let feedbackHtml = audioSeleccionado === 'audio_1' ? 
                 `<b>✅ Evaluación procesada con éxito.</b> Puntaje obtenido: ${puntaje}/100 pts.<br>Se marcaron con tilde verde las respuestas correctas según la auditoría operativa.` :
@@ -2329,18 +2346,21 @@
 
         // Finalizar Actividad 2 Calidad
         function finalizarActividad2() {
+            let detalleCasos = {};
             let respondidos = 0, validas = 0;
+
             for(let i = 0; i < casosActividad2.length; i++) {
                 let txt = document.getElementById(`act2_resp_${i}`).value.trim();
+                detalleCasos[`Caso_${i+1}`] = {
+                    planteo: casosActividad2[i],
+                    respuestaEscrita: txt
+                };
                 if(txt.length > 0) {
                     respondidos++;
                     let l = txt.toLowerCase();
-                    let esEvasivo = l.includes("no sé") || l.includes("no se") || l.includes("nose") || l.length < 10;
+                    let esEvasivo = l.includes("no sé") || l.includes("no se") || l.length < 10;
                     let contieneOrientacion = l.includes("entiend") || l.includes("solución") || l.includes("resolver") || l.includes("pago") || l.includes("cuota") || l.includes("plan") || l.includes("ayudar") || l.includes("veamos") || l.includes("prop") || l.includes("hoy") || l.includes("cuenta");
-
-                    if(!esEvasivo && contieneOrientacion) {
-                        validas++;
-                    }
+                    if(!esEvasivo && contieneOrientacion) validas++;
                 }
             }
             if(respondidos < casosActividad2.length) { 
@@ -2348,35 +2368,37 @@
                 return; 
             }
             let puntaje = Math.round((validas / casosActividad2.length) * 100);
-            registrarResultado("Actividad 2: ¿Qué responderías?", puntaje);
+            registrarResultado("Actividad 2: ¿Qué responderías?", puntaje, detalleCasos);
             alert(`🎉 Actividad 2 finalizada. Puntaje: ${puntaje}/100`);
         }
 
         // Finalizar Procedimientos Act 1 (MC)
         function finalizarProcMC() {
+            let detalleMC = {};
             let aciertos = 0;
+
             preguntasProcMC.forEach((p, pIdx) => {
                 if(p.tipo === 'multiple') {
                     let checkboxes = document.querySelectorAll(`input[name="proc_mc_${pIdx}"]:checked`);
                     let marcados = Array.from(checkboxes).map(cb => parseInt(cb.value));
-                    let correctas = p.correctas;
-                    let esIgual = marcados.length === correctas.length && marcados.every(v => correctas.includes(v));
+                    detalleMC[`Pregunta_${pIdx+1}`] = { enunciado: p.enunciado, seleccionadas: marcados, correctas: p.correctas };
+                    let esIgual = marcados.length === p.correctas.length && marcados.every(v => p.correctas.includes(v));
                     if(esIgual) aciertos++;
-                    correctas.forEach(cIdx => {
+                    p.correctas.forEach(cIdx => {
                         let icon = document.getElementById(`icon_mc_${pIdx}_${cIdx}`);
                         if(icon) { icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct"; icon.style.display = "inline"; }
                     });
                 } else {
                     let seleccionado = document.querySelector(`input[name="proc_mc_${pIdx}"]:checked`);
-                    if(seleccionado && parseInt(seleccionado.value) === p.correcta) {
-                        aciertos++;
-                    }
+                    let valSel = seleccionado ? parseInt(seleccionado.value) : null;
+                    detalleMC[`Pregunta_${pIdx+1}`] = { enunciado: p.enunciado, seleccionada: valSel, correcta: p.correcta };
+                    if(valSel === p.correcta) aciertos++;
                     let icon = document.getElementById(`icon_mc_${pIdx}_${p.correcta}`);
                     if(icon) { icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct"; icon.style.display = "inline"; }
                 }
             });
             let puntaje = Math.round((aciertos / preguntasProcMC.length) * 100);
-            registrarResultado("Herramientas de cobranza", puntaje);
+            registrarResultado("Herramientas de cobranza", puntaje, detalleMC);
             document.getElementById('feedback-procmc-content').innerHTML = `Se marcaron con tilde verde las respuestas correctas de cada enunciado.<br><b>⭐ Puntaje Final:</b> ${puntaje} / 100 pts`;
             document.getElementById('feedback-procmc-container').style.display = 'block';
             alert(`🎉 Herramientas de cobranza finalizada. Puntaje: ${puntaje}/100`);
@@ -2384,12 +2406,22 @@
 
         // Finalizar Procedimientos Act 2 (V/F)
         function finalizarProcVF() {
+            let detalleVF = {};
             let aciertos = 0;
+
             preguntasProcVF.forEach((p, pIdx) => {
                 let sel = document.querySelector(`input[name="proc_vf_${pIdx}"]:checked`);
+                let respuestaAsesor = sel ? sel.value : "Sin responder";
+                detalleVF[`Pregunta_${pIdx+1}`] = {
+                    enunciado: p.texto,
+                    respuestaAsesor: respuestaAsesor,
+                    respuestaEsperada: p.respuesta,
+                    esCorrecto: respuestaAsesor === p.respuesta
+                };
+
                 let icon = document.getElementById(`icon_vf_${pIdx}`);
                 icon.style.display = "inline-block";
-                if(sel && sel.value === p.respuesta) {
+                if(respuestaAsesor === p.respuesta) {
                     aciertos++;
                     icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct";
                 } else {
@@ -2397,7 +2429,7 @@
                 }
             });
             let puntaje = Math.round((aciertos / preguntasProcVF.length) * 100);
-            registrarResultado("Validación de Identidad", puntaje);
+            registrarResultado("Validación de Identidad", puntaje, detalleVF);
             alert(`🎉 Validación de Identidad finalizada. Puntaje: ${puntaje}/100`);
         }
 
@@ -2405,7 +2437,22 @@
         function finalizarSys1() {
             let clave = document.getElementById('sys-search-key').value.trim();
             if(!clave) { alert("⚠️ Por favor ingrese el documento o clave del cliente proporcionada por staff."); return; }
-            registrarResultado("Investigá al cliente", 100);
+
+            let detalleInvestigacion = { claveBusqueda: clave, respuestasBloques: {} };
+            let totalPreguntasSys1 = 0;
+            
+            bloquesSys1.forEach((b) => {
+                b.preguntas.forEach((p, pIdx) => {
+                    let respInput = document.getElementById(`sys1_resp_${totalPreguntasSys1}`);
+                    detalleInvestigacion.respuestasBloques[`Bloque_${b.categoria}_P_${pIdx+1}`] = {
+                        pregunta: p,
+                        respuestaAsesor: respInput ? respInput.value.trim() : ""
+                    };
+                    totalPreguntasSys1++;
+                });
+            });
+
+            registrarResultado("Investigá al cliente", 100, detalleInvestigacion);
             document.getElementById('feedback-sys1-content').innerHTML = `✅ Búsqueda procesada correctamente con clave/DU: <b>${clave}</b>. Actividad registrada con éxito.`;
             document.getElementById('feedback-sys1-container').style.display = 'block';
             alert("🎉 Actividad 'Investigá al cliente' registrada con éxito.");
@@ -2413,10 +2460,13 @@
 
         // Finalizar Sistemas Act 2 (Planes de Pago)
         function finalizarSys2() {
+            let detalleOrdenamiento = { planV: {}, planM: {} };
             let aciertosV = 0;
             pasosPlanVMezclados.forEach((item, idx) => {
                 let val = parseInt(document.getElementById(`orden_v_${idx}`).value);
                 let correctNum = item.originalIdx + 1;
+                detalleOrdenamiento.planV[`Paso_${idx+1}`] = { texto: item.texto, ordenAsesor: val, ordenCorrecto: correctNum };
+
                 let icon = document.getElementById(`feedback_v_${idx}`);
                 icon.style.display = "inline-block";
                 if(val === correctNum) {
@@ -2431,6 +2481,8 @@
             pasosPlanMMezclados.forEach((item, idx) => {
                 let val = parseInt(document.getElementById(`orden_m_${idx}`).value);
                 let correctNum = item.originalIdx + 1;
+                detalleOrdenamiento.planM[`Paso_${idx+1}`] = { texto: item.texto, ordenAsesor: val, ordenCorrecto: correctNum };
+
                 let icon = document.getElementById(`feedback_m_${idx}`);
                 icon.style.display = "inline-block";
                 if(val === correctNum) {
@@ -2445,13 +2497,13 @@
             let totalAciertos = aciertosV + aciertosM;
             let puntaje = Math.round((totalAciertos / totalPasos) * 100);
 
-            registrarResultado("Planes de pago", puntaje);
+            registrarResultado("Planes de pago", puntaje, detalleOrdenamiento);
             document.getElementById('feedback-sys2-content').innerHTML = `Ordenamiento verificado.<br>• Plan V: ${aciertosV}/${pasosPlanVOriginal.length} correctos<br>• Plan M: ${aciertosM}/${pasosPlanMOriginal.length} correctos<br><b>⭐ Puntaje Final:</b> ${puntaje}/100`;
             document.getElementById('feedback-sys2-container').style.display = 'block';
             alert(`🎉 Planes de pago finalizado. Puntaje: ${puntaje}/100`);
         }
 
-        function registrarResultado(actividadNombre, puntaje) {
+        function registrarResultado(actividadNombre, puntaje, detalleRespuestas = {}) {
             let clasificacion = puntaje >= 90 ? "DOMINADO" : puntaje >= 65 ? "PRESENTA OPORTUNIDADES" : puntaje >= 40 ? "REQUIERE REFUERZO" : "CRÍTICO";
             let claseCss = puntaje >= 90 ? "bg-dominado" : puntaje >= 65 ? "bg-oportunidades" : puntaje >= 40 ? "bg-refuerzo" : "bg-critico";
 
@@ -2461,7 +2513,8 @@
                 actividad: actividadNombre,
                 puntaje: puntaje,
                 clasificacion: clasificacion,
-                claseCss: claseCss
+                claseCss: claseCss,
+                detalleRespuestas: detalleRespuestas
             };
 
             registrosGlobales.push(nuevoRegistro);
@@ -2473,7 +2526,7 @@
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify(nuevoRegistro)
                 }).then(() => {
-                    console.log("Registrado en Google Sheet");
+                    console.log("Detalle 1x1 registrado en Google Sheet");
                     setTimeout(sincronizarResultadosRemotos, 1500); 
                 }).catch(error => {
                     console.error("Error al registrar:", error);
