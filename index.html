@@ -879,7 +879,7 @@
 
                             <div class="dashboard-card cat-card-proc" onclick="abrirCategoria('proc')">
                                 <div class="card-title">📋 PROCEDIMIENTOS Y CONDICIONES</div>
-                                <div class="card-desc">Herramientas de cobranza, validación de identidad y planilla interactiva de planes de pago.</div>
+                                <div class="card-desc">Herramientas de cobranza, validación de identidad y planilla interactiva completa de planes de pago.</div>
                             </div>
 
                             <div class="dashboard-card cat-card-gestion" onclick="abrirCategoria('gestion')">
@@ -956,13 +956,12 @@
                         </div>
                     </div>
 
-                    <!-- ACTIVIDAD 3: ELEGÍ EL CAMINO CORRECTO (CALIDAD - MODULAR CON CASOS Y REINTENTO EN ROJO) -->
+                    <!-- ACTIVIDAD 3: ELEGÍ EL CAMINO CORRECTO (CALIDAD) -->
                     <div id="sec-activity-3" class="section-view" style="display: none;">
                         <div class="card-container">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('gestion')">⬅️ Volver a Actividades</button>
                             <h2>🔀 Actividad 3: Elegí el camino correcto</h2>
                             
-                            <!-- Selector de Casos -->
                             <div id="act3-selector-casos" style="margin-top: 15px;">
                                 <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 14px;">🎯 Seleccioná el caso que deseás resolver:</p>
                                 <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -972,14 +971,10 @@
                                 </div>
                             </div>
 
-                            <!-- Contenedor del Caso Activo -->
                             <div id="act3-caso-activo-container" style="display: none; margin-top: 20px;">
                                 <button class="btn-galicia" style="width: auto; padding: 6px 14px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="volverASelectorCasos()">⬅️ Cambiar de Caso</button>
-                                
                                 <div class="audio-info-card" id="act3-caso-info" style="margin-bottom:20px;"></div>
-                                
                                 <div id="act3-steps-container"></div>
-
                                 <div id="feedback-act3-container" class="feedback-card" style="display:none;">
                                     <h4>💡 Resultado del Caso Práctico</h4>
                                     <div id="feedback-act3-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
@@ -1024,7 +1019,7 @@
                         </div>
                     </div>
 
-                    <!-- PROCEDIMIENTOS ACT 3: PLANES DE PAGO PASO A PASO (PLANILLA DE ARRASTRE) -->
+                    <!-- PROCEDIMIENTOS ACT 3: PLANES DE PAGO COMPLETO (PLANILLA DE ARRASTRE) -->
                     <div id="sec-proc-3" class="section-view" style="display: none;">
                         <div class="card-container" style="max-width: 1300px; margin: 0 auto;">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('proc')">⬅️ Volver a Actividades</button>
@@ -1032,7 +1027,7 @@
                             <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Analizá la condición actual y arrastrá las tarjetas en la columna correspondiente.</p>
                             
                             <div style="display: flex; justify-content: space-between; align-items: center; background: #FFF3EB; padding: 12px 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #FFD0B5;">
-                                <div><b>📌 Condición actual (<span id="cond-actual-idx">1</span> / <span id="cond-total-idx">4</span>):</b> <span id="cond-titulo-activo" style="color: var(--galicia-orange); font-weight: 700;">Productos que aplican</span></div>
+                                <div><b>📌 Condición actual (<span id="cond-actual-idx">1</span> / <span id="cond-total-idx">9</span>):</b> <span id="cond-titulo-activo" style="color: var(--galicia-orange); font-weight: 700;">Productos que aplican</span></div>
                                 <div id="cond-status-text" style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Pendiente de completar</div>
                             </div>
 
@@ -1068,7 +1063,7 @@
                     <!-- SISTEMAS ACT 1: INVESTIGÁ AL CLIENTE -->
                     <div id="sec-sistemas-1" class="section-view" style="display: none;">
                         <div class="card-container">
-                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('sistemas')">⬅️️ Volver a Actividades</button>
+                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('sistemas')">⬅️ Volver a Actividades</button>
                             <h2>🔍 Investigá al cliente</h2>
                             <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Realizá la búsqueda de la información requerida en sistemas y contestá cada punto según los bloques correspondientes.</p>
                             
@@ -1140,7 +1135,6 @@
                         <!-- Gráficos Estilo Referencia SaaS -->
                         <div class="analytics-grid">
                             
-                            <!-- Gráfico 1: Actividades completadas por categoría -->
                             <div class="chart-card">
                                 <div class="chart-title">
                                     <span>📂 Actividades Completadas por Categoría</span>
@@ -1177,26 +1171,21 @@
                                 </div>
                             </div>
 
-                            <!-- Gráfico 2: Resultados de precisión por actividad -->
                             <div class="chart-card">
                                 <div class="chart-title">
                                     <span>🎯 Precisión Promedio por Actividad</span>
                                     <span style="font-size: 12px; color: var(--text-muted);">Efectividad</span>
                                 </div>
-                                <div style="margin-top: 15px;" id="chart-precision-list">
-                                    <!-- Dinámico -->
-                                </div>
+                                <div style="margin-top: 15px;" id="chart-precision-list"></div>
                             </div>
 
                         </div>
 
-                        <!-- Módulo 3: Feedback con aspectos a mejorar -->
                         <div class="feedback-card">
                             <h4>💡 Diagnóstico y Plan de Acción Operativo</h4>
                             <p id="feedback-text">Complete al menos una actividad para generar el análisis automatizado de fortalezas, oportunidades de mejora y recomendaciones.</p>
                         </div>
 
-                        <!-- Historial en Tabla -->
                         <div class="card-container" style="margin-top: 25px;">
                             <h3>📋 Historial Detallado de Registros (En Vivo desde Google Sheet)</h3>
                             <table>
@@ -1294,11 +1283,10 @@
             'No voy a hacer parciales porque con eso solo pago intereses', 'Dejá que pase a un estudio jurídico, no me importa'
         ];
 
-        // Definición de los 3 Casos de la Actividad 3
         const casosActividad3Modular = [
             {
                 titulo: "Caso 1: Cliente con intenciones de pago, pero baja de ingresos",
-                contexto: "<b>Productos y días de mora:</b><br>• Visa $2.268.000 mín. / $8.563.124 tot. (70 días de mora)<br>• Master $485.260 mín. / $1.843.235 tot. (15 días de mora)<br>• Préstamo Personal $1.420.536 (8 días de mora)<br><i>💡 Contexto: Manifiesta poder abonar una parte, ya pagó los otros 2 préstamos que debía pero no llega a cancelar todo.</i>",
+                contexto: "<b>Productos y días de mora:</b><br>• Visa $2.268.000 mín. / $8.563.124 tot. (70 días de mora)<br>• Master $485.260 mín. / $1.843.235 tot. (15 días de mora)<br>• Préstamo Personal $1.420.536 (8 días de mora)",
                 pasos: [
                     {
                         titulo: "Paso 1: ¿Qué haces primero?",
@@ -1316,8 +1304,7 @@
                             { texto: "A- Como trabaja y cada cuanto tiene ingresos.", correcta: true },
                             { texto: "B- Si cobra fondo o seguro de desempleo.", correcta: false },
                             { texto: "C- Si recibe ayuda familiar.", correcta: false },
-                            { texto: "D- Si tiene algo en venta.", correcta: false },
-                            { texto: "E- Si tiene los números de cobranzas para llamar cuando pueda pagar.", correcta: false }
+                            { texto: "D- Si tiene algo en venta.", correcta: false }
                         ],
                         justificacion: "Es importante determinar los ingresos actuales para entender cuáles son sus posibilidades hoy."
                     },
@@ -1326,18 +1313,16 @@
                         opciones: [
                             { texto: "A- Propuesta de plan de pagos.", correcta: false },
                             { texto: "B- Propuesta de promesa de pago.", correcta: true },
-                            { texto: "C- Indagar sobre capacidad de pago actual sobre los productos que tiene", correcta: false },
-                            { texto: "D- Pedirle que cuando cobre a principio de mes llame para dar fecha de pago.", correcta: false }
+                            { texto: "C- Indagar sobre capacidad de pago actual sobre los productos que tiene", correcta: false }
                         ],
                         justificacion: "Ya que posee ingresos en un corto plazo, avanzo con la primera opción en la negociación."
                     },
                     {
-                        titulo: "Paso 4: Cliente indica poder destinar $1.000.000 cada viernes a la cuenta para que se vaya cancelando todo. Actualmente en los 3 préstamos debe destinar 3.500.000 ¿Qué proponés?",
+                        titulo: "Paso 4: Cliente indica poder destinar $1.000.000 cada viernes a la cuenta para que se vaya cancelando todo. ¿Qué proponés?",
                         opciones: [
                             { texto: "A- Promesa de pago por mínimo anterior de visa.", correcta: false },
                             { texto: "B- Plan V + Plan M + Promesa por el préstamo", correcta: false },
-                            { texto: "C- Refinanciación UVA de todos los productos.", correcta: true },
-                            { texto: "D- Refinanciación solo por tarjetas.", correcta: false }
+                            { texto: "C- Refinanciación UVA de todos los productos.", correcta: true }
                         ],
                         justificacion: "Debido a los montos de sus productos, conviene unificar la deuda y ofrecer algo que se adapte realmente a su capacidad de pago actual."
                     },
@@ -1346,15 +1331,14 @@
                         opciones: [
                             { texto: "A- Que haga un pago parcial para disminuir días de mora.", correcta: false },
                             { texto: "B- Que esperamos a que junte la plata para cancelar.", correcta: false },
-                            { texto: "C- Que si no cancela hoy va a pasar a legales.", correcta: false },
-                            { texto: "D- Comparás tasas de interés de productos.", correcta: true }
+                            { texto: "C- Comparás tasas de interés de productos.", correcta: true }
                         ],
-                        justificacion: "Siempre que un cliente desestima una propuesta por alguna condición, es importante rebatir objeciones con comparaciones/información beneficiosa para convencerlo."
+                        justificacion: "Siempre que un cliente desestima una propuesta por alguna condición, es importante rebatir objeciones con comparaciones/información beneficiosa."
                     },
                     {
                         titulo: "Paso 6: Cliente accede al plan pero quiere solo 6 cuotas. ¿Qué le explicás?",
                         opciones: [
-                            { texto: "A- Que no le podemos dar ese plazo y que tiene que pagar 1 x 1 las cuotas", correcta: false },
+                            { texto: "A- Que no le podemos dar ese plazo y que tiene que pagar 1 x 1", correcta: false },
                             { texto: "B- Que no le podemos dar ese plazo, pero puede adelantar cuotas si dispone del dinero.", correcta: true },
                             { texto: "C- Que a modo excepcional le brindamos 6 cuotas.", correcta: false }
                         ],
@@ -1364,9 +1348,7 @@
                         titulo: "Paso 7: ¿Cómo finalizás la gestión?",
                         opciones: [
                             { texto: "A- Realizo validación de identidad + lectura de contrato.", correcta: false },
-                            { texto: "B- Indico que cargo el plan en sistemas y me despido.", correcta: false },
-                            { texto: "C- Realizo validación de identidad + lectura de contrato + validación de datos", correcta: true },
-                            { texto: "D- Doy de alta el plan y valido datos.", correcta: false }
+                            { texto: "B- Realizo validación de identidad + lectura de contrato + validación de datos", correcta: true }
                         ],
                         justificacion: "Validación completa de identidad, lectura de contrato y revalidación de datos de contacto."
                     }
@@ -1374,62 +1356,53 @@
             },
             {
                 titulo: "Caso 2: Cliente quiere quita de intereses",
-                contexto: "<b>Productos y días de mora:</b><br>• Visa $4.150.000 mín. / $9.800.000 tot. (95 días de mora)<br>• Préstamo Personal $0 (al día)<br><i>💡 Contexto: Atiende molesto, dice que no puede pagar el mínimo ya que no tiene trabajo y exige quita de interés.</i>",
+                contexto: "<b>Productos y días de mora:</b><br>• Visa $4.150.000 mín. / $9.800.000 tot. (95 días de mora)<br>• Préstamo Personal $0 (al día)",
                 pasos: [
                     {
                         titulo: "Paso 1: ¿Qué haces primero?",
                         opciones: [
-                            { texto: "A- Indico que no nos permite realizar quita de interés, que espere el pase a legales para que se lo hagan.", correcta: false },
-                            { texto: "B- Derivo a atención al cliente para que reclame intereses.", correcta: false },
-                            { texto: "C- Empatizo con la situación e indago sobre situación actual.", correcta: true }
+                            { texto: "A- Indico que no nos permite realizar quita de interés.", correcta: false },
+                            { texto: "B- Empatizo con la situación e indago sobre situación actual.", correcta: true }
                         ],
-                        justificacion: "Ante enojos/molestias del cliente, recordá mencionar alguna frase empática que transmita entendimiento y cercanía, sin perder nuestro foco principal."
+                        justificacion: "Ante enojos/molestias del cliente, recordá mencionar alguna frase empática que transmita entendimiento y cercanía."
                     },
                     {
-                        titulo: "Paso 2: Menciona que hace changas en la semana, pero no llega a cubrir mínimo de la tarjeta. ¿Qué información necesitás?",
+                        titulo: "Paso 2: Menciona que hace changas en la semana, pero no llega a cubrir mínimo. ¿Qué información necesitás?",
                         opciones: [
                             { texto: "A- Conocer cada cuánto percibe ingresos actualmente", correcta: false },
-                            { texto: "B- Saber si cuenta con otros ingresos en su domicilio", correcta: false },
-                            { texto: "C- Saber de qué son las changas y cuánto cobra por ellas", correcta: false },
-                            { texto: "D- Todas son correctas.", correcta: true }
+                            { texto: "B- Todas son correctas.", correcta: true }
                         ],
-                        justificacion: "Si un cliente se encuentra sin trabajo, es importante conocer a fondo la situación de ingresos para poder negociar con todos ellos una alternativa de pago."
+                        justificacion: "Si un cliente se encuentra sin trabajo, es importante conocer a fondo la situación de ingresos para poder negociar."
                     },
                     {
-                        titulo: "Paso 3: Cobra semanalmente $350.000 aproximadamente, y comparte los gastos con su esposa que es bancaria. ¿Qué me conviene ofrecer?",
+                        titulo: "Paso 3: Cobra semanalmente $350.000 y comparte gastos con su esposa. ¿Qué me conviene ofrecer?",
                         opciones: [
                             { texto: "A- Insistir para que realice el pago mínimo", correcta: false },
-                            { texto: "B- Ofrecer Plan V", correcta: true },
-                            { texto: "C- Ofrecer Refinanciación para dar de baja la tarjeta porque no tiene ingreso estable.", correcta: false }
+                            { texto: "B- Ofrecer Plan V", correcta: true }
                         ],
-                        justificacion: "Con sus ingresos actuales, teniendo en cuenta que su esposa ayuda con los pagos y tiene trabajo estable, optemos por el plan prioritario."
+                        justificacion: "Con sus ingresos actuales, optemos por el plan prioritario."
                     },
                     {
-                        titulo: "Paso 4: Al ofrecer el plan, se enoja por incrementar aún más los intereses con la TNA del 41%. ¿Cómo manejo la situación?",
+                        titulo: "Paso 4: Al ofrecer el plan, se enoja por incrementar intereses con la TNA del 41%. ¿Cómo manejo la situación?",
                         opciones: [
-                            { texto: "A- Explico que los intereses ya generados fueron por falta de pago y no es posible quitarlos, pero sí congelar eso generando un plan con una TNA más baja", correcta: false },
-                            { texto: "B- Comparo TNA por plan y TNA por mora: por mora es mayor", correcta: false },
-                            { texto: "C- Menciono más beneficios del plan, como la precancelación y la posibilidad de continuar con la cuenta activa", correcta: false },
-                            { texto: "D- Todas son correctas", correcta: true }
+                            { texto: "A- Explico que los intereses ya generados fueron por falta de pago y no quita, pero sí congelar generando un plan con tasa menor", correcta: false },
+                            { texto: "B- Todas son correctas", correcta: true }
                         ],
-                        justificacion: "Siempre que el cliente presenta una objeción a la propuesta, es importante mencionar aspectos positivos para convencerlo de que es la mejor opción."
+                        justificacion: "Siempre que el cliente presenta una objeción, es importante mencionar aspectos positivos para convencerlo."
                     },
                     {
-                        titulo: "Paso 5: Acepta el plan, pero quiere que le den de baja la tarjeta para no generar más gastos administrativos. ¿Cómo resolvés?",
+                        titulo: "Paso 5: Acepta el plan, pero quiere dar de baja la tarjeta para no generar más gastos. ¿Cómo resolvés?",
                         opciones: [
-                            { texto: "A- Ofrezco refinanciación para que se dé de baja la tarjeta.", correcta: false },
-                            { texto: "B- Indico que no va a poder dar de baja la tarjeta y sigo con el cierre del plan.", correcta: false },
-                            { texto: "C- Le indico que, tras el alta del plan, solicite la baja con atención al cliente.", correcta: true }
+                            { texto: "A- Le indico que, tras el alta del plan, solicite la baja con atención al cliente.", correcta: true },
+                            { texto: "B- Indico que no va a poder dar de baja la tarjeta.", correcta: false }
                         ],
-                        justificacion: "Una vez que el plan está activo, el cliente puede solicitar la baja y seguir recibiendo mensualmente el resumen para abonar las cuotas que resten a futuro."
+                        justificacion: "Una vez activo el plan, el cliente puede solicitar la baja y seguir recibiendo el resumen para abonar cuotas."
                     },
                     {
                         titulo: "Paso 6: ¿Cómo finalizás la gestión?",
                         opciones: [
                             { texto: "A- Realizo validación de identidad + lectura de contrato.", correcta: false },
-                            { texto: "B- Indico que cargo el plan en sistemas y me despido.", correcta: false },
-                            { texto: "C- Realizo validación de identidad + lectura de contrato + validación de datos", correcta: true },
-                            { texto: "D- Doy de alta el plan y valido datos.", correcta: false }
+                            { texto: "B- Realizo validación de identidad + lectura de contrato + validación de datos", correcta: true }
                         ],
                         justificacion: "Cierre formal con validación de identidad, lectura de contrato y validación de datos."
                     }
@@ -1437,92 +1410,130 @@
             },
             {
                 titulo: "Caso 3: Cliente dice que ya arregló antes",
-                contexto: "<b>Productos y días de mora:</b><br>• Préstamo de refinanciación: $2.632.000 (117 días de mora)<br><i>💡 Contexto: Atiende enojado, dice que antes de llamar revisemos que ya tiene un acuerdo.</i>",
+                contexto: "<b>Productos y días de mora:</b><br>• Préstamo de refinanciación: $2.632.000 (117 días de mora)",
                 pasos: [
                     {
                         titulo: "Paso 1: ¿Qué haces primero?",
                         opciones: [
                             { texto: "A- Indicarle que la mora continúa y por eso lo llamamos", correcta: false },
-                            { texto: "B- Reviso qué acordó en la gestión anterior para retomar esa información", correcta: true },
-                            { texto: "C- Pido disculpas y me despido.", correcta: false }
+                            { texto: "B- Reviso qué acordó en la gestión anterior para retomar esa información", correcta: true }
                         ],
-                        justificacion: "Es importante darle continuidad cuando el cliente ya viene con gestiones previas, para retomar información y evitar volver a preguntar datos que ya dio."
+                        justificacion: "Es importante darle continuidad cuando el cliente ya viene con gestiones previas."
                     },
                     {
-                        titulo: "Paso 2: Al revisar las gestiones, vemos que había pactado realizar un pago parcial sobre la refinanciación de $200.000 a fin del mes anterior. ¿Cómo sigo?",
+                        titulo: "Paso 2: Vemos que había pactado un pago parcial de $200.000 a fin del mes anterior. ¿Cómo sigo?",
                         opciones: [
-                            { texto: "A- Le indico que visualizo esa información y corroboro si el pago se realizó", correcta: false },
-                            { texto: "B- Le pido un nuevo pago para esta semana", correcta: false },
-                            { texto: "C- Corroboro el pago y vuelvo a consultar sobre la situación actual.", correcta: true }
+                            { texto: "A- Le pido un nuevo pago para esta semana", correcta: false },
+                            { texto: "B- Corroboro el pago y vuelvo a consultar sobre la situación actual.", correcta: true }
                         ],
-                        justificacion: "Cuando el cliente acordó pagos, es importante revisar dentro del sistema si ya impactó y desde ahí continuar con la actualización de la cuenta y la posibilidad de nuevas alternativas."
+                        justificacion: "Corroboramos el pago y actualizamos la cuenta."
                     },
                     {
-                        titulo: "Paso 3: Dentro de las gestiones anteriores la clienta informó que se le rompió el auto y por eso no llegó a cubrir las cuotas del plan, ya que estuvo destinando su sueldo a esos gastos. ¿Qué información necesitarías para volver a negociar?",
+                        titulo: "Paso 3: Informó que se le rompió el auto y por eso no llegó. ¿Qué información necesitarías?",
                         opciones: [
-                            { texto: "A- Conocer si sigue teniendo el mismo ingreso mensual.", correcta: false },
-                            { texto: "B- Consulto si ya terminó con los gastos del arreglo del auto.", correcta: false },
-                            { texto: "C- Consultar por otros ingresos.", correcta: false },
-                            { texto: "D- Todas son correctas", correcta: true }
+                            { texto: "A- Consultar por otros ingresos.", correcta: false },
+                            { texto: "B- Todas son correctas", correcta: true }
                         ],
-                        justificacion: "Es importante traer nuevamente a la conversación lo informado con anterioridad, para generar nuevas consultas en base a eso."
+                        justificacion: "Es importante traer nuevamente a la conversación lo informado con anterioridad."
                     },
                     {
-                        titulo: "Paso 4: La clienta menciona que los gastos ya se cubrieron, por lo que puede comenzar a abonar cuando cobre su sueldo con normalidad. ¿Qué proponés?",
+                        titulo: "Paso 4: La clienta menciona que los gastos ya se cubrieron. ¿Qué proponés?",
                         opciones: [
                             { texto: "A- Volver a refinanciar la deuda", correcta: false },
-                            { texto: "B- Ofrezco promesa de pago por todo lo vencido", correcta: true },
-                            { texto: "C- Indico que cuando pueda realizar el pago se comunique", correcta: false }
+                            { texto: "B- Ofrezco promesa de pago por todo lo vencido", correcta: true }
                         ],
-                        justificacion: "Al disponer de ingresos para volver a abonar, es importante comenzar con la negociación escalonada completa."
+                        justificacion: "Al disponer de ingresos, comenzamos con la negociación."
                     },
                     {
                         titulo: "Paso 5: Rechaza la alternativa porque no llega a cubrir todas las cuotas vencidas. ¿Cómo seguís?",
                         opciones: [
                             { texto: "A- Ofrezco cubrir al menos 1 cuota vencida para empezar a disminuir días de mora.", correcta: true },
-                            { texto: "B- Ofrezco refinanciación CABA.", correcta: false },
-                            { texto: "C- Le pido que cuando junte todo el dinero nos llame para pagar.", correcta: false }
+                            { texto: "B- Ofrezco refinanciación CABA.", correcta: false }
                         ],
-                        justificacion: "Al no poder cancelar la totalidad de lo vencido, es importante conducir a que el cliente realice pagos significativos en la cuenta, sobre todo reduciendo días de mora."
+                        justificacion: "Conducir a que el cliente realice pagos significativos reduciendo días de mora."
                     },
                     {
                         titulo: "Paso 6: Cliente accede a ese pago, ¿cómo finalizás la gestión?",
                         opciones: [
-                            { texto: "A- Registro la promesa de pago e informo que se comunique el mes próximo", correcta: false },
-                            { texto: "B- Registro la promesa y solicito nuevo contacto posterior a ese pago, para informar próximos", correcta: true },
-                            { texto: "C- Registro la promesa y valido datos.", correcta: false }
+                            { texto: "A- Registro la promesa e informo que se comunique el mes próximo", correcta: false },
+                            { texto: "B- Registro la promesa y solicito nuevo contacto posterior a ese pago, para informar próximos", correcta: true }
                         ],
-                        justificacion: "Cuando un cliente realiza un pago parcial, se registra como promesa de pago y se solicita un futuro contacto posterior a ese pago, para poder darle continuidad al resto de la deuda."
+                        justificacion: "Se registra la promesa y se solicita nuevo contacto posterior al pago."
                     }
                 ]
             }
         ];
 
-        // Datos para la Planilla Interactiva de Arrastre (Procedimientos Actividad 3)
         const matrizPlanillaData = [
             {
                 condicion: "Productos que aplican",
-                refinanciacion: "- Tarjetas de crédito activas<br>- Tarjetas cerradas con saldo<br>- Préstamos en mora/al día",
-                planv: "- Tarjetas Visa/Amex",
-                planm: "- Tarjetas MasterCard"
+                refinanciacion: "- Tarjetas de crédito activas<br>- Tarjetas de crédito cerradas con saldo pendiente<br>- Préstamos personales en mora/al día<br>- Cuenta corriente con/sin saldo en negativo<br>- Cuenta Deudora",
+                planv: "- Tarjetas de crédito Visa/Amex",
+                planm: "- Tarjetas de crédito MasterCard",
+                tipoValidacion: "estricta"
             },
             {
                 condicion: "Plazos",
                 refinanciacion: "- UVA: 12 a 36 cuotas<br>- Tradicional: 6 a 48 cuotas",
                 planv: "- 6, 9, 12, 18, 24, 30, 36, 42, 48",
-                planm: "- 6, 12, 18, 24, 36"
+                planm: "- 6, 12, 18, 24, 36",
+                tipoValidacion: "estricta"
             },
             {
                 condicion: "Tasa de interés",
-                refinanciacion: "- UVA: 16%<br>- Tradicional: 46% - 49%",
-                planv: "-41%",
-                planm: "-41%"
+                refinanciacion: "- UVA: 16%<br>- Tradicional: -90 ddm 49% / +90 ddm 46%",
+                planv: "- 41%",
+                planm: "- 41%",
+                tipoValidacion: "intercambiable_planes"
             },
             {
                 condicion: "Embargos",
-                refinanciacion: "- Si posee embargos no aplica",
+                refinanciacion: "- Si posee embargos activos NO se puede aplicar el plan",
                 planv: "- No es excluyente",
-                planm: "- No es excluyente"
+                planm: "- No es excluyente",
+                tipoValidacion: "intercambiable_planes"
+            },
+            {
+                condicion: "Estado de la cuenta",
+                refinanciacion: "- Se darán de baja los productos incluídos en el plan",
+                planv: "- La tarjeta continuará activa para el uso",
+                planm: "- La tarjeta continuará activa para el uso",
+                tipoValidacion: "intercambiable_planes"
+            },
+            {
+                condicion: "Fecha 1er cuota",
+                refinanciacion: "- Se habilita calendario a 45 días, se coloca como primer opción el 5 del mes siguiente o subsiguiente. Se modifica unicamente a pedido del cliente",
+                planv: "- 1er cuota se visualiza en el próximo resumen, posterior al cierre siguiente",
+                planm: "- 1er cuota se visualiza en el próximo resumen, posterior al cierre siguiente",
+                tipoValidacion: "intercambiable_planes"
+            },
+            {
+                condicion: "Aplicativo para el alta",
+                refinanciacion: "- Gamora",
+                planv: "- Visa",
+                planm: "- Master",
+                tipoValidacion: "estricta"
+            },
+            {
+                condicion: "Contrato",
+                refinanciacion: "- Obligatorio y textual",
+                planv: "- Obligatorio y textual",
+                planm: "- Obligatorio y textual",
+                tipoValidacion: "todos_iguales"
+            },
+            {
+                condicion: "Validación de identidad",
+                refinanciacion: "- Obligatoria",
+                planv: "- Obligatoria",
+                planm: "- Obligatoria",
+                tipoValidacion: "todos_iguales"
+            },
+            {
+                condicion: "Productos que no aplican",
+                refinanciacion: "- Refinanciaciones activas<br>- Préstamos hipotecarios<br>- Préstamos prendarios<br>- Saldos Varios inmovilizados<br>- Caja de ahorro",
+                planv: "- Cualquier producto diferente a la tarjeta",
+                planm: "- Cualquier producto diferente a la tarjeta",
+                tipoValidacion: "intercambiable_planes"
             }
         ];
 
@@ -1537,7 +1548,7 @@
                 opciones: [
                     "Multiplicando el valor UVA en la cuota por la cotización UVA en la fecha de vencimiento.",
                     "Multiplicando el monto original del préstamo por una comisión fija del 16%.",
-                    "Utilizando el valor UVA desde la fecha en que se firmó el acuerdo de refinanciamiento"
+                    "Utilizando el valor UVA desde la fecha en que se firmó el acuerdo"
                 ],
                 correcta: 0
             },
@@ -1546,8 +1557,7 @@
                 opciones: [
                     "12 a 36 cuotas - TNA 16%",
                     "6 a 48 cuotas - TNA 49% -90ddm / TNA 46% +90 ddm",
-                    "12 a 36 cuotas - TNA 63% -90 ddm / TNA 54% +90 ddm",
-                    "24 a 36 cuotas - TNA 35%"
+                    "12 a 36 cuotas - TNA 63%"
                 ],
                 correcta: 1
             },
@@ -1558,7 +1568,7 @@
             },
             {
                 enunciado: "¿Qué deudas incluye el Plan V en un único plan de cuotas?",
-                opciones: ["La deuda total de Visa o Amex del cliente", "Únicamente adelantos de efectivo recientes", "Solo compras en un solo comercio adherido", "Gastos de mantenimiento y comisiones bancarias"],
+                opciones: ["La deuda total de Visa o Amex del cliente", "Únicamente adelantos de efectivo recientes", "Solo compras en un solo comercio adherido"],
                 correcta: 0
             },
             {
@@ -1574,7 +1584,7 @@
             },
             {
                 enunciado: "Identifica los tres tipos de promesa mencionados.",
-                opciones: ["Promesa inmediata, diferida y contingente", "Promesa flexible, escalonada y con garantía", "Promesa total, por producto y monto cliente", "Promesa total, prioritaria y parcial"],
+                opciones: ["Promesa inmediata, diferida y contingente", "Promesa total, por producto y monto cliente", "Promesa total, prioritaria y parcial"],
                 correcta: 2
             },
             {
@@ -1589,58 +1599,8 @@
             },
             {
                 enunciado: "El plazo máximo para pactar una promesa depende principalmente de:",
-                opciones: ["La tasa de interés vigente", "La cantidad de productos contratados", "El monto original del contrato", "El tramo de mora del cliente"],
-                correcta: 3
-            },
-            {
-                enunciado: "¿Cuál es el objetivo principal al priorizar productos con mayor cantidad de días en mora al negociar una promesa?",
-                opciones: ["Que deje de aplicarse interés a la deuda", "Reducir la cantidad de días en mora y bajar de tramo", "Seleccionar productos con menor deuda para cerrar rápido"],
-                correcta: 1
-            },
-            {
-                enunciado: "Selecciona la afirmación correcta sobre el Plan V.",
-                opciones: ["La tarjeta no se da de baja al activarse el plan", "La tarjeta se bloquea hasta cancelar todo", "La tarjeta pierde su línea disponible", "La tarjeta migra a otra marca bancaria"],
-                correcta: 0
-            },
-            {
-                enunciado: "En el sistema Gamora, ¿para qué sirve la verificación del estado de las promesas?",
-                opciones: ["Corroborar si promesas están cumplidas, pendientes o quebradas", "Calcular intereses automáticos del préstamo", "Para ver si ya hizo un compromiso y ofrecer un plan de pagos directamente"],
-                correcta: 0
-            },
-            {
-                enunciado: "¿Cuál es el objetivo principal al ofrecer Plan V Consolidado?",
-                opciones: ["Financiar la deuda manteniendo el producto activo", "Reducir la tasa de interés de la tarjeta", "Aumentar el límite de compras de la tarjeta"],
-                correcta: 0
-            },
-            {
-                enunciado: "¿Cómo se determina la primer cuota de refi?",
-                opciones: ["Con el calendario a 45 días, priorizando el ofrecimiento el 5 del mes siguiente", "La primer fecha es en 45 días", "Del 5 al 20 del mes siguiente"],
-                correcta: 0
-            },
-            {
-                enunciado: "¿Qué pasa con el saldo en dólares de tarjeta MasterCard cuando hago plan M?",
-                opciones: ["Queda por fuera del plan y se abona en el próximo resumen", "Se incluye en el plan, pesificando el monto con el tipo de cambio del día", "Se tiene que pagar primero y después podemos hacer el plan"],
-                correcta: 1
-            },
-            {
-                enunciado: "¿Qué productos NO son refinanciables?",
-                opciones: ["Hipotecarios / Prendarios / Refinanciaciones activas", "Hipotecarios / Préstamos UVA", "Cuenta continuadora / Cuenta deudora"],
-                correcta: 0
-            },
-            {
-                enunciado: "¿Qué pasa con la cuenta corriente si hago refi?",
-                opciones: ["Se incluye sí o sí para darse de baja", "No es un producto refinanciable", "Si no tiene saldo pendiente el cliente puede elegir incluirla o no"],
-                correcta: 0
-            },
-            {
-                enunciado: "¿Cuál es el plazo de cuotas de Plan M?",
-                opciones: ["12 a 36", "6 a 36", "6 a 48"],
-                correcta: 1
-            },
-            {
-                enunciado: "¿Por qué productos se puede hacer gestión multiproducto?",
-                opciones: ["Promesa de préstamos o tarjetas + Plan V/Plan M", "Promesa de préstamos + Refinanciación de tarjetas", "Promesa de tarjetas + Refinanciación"],
-                correcta: 0
+                opciones: ["La tasa de interés vigente", "La cantidad de productos contratados", "El tramo de mora del cliente"],
+                correcta: 2
             }
         ];
 
@@ -1654,57 +1614,24 @@
             { texto: "Si realizo 5ta pregunta sobre producto y el cliente responde 'NO ME ACUERDO', puedo reemplazarla realizando una 6ta pregunta.", respuesta: "FALSO" },
             { texto: "Si el cliente es mayor y no entiende las consultas, puedo realizar validación de identidad con un Encargado de Pagos.", respuesta: "FALSO" },
             { texto: "En casos que el cliente brinde el 4to grupo de la Tarjeta de Débito, puedo corregirlo indicando que necesito el grupo anterior.", respuesta: "VERDADERO" },
-            { texto: "Si refinancio Tarjetas de Crédito cerradas y no tiene vigente una Tarjeta de Débito, no puedo avanzar con la validación. Derivo al cliente a solicitar CA con TD asociada.", respuesta: "VERDADERO" }
+            { texto: "Si refinancio Tarjetas de Crédito cerradas y no tiene vigente una Tarjeta de Débito, no puedo avanzar con la validación.", respuesta: "VERDADERO" }
         ];
 
         const bloquesSys1 = [
             {
                 categoria: "💳 Tarjetas de crédito",
                 preguntas: [
-                    "¿Cuál es el producto causante?",
-                    "¿Qué productos están activos?",
-                    "¿Cuánto es la deuda vencida actual?",
-                    "¿Cuál es el importe del resumen más vencido en su tarjeta de crédito?",
-                    "¿Cuándo es el próximo vencimiento?",
-                    "¿Cuándo fue el último cierre en la tarjeta de crédito?",
-                    "¿Cuándo realizó el último pago?",
-                    "¿En qué mes comenzó la deuda?",
-                    "¿Posee adicionales en su tarjeta de crédito?",
-                    "¿Tiene la tarjeta de crédito adherida al débito automático? ¿A qué caja de ahorro?",
-                    "¿En la tarjeta de crédito posee Planes V activos?"
+                    "¿Cuál es el producto causante?", "¿Qué productos están activos?", "¿Cuánto es la deuda vencida actual?",
+                    "¿Cuál es el importe del resumen más vencido?", "¿Cuándo es el próximo vencimiento?", "¿Cuándo fue el último cierre?",
+                    "¿Cuándo realizó el último pago?", "¿En qué mes comenzó la deuda?", "¿Posee adicionales?", "¿Tiene débito automático?", "¿Posee Planes V activos?"
                 ]
             },
             {
                 categoria: "📋 Preguntas de refi",
                 preguntas: [
-                    "¿Tiene una refinanciación activa? ¿In UVA o tasa fija?",
-                    "¿La refinanciación es un préstamo? Justificar",
-                    "¿Cuándo se dió de alta?",
-                    "¿Qué productos están incluidos?",
-                    "¿Cuánto era el monto inicial?",
-                    "¿Cuál es la cantidad total de cuotas en la cuál hizo la refinanciación?",
-                    "¿Cuántas cuotas tiene pendientes de pago?",
-                    "¿Cuántas cuotas futuras le quedan para finalizar la refinanciación?",
-                    "¿Cuál es el importe de la cuota?",
-                    "¿Cuál es la cuota más antigua pendiente?"
-                ]
-            },
-            {
-                categoria: "🛒 Consumos por fuera",
-                preguntas: [
-                    "¿Qué consumos exactamente quedaron por fuera de la refinanciación?",
-                    "¿Corresponde que pague o que haga el reclamo?",
-                    "¿Sigue teniendo cuotas futuras pendientes o tiene la caída total de las cuotas?",
-                    "¿Se puede refinanciar nuevamente?"
-                ]
-            },
-            {
-                categoria: "🏦 Caja de ahorro",
-                preguntas: [
-                    "¿Tiene movimientos recientes?",
-                    "¿Tiene caja de ahorro o en dólares?",
-                    "¿Recibe sus haberes por la Caja de BG?",
-                    "¿Observás ingresos recientes en el último mes? ¿De cuánto importe en total?"
+                    "¿Tiene una refinanciación activa? ¿In UVA o tasa fija?", "¿La refinanciación es un préstamo? Justificar",
+                    "¿Cuándo se dió de alta?", "¿Qué productos están incluidos?", "¿Cuánto era el monto inicial?",
+                    "¿Cuántas cuotas tiene pendientes?", "¿Cuántas cuotas futuras le quedan?", "¿Cuál es el importe de la cuota?"
                 ]
             }
         ];
@@ -1712,32 +1639,21 @@
         const pasosPlanVOriginal = [
             "Verificar que cumpla con las condiciones para acceder al plan.",
             "Ingresar en BC10 con el DU y copiar el N° de plástico (16 dígitos)",
-            "Ingresar en visa/amex con usuario y contraseña correspondiente.",
-            "Seleccionar opción 22",
-            "Seleccionar opción 18 (menos 15 ddm) / 19 (más 15ddm)",
-            "Pegar el número del plástico + INTRO",
-            "Corroborar que la opción ingresada (18/19) es correcta.",
-            "Ingresar cantidad de cuotas + INTRO",
-            "Calcular el Pago extraordinario (restando monto total - monto financiado)",
-            "Click f6 para ver cuotas",
-            "En caso de tener que recalcular cuotas, volver a la selección 18/19 y repetir el procedimiento",
+            "Ingresar en visa/amex con usuario y contraseña.",
+            "Seleccionar opción 22", "Seleccionar opción 18 (menos 15 ddm) / 19 (más 15ddm)",
+            "Pegar el número del plástico + INTRO", "Ingresar cantidad de cuotas + INTRO",
+            "Calcular el Pago extraordinario", "Click f6 para ver cuotas",
             "Confirmar el plan post validación de identidad + lectura de contrato con f9+f9"
         ];
 
         const pasosPlanMOriginal = [
             "Verificar que cumpla con las condiciones para acceder al plan.",
             "Ingresar en BC10 con el DU y copiar el N° de plástico (16 dígitos)",
-            "Ingresar en mastercard con usuario y contraseña correspondiente.",
+            "Ingresar en mastercard con usuario y contraseña.",
             "Ingresar en la opción 19 para corroborar estado de inhibición.",
-            "Ingresar en la primer opción: ACTUALIZACIÓN DE MARCAS DE INHIBICIÓN con INTRO - Tabular hasta Numero de tarjeta y pegar los 16 dígitos + intro",
-            "Corroborar estado actual: si dice SI modificar en estado nuevo escribiendo NO + intro - Volver al menú principal con f3",
             "Ingresar en la opción 09 para simular el plan --> Pegar número de tarjeta",
-            "Realizar caida de cuotas a futuro: F1 (seleccionar los consumos con 'S', confirmar con F12+intro - Volver con f3 a la página anterior",
-            "Ingresar en la opción F2 - Seleccionar con 'S' Plan M Consolidado + intro",
-            "Confirmar calculo deuda con INTRO e ingresar cantidad de cuotas con 3 dígitos + intro",
-            "En caso de tener que recalcular cuotas, volver con f3 a página anterior, ingresar cuotas + intro.",
-            "Si das de alta: agregá fecha de vencimiento de plastico (MM/AA) + F12",
-            "Si no das de alta: anular caida de cuotas (Menú inicial- Ingresar opción F4= F12 + Shift-F2) - Volver a inhibir (opción 19 completo - estado nuevo SI)"
+            "Realizar caida de cuotas a futuro: F1", "Ingresar en la opción F2 - Plan M Consolidado",
+            "Confirmar calculo deuda con INTRO e ingresar cuotas", "Confirmar alta con fecha de vencimiento + F12"
         ];
 
         let pasosPlanVMezclados = [];
@@ -1748,8 +1664,9 @@
         let respuestasCasoAct3Usuario = [];
         let idxCondicionPaso = 0;
         let aciertosTotalesPasoAPaso = 0;
+        let planillaDetalleGuardado = [];
 
-        const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbx9rn8vurkac7cMhUsbtUXcI2Bg-GK6geUTUaThopFSLnHkcHw2ALyCi6GbUTyYPTE/exec";
+        const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbwmYkKxHXKSE5U1IoypYKBULNaJZl8rBQ0FRfnUNeRV67op3u0VoUJlH3GxeIsj/exec";
 
         function mezclarArray(array) {
             let originalConIndices = array.map((texto, originalIdx) => ({ texto, originalIdx }));
@@ -1765,7 +1682,10 @@
                 opt.textContent = nombre;
                 selectAsesor.appendChild(opt);
             });
+            reiniciarFormulariosUI();
+        });
 
+        function reiniciarFormulariosUI() {
             // Calidad Act 1
             const formContainer = document.getElementById('form-items-container');
             const itemsGestionMod = [
@@ -1829,7 +1749,7 @@
                 </div>
             `).join('');
 
-            // Sistemas Act 1 (Investigá al cliente - Bloques)
+            // Sistemas Act 1
             const sys1Container = document.getElementById('sys-investiga-container');
             let globalIdx = 0;
             sys1Container.innerHTML = bloquesSys1.map(bloque => `
@@ -1847,7 +1767,6 @@
                 </div>
             `).join('');
 
-            // Sistemas Act 2 (Planes de pago)
             pasosPlanVMezclados = mezclarArray(pasosPlanVOriginal);
             pasosPlanMMezclados = mezclarArray(pasosPlanMOriginal);
 
@@ -1868,7 +1787,7 @@
                     <span id="feedback_m_${idx}" class="feedback-icon" style="display:none;"></span>
                 </div>
             `).join('');
-        });
+        }
 
         let usuarioActual = "";
 
@@ -1923,75 +1842,74 @@
                 titulo.innerText = "🎧 CALIDAD DE LA GESTIÓN - Actividades";
                 grid.innerHTML = `
                     <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-activity-1', '🎧 Actividad 1: Auditá la gestión')">
+                        <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-activity-1', '🎧 Actividad 1: Auditá la gestión')">
                             <div class="card-title" style="color: #E96151; font-size: 20px;">🎧 Actividad 1: Auditá la gestión</div>
-                            <div class="card-desc" style="color: var(--text-main);">Evaluación interactiva de cumplimiento de procesos sobre auditoría de audios reales.</div>
+                            <div class="card-desc" style="color: var(--text-main);">Evaluación interactiva de cumplimiento de procesos sobre auditoría de audios reales. (Permite reintentar)</div>
                         </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-act-1" class="status-pill status-pending">Pendiente</span></div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                     <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-activity-2', '💬 Actividad 2: ¿Qué responderías?')">
+                        <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-activity-2', '💬 Actividad 2: ¿Qué responderías?')">
                             <div class="card-title" style="color: #E96151; font-size: 20px;">💬 Actividad 2: ¿Qué responderías?</div>
-                            <div class="card-desc" style="color: var(--text-main);">Casos hipotéticos orientados a la reconducción de objeciones hacia la cobranza efectiva.</div>
+                            <div class="card-desc" style="color: var(--text-main);">Casos hipotéticos orientados a la reconducción de objeciones hacia la cobranza efectiva. (Permite reintentar)</div>
                         </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-act-2" class="status-pill status-pending">Pendiente</span></div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-activity-3', '🔀 Actividad 3: Elegí el camino correcto')">
                             <div class="card-title" style="color: #E96151; font-size: 20px;">🔀 Actividad 3: Elegí el camino correcto</div>
-                            <div class="card-desc" style="color: var(--text-main);">Resolución secuencial de casos prácticos con múltiples escenarios.</div>
+                            <div class="card-desc" style="color: var(--text-main);">Resolución secuencial de casos prácticos con múltiples escenarios. (Permite reintentar)</div>
                         </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-act-3" class="status-pill status-pending">Pendiente</span></div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                 `;
             } else if(cat === 'proc') {
                 titulo.innerText = "📋 PROCEDIMIENTOS Y CONDICIONES GENERALES - Actividades";
                 grid.innerHTML = `
                     <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-proc-1', '📋 Herramientas de cobranza')">
+                        <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-proc-1', '📋 Herramientas de cobranza')">
                             <div class="card-title" style="color: #FF9955; font-size: 20px;">📋 Actividad 1: Herramientas de cobranza</div>
-                            <div class="card-desc" style="color: var(--text-main);">Multiple choice sobre condiciones generales y herramientas de cobranza.</div>
+                            <div class="card-desc" style="color: var(--text-main);">Multiple choice sobre condiciones generales y herramientas de cobranza. (Permite reintentar)</div>
                         </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-proc-1" class="status-pill status-pending">Pendiente</span></div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                     <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-proc-2', '🛡️ Validación de Identidad')">
+                        <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-proc-2', '🛡️ Validación de Identidad')">
                             <div class="card-title" style="color: #FF9955; font-size: 20px;">🛡️ Actividad 2: Validación de Identidad</div>
-                            <div class="card-desc" style="color: var(--text-main);">Evaluación de verdadero o falso sobre los protocolos de validación de identidad.</div>
+                            <div class="card-desc" style="color: var(--text-main);">Evaluación de verdadero o falso sobre protocolos de validación. (Permite reintentar)</div>
                         </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-proc-2" class="status-pill status-pending">Pendiente</span></div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="iniciarPlanillaPasoAPaso()">
                             <div class="card-title" style="color: #FF9955; font-size: 20px;">📊 Actividad 3: Planes de Pago (Paso a Paso)</div>
-                            <div class="card-desc" style="color: var(--text-main);">Matriz interactiva con arrastre de tarjetas por condición.</div>
+                            <div class="card-desc" style="color: var(--text-main);">Matriz interactiva completa con validación flexible. (Permite reintentar)</div>
                         </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-proc-3" class="status-pill status-pending">Pendiente</span></div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                 `;
             } else if(cat === 'sistemas') {
                 titulo.innerText = "💻 USO DE SISTEMAS - Actividades";
                 grid.innerHTML = `
                     <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-sistemas-1', '🔍 Investigá al cliente')">
+                        <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-sistemas-1', '🔍 Investigá al cliente')">
                             <div class="card-title" style="color: #FF6600; font-size: 20px;">🔍 Actividad 1: Investigá al cliente</div>
-                            <div class="card-desc" style="color: var(--text-main);">Búsqueda y extracción de datos básicos del cliente en los sistemas operativos.</div>
+                            <div class="card-desc" style="color: var(--text-main);">Búsqueda y extracción de datos básicos del cliente en los sistemas. (Permite reintentar)</div>
                         </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-sys-1" class="status-pill status-pending">Pendiente</span></div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                     <div class="activity-card-wrapper">
-                        <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-sistemas-2', '⚙️ Planes de pago')">
+                        <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-sistemas-2', '⚙️ Planes de pago')">
                             <div class="card-title" style="color: #FF6600; font-size: 20px;">⚙️ Actividad 2: Planes de pago (Plan V - Plan M)</div>
-                            <div class="card-desc" style="color: var(--text-main);">Ordenamiento secuencial del paso a paso para simular planes de pago en sistemas.</div>
+                            <div class="card-desc" style="color: var(--text-main);">Ordenamiento secuencial de pasos para simular planes de pago. (Permite reintentar)</div>
                         </div>
-                        <div class="activity-status-badge"><span>Estado:</span><span id="badge-sys-2" class="status-pill status-pending">Pendiente</span></div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                 `;
             }
 
             document.getElementById('sec-actividades-gestion').style.display = 'block';
             document.getElementById('page-title').innerText = '📂 Catálogo de Actividades';
-            actualizarBadgesActividades();
         }
 
         function abrirSeccionUnica(seccionId, titulo) {
@@ -2026,49 +1944,16 @@
                 audioSource.src = "https://raw.githubusercontent.com/bgindividuos-rgb/Audios/1ac480e3ec15696fc71ee820aa60fd1e37f90ce0/Promesa%20de%20pago%20DU-32090812.mp3";
             }
             player.load();
-
-            for(let i=0; i<12; i++) {
-                document.getElementById(`feedback_icon_${i}`).style.display = 'none';
-            }
-            document.getElementById('feedback-gestion-container').style.display = 'none';
         }
 
         function toggleObsRequired(idx) {
             let status = document.getElementById(`item_status_${idx}`).value;
             let txtArea = document.getElementById(`item_obs_${idx}`);
-            if(status === 'NO CUMPLIDO') {
-                txtArea.style.borderColor = varCss('--danger');
-            } else {
-                txtArea.style.borderColor = varCss('--border-color');
-            }
+            txtArea.style.borderColor = (status === 'NO CUMPLIDO') ? varCss('--danger') : varCss('--border-color');
         }
 
         function varCss(name) {
             return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-        }
-
-        function actualizarBadgesActividades() {
-            let regsAsesor = registrosGlobales.filter(r => r.asesor === usuarioActual);
-
-            const mapBadges = [
-                { id: 'badge-act-1', key: 'Auditá' },
-                { id: 'badge-act-2', key: 'responderías' },
-                { id: 'badge-act-3', key: 'camino' },
-                { id: 'badge-proc-1', key: 'Herramientas de cobranza' },
-                { id: 'badge-proc-2', key: 'Validación de Identidad' },
-                { id: 'badge-proc-3', key: 'Planes de Pago (Paso a Paso)' },
-                { id: 'badge-sys-1', key: 'Investigá' },
-                { id: 'badge-sys-2', key: 'Planes de pago' }
-            ];
-
-            mapBadges.forEach(b => {
-                let el = document.getElementById(b.id);
-                if(el) {
-                    let completada = regsAsesor.some(r => r.actividad.includes(b.key));
-                    el.innerText = completada ? "Completado" : "Pendiente";
-                    el.className = completada ? "status-pill status-completed" : "status-pill status-pending";
-                }
-            });
         }
 
         function actualizarProgresosDashboard() {
@@ -2095,7 +1980,6 @@
             document.getElementById('bar-sistemas').style.width = `${pctSys}%`;
         }
 
-        // Lógica de Actividad 3 Modular con Casos y reintento en rojo
         function volverASelectorCasos() {
             document.getElementById('act3-selector-casos').style.display = 'block';
             document.getElementById('act3-caso-activo-container').style.display = 'none';
@@ -2124,7 +2008,7 @@
                 <div class="activity-item" id="act3_step_box_${pIdx}" style="${pIdx > 0 ? 'display:none;' : ''}">
                     <label style="font-size:15px; color:var(--galicia-orange); margin-bottom:12px;">📌 ${paso.titulo}</label>
                     ${paso.opciones.map((opt, oIdx) => `
-                        <div class="step-option-card" id="act3_opt_${pIdx}_${oIdx}" onclick="seleccionarOpcionCasoAct3(${pIdx}, ${oIdx}, ${opt.correcta})">
+                        <div class="step-option-card" id="act3_opt_${pIdx}_${oIdx}" onclick="seleccionarOpcionCasoAct3(${pIdx},${oIdx}, ${opt.correcta}, '${opt.texto}')">
                             ${opt.texto}
                         </div>
                     `).join('')}
@@ -2135,8 +2019,10 @@
             `).join('');
         }
 
-        function seleccionarOpcionCasoAct3(pIdx, oIdx, esCorrecta) {
-            if(respuestasCasoAct3Usuario[pIdx] === true) return;
+        function seleccionarOpcionCasoAct3(pIdx, oIdx, esCorrecta, textoElegido) {
+            if(!respuestasCasoAct3Usuario[pIdx]) {
+                respuestasCasoAct3Usuario[pIdx] = { paso: casoActualAct3.pasos[pIdx].titulo, seleccionado: textoElegido, resultado: esCorrecta ? "Correcto" : "Incorrecto" };
+            }
 
             let sel = document.getElementById(`act3_opt_${pIdx}_${oIdx}`);
             let justificacionDiv = document.getElementById(`act3_justificacion_${pIdx}`);
@@ -2145,12 +2031,9 @@
                 casoActualAct3.pasos[pIdx].opciones.forEach((opt, idx) => {
                     let card = document.getElementById(`act3_opt_${pIdx}_${idx}`);
                     card.style.pointerEvents = 'none';
-                    if(opt.correcta) {
-                        card.classList.add('selected-correct');
-                    }
+                    if(opt.correcta) card.classList.add('selected-correct');
                 });
 
-                respuestasCasoAct3Usuario[pIdx] = true;
                 aciertosCasoAct3++;
                 justificacionDiv.style.display = 'block';
 
@@ -2161,36 +2044,33 @@
                         let totalPasos = casoActualAct3.pasos.length;
                         let puntaje = Math.round((aciertosCasoAct3 / totalPasos) * 100);
                         
-                        let detallePasosCaso = {};
-                        casoActualAct3.pasos.forEach((p, index) => {
-                            detallePasosCaso[`Paso_${index+1}`] = {
-                                enunciado: p.titulo,
-                                resultado: respuestasCasoAct3Usuario[index] ? "Correcto" : "Incorrecto"
-                            };
+                        let detalleTexto = "";
+                        respuestasCasoAct3Usuario.forEach((r) => {
+                            detalleTexto += `• [${r.paso}] Selección: "${r.seleccionado}" (${r.resultado})\n`;
                         });
 
-                        registrarResultado(`Actividad 3: ${casoActualAct3.titulo}`, puntaje, detallePasosCaso);
-
-                        document.getElementById('feedback-act3-content').innerHTML = `🎉 <b>¡Caso completado con éxito!</b><br>• Puntaje obtenido: ${puntaje}/100 pts.<br>• Todas las decisiones operativas fueron correctas.`;
+                        registrarResultado(`Actividad 3 (Elegí el camino correcto): ${casoActualAct3.titulo}`, puntaje, detalleTexto);
+                        document.getElementById('feedback-act3-content').innerHTML = `🎉 <b>¡Caso completado!</b> Puntaje obtenido: ${puntaje}/100 pts.`;
                         document.getElementById('feedback-act3-container').style.display = 'block';
                         alert(`🎉 Caso completado. Puntaje: ${puntaje}/100`);
                     }
                 }, 400);
             } else {
                 sel.classList.add('selected-incorrect');
-                setTimeout(() => {
-                    sel.classList.remove('selected-incorrect');
-                }, 1200);
+                setTimeout(() => sel.classList.remove('selected-incorrect'), 1200);
             }
         }
 
-        // Lógica de Planilla de Arrastre de Procedimientos Act 3
+        // Planilla de Arrastre Procedimientos Act 3
         function iniciarPlanillaPasoAPaso() {
             abrirSeccionUnica('sec-proc-3', '📊 Actividad: Planes de Pago (Paso a Paso)');
             idxCondicionPaso = 0;
             aciertosTotalesPasoAPaso = 0;
+            planillaDetalleGuardado = [];
             document.getElementById('feedback-planespago-container').style.display = 'none';
             document.getElementById('cond-total-idx').innerText = matrizPlanillaData.length;
+            document.getElementById('banco-tarjetas-condicion').parentElement.style.display = 'block';
+            document.getElementById('tabla-fila-activa-body').parentElement.parentElement.style.display = 'table';
             renderizarFilaCondicionPaso();
         }
 
@@ -2224,7 +2104,7 @@
             let bancoBox = document.getElementById('banco-tarjetas-condicion');
             bancoBox.innerHTML = "";
             tarjetasFila.forEach((t, i) => {
-                bancoBox.innerHTML += `<div class="tarjeta-arrastrable" draggable="true" id="tarjeta_paso_${i}" data-plan-correcto="${t.plan}" data-texto-contenido="${t.texto.trim()}" ondragstart="empezarArrastre(event)">${t.texto}</div>`;
+                bancoBox.innerHTML += `<div class="tarjeta-arrastrable" draggable="true" id="tarjeta_paso_${i}" data-plan-correcto="${t.plan}" ondragstart="empezarArrastre(event)">${t.texto}</div>`;
             });
         }
 
@@ -2235,35 +2115,61 @@
         function soltarEnBanco(e) { e.preventDefault(); document.getElementById('banco-tarjetas-condicion').appendChild(document.getElementById(e.dataTransfer.getData('text/plain'))); }
 
         function validarCondicionPasoAPaso() {
+            let filaData = matrizPlanillaData[idxCondicionPaso];
             let zonas = [
-                { id: 'drop_ref_paso', planEsperado: 'ref' },
-                { id: 'drop_planv_paso', planEsperado: 'planv' },
-                { id: 'drop_planm_paso', planEsperado: 'planm' }
+                { id: 'drop_ref_paso', nombreCol: 'Refinanciación', planEsperado: 'ref' },
+                { id: 'drop_planv_paso', nombreCol: 'Plan V', planEsperado: 'planv' },
+                { id: 'drop_planm_paso', nombreCol: 'Plan M', planEsperado: 'planm' }
             ];
 
             let totalEnZonas = 0;
             zonas.forEach(z => { totalEnZonas += document.getElementById(z.id).querySelectorAll('.tarjeta-arrastrable').length; });
 
             if(totalEnZonas < 3) {
-                alert("⚠️️ Por favor coloca las 3 tarjetas antes de validar.");
+                alert("⚠ Por favor coloca las 3 tarjetas en las columnas antes de validar.");
                 return;
             }
 
             let aciertosFila = 0;
+            let disposicionActual = {};
+
             zonas.forEach(z => {
+                let tarjetasEnCol = [];
                 document.getElementById(z.id).querySelectorAll('.tarjeta-arrastrable').forEach(t => {
-                    if(t.getAttribute('data-plan-correcto') === z.planEsperado) {
+                    tarjetasEnCol.push(t.innerText.trim());
+                    let planCorr = t.getAttribute('data-plan-correcto');
+                    if (filaData.tipoValidacion === "todos_iguales") {
                         aciertosFila++;
-                        t.style.borderColor = varCss('--success');
-                        t.style.backgroundColor = '#D1FAE5';
+                        t.style.borderColor = varCss('--success'); t.style.backgroundColor = '#D1FAE5';
+                    } else if (filaData.tipoValidacion === "intercambiable_planes") {
+                        if (planCorr === 'ref' && z.planEsperado === 'ref') {
+                            aciertosFila++;
+                            t.style.borderColor = varCss('--success'); t.style.backgroundColor = '#D1FAE5';
+                        } else if (planCorr !== 'ref' && (z.planEsperado === 'planv' || z.planEsperado === 'planm')) {
+                            aciertosFila++;
+                            t.style.borderColor = varCss('--success'); t.style.backgroundColor = '#D1FAE5';
+                        } else {
+                            t.style.borderColor = varCss('--danger'); t.style.backgroundColor = '#FEE2E2';
+                        }
                     } else {
-                        t.style.borderColor = varCss('--danger');
-                        t.style.backgroundColor = '#FEE2E2';
+                        if(planCorr === z.planEsperado) {
+                            aciertosFila++;
+                            t.style.borderColor = varCss('--success'); t.style.backgroundColor = '#D1FAE5';
+                        } else {
+                            t.style.borderColor = varCss('--danger'); t.style.backgroundColor = '#FEE2E2';
+                        }
                     }
                 });
+                disposicionActual[z.nombreCol] = tarjetasEnCol;
             });
 
-            if(aciertosFila === 3) {
+            planillaDetalleGuardado.push({
+                condicion: filaData.condicion,
+                ubicacionAsesor: disposicionActual,
+                resultado: aciertosFila >= 3 ? "Correcto" : "Revisar"
+            });
+
+            if(aciertosFila >= 3) {
                 aciertosTotalesPasoAPaso++;
                 document.getElementById('cond-status-text').innerText = "✅ ¡Condición correcta!";
                 document.getElementById('cond-status-text').style.color = varCss('--success');
@@ -2283,13 +2189,15 @@
             } else {
                 let puntaje = Math.round((aciertosTotalesPasoAPaso / matrizPlanillaData.length) * 100);
                 
-                let detallePlanillaArrastre = {
-                    condicionesEvaluadas: matrizPlanillaData.map(m => m.condicion),
-                    aciertosTotales: aciertosTotalesPasoAPaso,
-                    totalCondiciones: matrizPlanillaData.length
-                };
+                let detalleTexto = "";
+                planillaDetalleGuardado.forEach(p => {
+                    detalleTexto += `• Condición [${p.condicion}]:\n`;
+                    detalleTexto += `  - Refinanciación: ${JSON.stringify(p.ubicacionAsesor['Refinanciación'] || [])}\n`;
+                    detalleTexto += `  - Plan V: ${JSON.stringify(p.ubicacionAsesor['Plan V'] || [])}\n`;
+                    detalleTexto += `  - Plan M: ${JSON.stringify(p.ubicacionAsesor['Plan M'] || [])}\n`;
+                });
 
-                registrarResultado("Procedimientos: Planes de Pago (Paso a Paso)", puntaje, detallePlanillaArrastre);
+                registrarResultado("Procedimientos: Planes de Pago (Paso a Paso)", puntaje, detalleTexto);
 
                 document.getElementById('banco-tarjetas-condicion').parentElement.style.display = 'none';
                 document.getElementById('tabla-fila-activa-body').parentElement.parentElement.style.display = 'none';
@@ -2301,209 +2209,151 @@
             }
         }
 
-        // Finalizar Actividad 1 Calidad
         function finalizarActividad1() {
             let audioSeleccionado = document.getElementById('audio-select').value;
             let claveActiva = audioSeleccionado === 'audio_1' ? claveAudio1 : (audioSeleccionado === 'audio_2' ? claveAudio2 : claveAudio3);
-            let detalleItems = {};
+            let detalleTexto = "";
             let aciertos = 0;
 
             for(let i = 0; i < 12; i++) {
                 let status = document.getElementById(`item_status_${i}`).value;
                 let obs = document.getElementById(`item_obs_${i}`).value.trim();
                 if(status === 'NO CUMPLIDO' && obs === '') {
-                    alert(`⚠ Por favor complete la oportunidad de mejora en el ítem ${i + 1}, ya que seleccionó NO CUMPLIDO.`);
+                    alert(`⚠ Por favor complete la oportunidad de mejora en el ítem ${i + 1}.`);
                     document.getElementById(`item_obs_${i}`).focus();
                     return;
                 }
-                detalleItems[`Item_${i+1}`] = {
-                    respuestaAsesor: status,
-                    esperado: claveActiva[i],
-                    observacion: obs,
-                    esCorrecto: status === claveActiva[i]
-                };
+                detalleTexto += `• Ítem ${i+1}: ${status} ${obs ? '(Obs: ' + obs + ')' : ''} [Esperado: ${claveActiva[i]}]\n`;
                 if(status === claveActiva[i]) aciertos++;
 
                 let iconoSpan = document.getElementById(`feedback_icon_${i}`);
                 iconoSpan.style.display = "inline-block";
-                if(status === claveActiva[i]) {
-                    iconoSpan.innerHTML = "✔"; iconoSpan.className = "feedback-icon icon-correct";
-                } else {
-                    iconoSpan.innerHTML = "✖"; iconoSpan.className = "feedback-icon icon-incorrect";
-                }
+                iconoSpan.innerHTML = (status === claveActiva[i]) ? "✔" : "✖";
+                iconoSpan.className = (status === claveActiva[i]) ? "feedback-icon icon-correct" : "feedback-icon icon-incorrect";
             }
             let puntaje = Math.round((aciertos / 12) * 100);
-            registrarResultado("Auditá la gestión", puntaje, detalleItems);
+            registrarResultado(`Calidad - Auditá la gestión (${audioSeleccionado})`, puntaje, detalleTexto);
 
-            let feedbackHtml = audioSeleccionado === 'audio_1' ? 
-                `<b>✅ Evaluación procesada con éxito.</b> Puntaje obtenido: ${puntaje}/100 pts.<br>Se marcaron con tilde verde las respuestas correctas según la auditoría operativa.` :
-                (audioSeleccionado === 'audio_2' ? feedbackTextoAudio2 + `<br><br><b>⭐ Puntaje Final:</b> ${puntaje}/100 pts` : feedbackTextoAudio3 + `<br><br><b>⭐ Puntaje Final:</b> ${puntaje}/100 pts`);
+            let feedbackHtml = audioSeleccionado === 'audio_1' ? `<b>✅ Evaluación procesada.</b> Puntaje: ${puntaje}/100` :
+                (audioSeleccionado === 'audio_2' ? feedbackTextoAudio2 + `<br><b>⭐ Puntaje Final:</b> ${puntaje}/100` : feedbackTextoAudio3 + `<br><b>⭐ Puntaje Final:</b> ${puntaje}/100`);
 
             document.getElementById('feedback-gestion-content').innerHTML = feedbackHtml;
             document.getElementById('feedback-gestion-container').style.display = 'block';
             alert(`🎉 Evaluación procesada. Puntaje: ${puntaje}/100`);
         }
 
-        // Finalizar Actividad 2 Calidad
         function finalizarActividad2() {
-            let detalleCasos = {};
+            let detalleTexto = "";
             let respondidos = 0, validas = 0;
 
             for(let i = 0; i < casosActividad2.length; i++) {
                 let txt = document.getElementById(`act2_resp_${i}`).value.trim();
-                detalleCasos[`Caso_${i+1}`] = {
-                    planteo: casosActividad2[i],
-                    respuestaEscrita: txt
-                };
+                detalleTexto += `• Caso ${i+1} ("${casosActividad2[i]}"): "${txt}"\n`;
                 if(txt.length > 0) {
                     respondidos++;
                     let l = txt.toLowerCase();
-                    let esEvasivo = l.includes("no sé") || l.includes("no se") || l.length < 10;
-                    let contieneOrientacion = l.includes("entiend") || l.includes("solución") || l.includes("resolver") || l.includes("pago") || l.includes("cuota") || l.includes("plan") || l.includes("ayudar") || l.includes("veamos") || l.includes("prop") || l.includes("hoy") || l.includes("cuenta");
-                    if(!esEvasivo && contieneOrientacion) validas++;
+                    if(!l.includes("no sé") && l.length >= 10) validas++;
                 }
             }
-            if(respondidos < casosActividad2.length) { 
-                alert("⚠️ Por favor complete todos los escenarios con una respuesta orientada a reconducir al cliente."); 
-                return; 
-            }
+            if(respondidos < casosActividad2.length) { alert("⚠️ Por favor complete todos los escenarios."); return; }
             let puntaje = Math.round((validas / casosActividad2.length) * 100);
-            registrarResultado("Actividad 2: ¿Qué responderías?", puntaje, detalleCasos);
+            registrarResultado("Calidad - Actividad 2: ¿Qué responderías?", puntaje, detalleTexto);
             alert(`🎉 Actividad 2 finalizada. Puntaje: ${puntaje}/100`);
         }
 
-        // Finalizar Procedimientos Act 1 (MC)
         function finalizarProcMC() {
-            let detalleMC = {};
+            let detalleTexto = "";
             let aciertos = 0;
 
             preguntasProcMC.forEach((p, pIdx) => {
                 if(p.tipo === 'multiple') {
                     let checkboxes = document.querySelectorAll(`input[name="proc_mc_${pIdx}"]:checked`);
                     let marcados = Array.from(checkboxes).map(cb => parseInt(cb.value));
-                    detalleMC[`Pregunta_${pIdx+1}`] = { enunciado: p.enunciado, seleccionadas: marcados, correctas: p.correctas };
-                    let esIgual = marcados.length === p.correctas.length && marcados.every(v => p.correctas.includes(v));
-                    if(esIgual) aciertos++;
-                    p.correctas.forEach(cIdx => {
-                        let icon = document.getElementById(`icon_mc_${pIdx}_${cIdx}`);
-                        if(icon) { icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct"; icon.style.display = "inline"; }
-                    });
+                    let textosMarcados = marcados.map(mIdx => p.opciones[mIdx]);
+                    detalleTexto += `• P${pIdx+1}: [${textosMarcados.join(', ')}]\n`;
+                    if(marcados.length === p.correctas.length && marcados.every(v => p.correctas.includes(v))) aciertos++;
                 } else {
                     let seleccionado = document.querySelector(`input[name="proc_mc_${pIdx}"]:checked`);
                     let valSel = seleccionado ? parseInt(seleccionado.value) : null;
-                    detalleMC[`Pregunta_${pIdx+1}`] = { enunciado: p.enunciado, seleccionada: valSel, correcta: p.correcta };
+                    let textoSel = valSel !== null ? p.opciones[valSel] : "Sin responder";
+                    detalleTexto += `• P${pIdx+1}: "${textoSel}" [Correcta: "${p.opciones[p.correcta]}"]\n`;
                     if(valSel === p.correcta) aciertos++;
-                    let icon = document.getElementById(`icon_mc_${pIdx}_${p.correcta}`);
-                    if(icon) { icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct"; icon.style.display = "inline"; }
                 }
             });
             let puntaje = Math.round((aciertos / preguntasProcMC.length) * 100);
-            registrarResultado("Herramientas de cobranza", puntaje, detalleMC);
-            document.getElementById('feedback-procmc-content').innerHTML = `Se marcaron con tilde verde las respuestas correctas de cada enunciado.<br><b>⭐ Puntaje Final:</b> ${puntaje} / 100 pts`;
+            registrarResultado("Procedimientos - Herramientas de cobranza", puntaje, detalleTexto);
+            document.getElementById('feedback-procmc-content').innerHTML = `<b>⭐ Puntaje Final:</b> ${puntaje} / 100 pts`;
             document.getElementById('feedback-procmc-container').style.display = 'block';
             alert(`🎉 Herramientas de cobranza finalizada. Puntaje: ${puntaje}/100`);
         }
 
-        // Finalizar Procedimientos Act 2 (V/F)
         function finalizarProcVF() {
-            let detalleVF = {};
+            let detalleTexto = "";
             let aciertos = 0;
 
             preguntasProcVF.forEach((p, pIdx) => {
                 let sel = document.querySelector(`input[name="proc_vf_${pIdx}"]:checked`);
                 let respuestaAsesor = sel ? sel.value : "Sin responder";
-                detalleVF[`Pregunta_${pIdx+1}`] = {
-                    enunciado: p.texto,
-                    respuestaAsesor: respuestaAsesor,
-                    respuestaEsperada: p.respuesta,
-                    esCorrecto: respuestaAsesor === p.respuesta
-                };
-
-                let icon = document.getElementById(`icon_vf_${pIdx}`);
-                icon.style.display = "inline-block";
-                if(respuestaAsesor === p.respuesta) {
-                    aciertos++;
-                    icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct";
-                } else {
-                    icon.innerHTML = "✖"; icon.className = "feedback-icon icon-incorrect";
-                }
+                detalleTexto += `• P${pIdx+1} ("${p.texto}"): Asesor marcó -> ${respuestaAsesor} (Esperado: ${p.respuesta})\n`;
+                if(respuestaAsesor === p.respuesta) aciertos++;
             });
             let puntaje = Math.round((aciertos / preguntasProcVF.length) * 100);
-            registrarResultado("Validación de Identidad", puntaje, detalleVF);
+            registrarResultado("Procedimientos - Validación de Identidad", puntaje, detalleTexto);
             alert(`🎉 Validación de Identidad finalizada. Puntaje: ${puntaje}/100`);
         }
 
-        // Finalizar Sistemas Act 1 (Investigá al cliente)
         function finalizarSys1() {
             let clave = document.getElementById('sys-search-key').value.trim();
-            if(!clave) { alert("⚠️ Por favor ingrese el documento o clave del cliente proporcionada por staff."); return; }
+            if(!clave) { alert("⚠️ Por favor ingrese el documento o clave del cliente."); return; }
 
-            let detalleInvestigacion = { claveBusqueda: clave, respuestasBloques: {} };
+            let detalleTexto = `Clave búsqueda: ${clave}\n`;
             let totalPreguntasSys1 = 0;
             
             bloquesSys1.forEach((b) => {
+                detalleTexto += `[${b.categoria}]\n`;
                 b.preguntas.forEach((p, pIdx) => {
                     let respInput = document.getElementById(`sys1_resp_${totalPreguntasSys1}`);
-                    detalleInvestigacion.respuestasBloques[`Bloque_${b.categoria}_P_${pIdx+1}`] = {
-                        pregunta: p,
-                        respuestaAsesor: respInput ? respInput.value.trim() : ""
-                    };
+                    let val = respInput ? respInput.value.trim() : "";
+                    detalleTexto += `  - ${p}: "${val}"\n`;
                     totalPreguntasSys1++;
                 });
             });
 
-            registrarResultado("Investigá al cliente", 100, detalleInvestigacion);
-            document.getElementById('feedback-sys1-content').innerHTML = `✅ Búsqueda procesada correctamente con clave/DU: <b>${clave}</b>. Actividad registrada con éxito.`;
+            registrarResultado("Sistemas - Investigá al cliente", 100, detalleTexto);
+            document.getElementById('feedback-sys1-content').innerHTML = `✅ Búsqueda procesada con clave: <b>${clave}</b>.`;
             document.getElementById('feedback-sys1-container').style.display = 'block';
-            alert("🎉 Actividad 'Investigá al cliente' registrada con éxito.");
+            alert("🎉 Actividad registrada con éxito.");
         }
 
-        // Finalizar Sistemas Act 2 (Planes de Pago)
         function finalizarSys2() {
-            let detalleOrdenamiento = { planV: {}, planM: {} };
+            let detalleTexto = "PLAN V:\n";
             let aciertosV = 0;
             pasosPlanVMezclados.forEach((item, idx) => {
                 let val = parseInt(document.getElementById(`orden_v_${idx}`).value);
                 let correctNum = item.originalIdx + 1;
-                detalleOrdenamiento.planV[`Paso_${idx+1}`] = { texto: item.texto, ordenAsesor: val, ordenCorrecto: correctNum };
-
-                let icon = document.getElementById(`feedback_v_${idx}`);
-                icon.style.display = "inline-block";
-                if(val === correctNum) {
-                    aciertosV++;
-                    icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct";
-                } else {
-                    icon.innerHTML = `✖ (Correcto: ${correctNum})`; icon.className = "feedback-icon icon-incorrect";
-                }
+                detalleTexto += `  - Paso: "${item.texto}" -> Orden dado: ${val} (Real: ${correctNum})\n`;
+                if(val === correctNum) aciertosV++;
             });
 
+            detalleTexto += "PLAN M:\n";
             let aciertosM = 0;
             pasosPlanMMezclados.forEach((item, idx) => {
                 let val = parseInt(document.getElementById(`orden_m_${idx}`).value);
                 let correctNum = item.originalIdx + 1;
-                detalleOrdenamiento.planM[`Paso_${idx+1}`] = { texto: item.texto, ordenAsesor: val, ordenCorrecto: correctNum };
-
-                let icon = document.getElementById(`feedback_m_${idx}`);
-                icon.style.display = "inline-block";
-                if(val === correctNum) {
-                    aciertosM++;
-                    icon.innerHTML = "✔"; icon.className = "feedback-icon icon-correct";
-                } else {
-                    icon.innerHTML = `✖ (Correcto: ${correctNum})`; icon.className = "feedback-icon icon-incorrect";
-                }
+                detalleTexto += `  - Paso: "${item.texto}" -> Orden dado: ${val} (Real: ${correctNum})\n`;
+                if(val === correctNum) aciertosM++;
             });
 
             let totalPasos = pasosPlanVOriginal.length + pasosPlanMOriginal.length;
-            let totalAciertos = aciertosV + aciertosM;
-            let puntaje = Math.round((totalAciertos / totalPasos) * 100);
+            let puntaje = Math.round(((aciertosV + aciertosM) / totalPasos) * 100);
 
-            registrarResultado("Planes de pago", puntaje, detalleOrdenamiento);
-            document.getElementById('feedback-sys2-content').innerHTML = `Ordenamiento verificado.<br>• Plan V: ${aciertosV}/${pasosPlanVOriginal.length} correctos<br>• Plan M: ${aciertosM}/${pasosPlanMOriginal.length} correctos<br><b>⭐ Puntaje Final:</b> ${puntaje}/100`;
+            registrarResultado("Sistemas - Planes de pago (Ordenamiento)", puntaje, detalleTexto);
+            document.getElementById('feedback-sys2-content').innerHTML = `<b>⭐ Puntaje Final:</b> ${puntaje}/100`;
             document.getElementById('feedback-sys2-container').style.display = 'block';
             alert(`🎉 Planes de pago finalizado. Puntaje: ${puntaje}/100`);
         }
 
-        function registrarResultado(actividadNombre, puntaje, detalleRespuestas = {}) {
+        function registrarResultado(actividadNombre, puntaje, detalleTexto = "") {
             let clasificacion = puntaje >= 90 ? "DOMINADO" : puntaje >= 65 ? "PRESENTA OPORTUNIDADES" : puntaje >= 40 ? "REQUIERE REFUERZO" : "CRÍTICO";
             let claseCss = puntaje >= 90 ? "bg-dominado" : puntaje >= 65 ? "bg-oportunidades" : puntaje >= 40 ? "bg-refuerzo" : "bg-critico";
 
@@ -2514,10 +2364,12 @@
                 puntaje: puntaje,
                 clasificacion: clasificacion,
                 claseCss: claseCss,
-                detalleRespuestas: detalleRespuestas
+                detalleRespuestas: detalleTexto
             };
 
             registrosGlobales.push(nuevoRegistro);
+
+            const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbwmYkKxHXKSE5U1IoypYKBULNaJZl8rBQ0FRfnUNeRV67op3u0VoUJlH3GxeIsj/exec";
 
             if (urlGoogleSheet) {
                 fetch(urlGoogleSheet, {
@@ -2526,39 +2378,32 @@
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify(nuevoRegistro)
                 }).then(() => {
-                    console.log("Detalle 1x1 registrado en Google Sheet");
                     setTimeout(sincronizarResultadosRemotos, 1500); 
-                }).catch(error => {
-                    console.error("Error al registrar:", error);
-                });
+                }).catch(error => console.error("Error al registrar:", error));
             }
         }
 
         function sincronizarResultadosRemotos() {
+            const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbwmYkKxHXKSE5U1IoypYKBULNaJZl8rBQ0FRfnUNeRV67op3u0VoUJlH3GxeIsj/exec";
             if(!urlGoogleSheet) return;
             
             fetch(urlGoogleSheet)
                 .then(response => response.json())
                 .then(data => {
-                    if(Array.isArray(data) && data.length > 0) {
-                        registrosGlobales = data; 
-                    }
+                    if(Array.isArray(data) && data.length > 0) registrosGlobales = data; 
                     
                     let asesoresParticipantes = [...new Set(registrosGlobales.map(r => r.asesor))];
                     let select = document.getElementById('filter-advisor');
                     let valorActual = select.value;
                     
                     select.innerHTML = '<option value="ALL">🌟 Ver Resultados Globales (Todo el Equipo)</option>';
-                    asesoresParticipantes.forEach(a => { 
-                        select.innerHTML += `<option value="${a}">👤 ${a}</option>`; 
-                    });
+                    asesoresParticipantes.forEach(a => { select.innerHTML += `<option value="${a}">👤 ${a}</option>`; });
                     select.value = valorActual;
 
                     renderizarAnalytics();
                     actualizarProgresosDashboard();
                 })
                 .catch(error => {
-                    console.error("Error al sincronizar datos desde Google Sheet:", error);
                     renderizarAnalytics();
                     actualizarProgresosDashboard();
                 });
@@ -2577,7 +2422,7 @@
                 document.getElementById('stat-cat-sistemas').innerText = "0 / 2";
                 document.getElementById('chart-precision-list').innerHTML = `<p style="font-size:13px; color:var(--text-muted);">Sin datos registrados.</p>`;
                 document.getElementById('feedback-text').innerText = "Complete actividades para visualizar el diagnóstico operativo.";
-                document.getElementById('tabla-resultados-body').innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No hay registros disponibles en Google Sheet.</td></tr>`;
+                document.getElementById('tabla-resultados-body').innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No hay registros disponibles.</td></tr>`;
                 return;
             }
 
@@ -2617,13 +2462,10 @@
             });
             document.getElementById('chart-precision-list').innerHTML = htmlPrec;
 
-            document.getElementById('feedback-text').innerHTML = promedio >= 90 ? 
-                "<b>🌟 Fortaleza:</b> Excelente desempeño global en procedimientos, sistemas y calidad de gestión en el equipo.<br><b>💡 Recomendación:</b> Mantener el estándar operativo y liderar buenas prácticas." :
-                "<b>🎯 Oportunidad de mejora:</b> Se sugiere repasar los flujos de simulación de planes de pago y las condiciones de validación de identidad.<br><b>💡 Recomendación:</b> Realizar nuevamente las actividades con menor puntaje para afianzar conceptos.";
-
             let tbody = document.getElementById('tabla-resultados-body');
             tbody.innerHTML = "";
             filtrados.forEach(r => {
+                let detalleTooltip = (r.detalleRespuestas || "").replace(/\n/g, '<br>');
                 tbody.innerHTML += `
                     <tr>
                         <td>${r.fecha}</td>
@@ -2631,6 +2473,11 @@
                         <td>${r.actividad}</td>
                         <td><b>${r.puntaje} pts</b></td>
                         <td><span class="badge ${r.claseCss}">${r.clasificacion}</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="background: #FAFAFA; font-size: 12px; color: var(--text-muted); border-bottom: 2px solid var(--border-color); padding: 8px 16px;">
+                            <b>🔍 Detalle de respuestas 1x1:</b><br>${detalleTooltip || "Sin detalle almacenado"}
+                        </td>
                     </tr>
                 `;
             });
