@@ -31,6 +31,82 @@
             padding: 25px;
         }
 
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .screen.active {
+            display: block;
+        }
+
+        #login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #FFF3EB 0%, #FFE5D0 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            z-index: 9999;
+        }
+
+        .login-card {
+            background: var(--white);
+            padding: 45px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255,102,0,0.1);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            border-top: 6px solid var(--galicia-orange);
+        }
+
+        .login-card h2 {
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-size: 24px;
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.2s;
+            background: var(--white);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .login-card input:focus {
+            outline: none;
+            border-color: var(--galicia-orange);
+            box-shadow: 0 0 0 4px rgba(255,102,0,0.12);
+        }
+
         .container {
             max-width: 1450px;
             margin: 0 auto;
@@ -54,15 +130,27 @@
             background: linear-gradient(135deg, var(--galicia-orange) 0%, var(--galicia-dark-orange) 100%);
             color: var(--white);
             border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(255,102,0,0.25);
+        }
+        .btn-galicia:hover { transform: translateY(-2px); }
+
+        .btn-header {
+            background: linear-gradient(135deg, var(--galicia-orange) 0%, var(--galicia-dark-orange) 100%);
+            color: var(--white);
+            border: none;
             padding: 10px 20px;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255,102,0,0.2);
-            transition: transform 0.1s;
         }
-        .btn-galicia:hover { transform: translateY(-2px); }
 
         .tabs-nav {
             display: flex;
@@ -213,15 +301,8 @@
             border: 1px solid var(--border-color);
         }
 
-        .item-row-correct {
-            background: #F0FDF4;
-            border-color: #BBF7D0;
-        }
-
-        .item-row-incorrect {
-            background: #FEF2F2;
-            border-color: #FECACA;
-        }
+        .item-row-correct { background: #F0FDF4; border-color: #BBF7D0; }
+        .item-row-incorrect { background: #FEF2F2; border-color: #FECACA; }
 
         .item-row-header {
             display: flex;
@@ -274,99 +355,114 @@
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>📊 Dashboard Visual de Respuestas | Banco Galicia</h1>
-            <button class="btn-galicia" onclick="cargarDatosSheet()">🔄 Actualizar Datos</button>
-        </header>
-
-        <div class="tabs-nav">
-            <button class="tab-btn active" onclick="cambiarTab('resumen', this)">📊 Resumen General</button>
-            <button class="tab-btn" onclick="cambiarTab('sistemas', this)">💻 Uso de Sistemas</button>
-            <button class="tab-btn" onclick="cambiarTab('proc', this)">📋 Procedimientos y Condiciones</button>
-            <button class="tab-btn" onclick="cambiarTab('gestion', this)">🎧 Calidad de la Gestión</button>
-        </div>
-
-        <!-- TAB 1: RESUMEN GENERAL -->
-        <div id="tab-resumen" class="tab-content active">
-            <div class="kpi-container">
-                <div class="kpi-card"><span>📊 Total Evaluaciones</span><h3 id="kpi-total">0</h3></div>
-                <div class="kpi-card"><span>⭐ Puntaje Promedio</span><h3 id="kpi-promedio">0 pts</h3></div>
-                <div class="kpi-card"><span>🏆 Tasa de Aprobación</span><h3 id="kpi-aprobacion">0%</h3></div>
-                <div class="kpi-card"><span>👤 Asesores Activos</span><h3 id="kpi-asesores">0</h3></div>
+    <!-- Pantalla de Acceso al Dashboard -->
+    <div id="login-screen" class="screen active">
+        <div class="login-card">
+            <h2>🟧 Banco Galicia</h2>
+            <p>Panel Exclusivo de Respuestas y Evaluaciones</p>
+            <div class="input-group">
+                <label>🔐 Ingrese Código de Acceso</label>
+                <input type="password" id="staff-access-code" placeholder="••••••••••••" onkeypress="if(event.key === 'Enter') validarStaffAccess()">
             </div>
-            <div class="card-box">
-                <h3 style="margin-bottom: 15px; font-size: 16px; color: var(--galicia-orange);">📈 Promedio por Actividad</h3>
-                <div id="resumen-barras-actividades"></div>
-            </div>
+            <button class="btn-galicia" onclick="validarStaffAccess()">🚀 Ingresar al Dashboard</button>
         </div>
+    </div>
 
-        <!-- TAB 2: USO DE SISTEMAS -->
-        <div id="tab-sistemas" class="tab-content">
-            <div class="card-box">
-                <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">💻 USO DE SISTEMAS - Detalle Visual 1x1</h3>
-                <div class="filters-grid">
-                    <div class="filter-group">
-                        <label>🎯 Seleccionar Actividad:</label>
-                        <select id="sel-act-sistemas" class="form-control" onchange="renderizarVisualCategoria('sistemas')">
-                            <option value="ALL">-- Todas las actividades de Sistemas --</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>👤 Filtrar por Asesor:</label>
-                        <select id="sel-asesor-sistemas" class="form-control" onchange="renderizarVisualCategoria('sistemas')">
-                            <option value="ALL">🌟 Todos los Asesores</option>
-                        </select>
-                    </div>
+    <!-- Contenido Principal del Dashboard -->
+    <div id="main-dashboard-screen" class="screen">
+        <div class="container">
+            <header>
+                <h1>📊 Dashboard Visual de Respuestas | Banco Galicia</h1>
+                <button class="btn-header" onclick="cargarDatosSheet()">🔄 Actualizar Datos</button>
+            </header>
+
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="cambiarTab('resumen', this)">📊 Resumen General</button>
+                <button class="tab-btn" onclick="cambiarTab('sistemas', this)">💻 Uso de Sistemas</button>
+                <button class="tab-btn" onclick="cambiarTab('proc', this)">📋 Procedimientos y Condiciones</button>
+                <button class="tab-btn" onclick="cambiarTab('gestion', this)">🎧 Calidad de la Gestión</button>
+            </div>
+
+            <!-- TAB 1: RESUMEN GENERAL -->
+            <div id="tab-resumen" class="tab-content active">
+                <div class="kpi-container">
+                    <div class="kpi-card"><span>📊 Total Evaluaciones</span><h3 id="kpi-total">0</h3></div>
+                    <div class="kpi-card"><span>⭐ Puntaje Promedio</span><h3 id="kpi-promedio">0 pts</h3></div>
+                    <div class="kpi-card"><span>🏆 Tasa de Aprobación</span><h3 id="kpi-aprobacion">0%</h3></div>
+                    <div class="kpi-card"><span>👤 Asesores Activos</span><h3 id="kpi-asesores">0</h3></div>
                 </div>
-                <div id="container-visual-sistemas" style="margin-top: 20px;"></div>
-            </div>
-        </div>
-
-        <!-- TAB 3: PROCEDIMIENTOS Y CONDICIONES -->
-        <div id="tab-proc" class="tab-content">
-            <div class="card-box">
-                <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">📋 PROCEDIMIENTOS Y CONDICIONES - Detalle Visual 1x1</h3>
-                <div class="filters-grid">
-                    <div class="filter-group">
-                        <label>🎯 Seleccionar Actividad:</label>
-                        <select id="sel-act-proc" class="form-control" onchange="renderizarVisualCategoria('proc')">
-                            <option value="ALL">-- Todas las actividades de Procedimientos --</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>👤 Filtrar por Asesor:</label>
-                        <select id="sel-asesor-proc" class="form-control" onchange="renderizarVisualCategoria('proc')">
-                            <option value="ALL">🌟 Todos los Asesores</option>
-                        </select>
-                    </div>
+                <div class="card-box">
+                    <h3 style="margin-bottom: 15px; font-size: 16px; color: var(--galicia-orange);">📈 Promedio por Actividad</h3>
+                    <div id="resumen-barras-actividades"></div>
                 </div>
-                <div id="container-visual-proc" style="margin-top: 20px;"></div>
             </div>
-        </div>
 
-        <!-- TAB 4: CALIDAD DE LA GESTIÓN -->
-        <div id="tab-gestion" class="tab-content">
-            <div class="card-box">
-                <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">🎧 CALIDAD DE LA GESTIÓN - Detalle Visual 1x1</h3>
-                <div class="filters-grid">
-                    <div class="filter-group">
-                        <label>🎯 Seleccionar Actividad:</label>
-                        <select id="sel-act-gestion" class="form-control" onchange="renderizarVisualCategoria('gestion')">
-                            <option value="ALL">-- Todas las actividades de Calidad --</option>
-                        </select>
+            <!-- TAB 2: USO DE SISTEMAS -->
+            <div id="tab-sistemas" class="tab-content">
+                <div class="card-box">
+                    <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">💻 USO DE SISTEMAS - Detalle Visual 1x1</h3>
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label>🎯 Seleccionar Actividad:</label>
+                            <select id="sel-act-sistemas" class="form-control" onchange="renderizarVisualCategoria('sistemas')">
+                                <option value="ALL">-- Todas las actividades de Sistemas --</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>👤 Filtrar por Asesor:</label>
+                            <select id="sel-asesor-sistemas" class="form-control" onchange="renderizarVisualCategoria('sistemas')">
+                                <option value="ALL">🌟 Todos los Asesores</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="filter-group">
-                        <label>👤 Filtrar por Asesor:</label>
-                        <select id="sel-asesor-gestion" class="form-control" onchange="renderizarVisualCategoria('gestion')">
-                            <option value="ALL">🌟 Todos los Asesores</option>
-                        </select>
-                    </div>
+                    <div id="container-visual-sistemas" style="margin-top: 20px;"></div>
                 </div>
-                <div id="container-visual-gestion" style="margin-top: 20px;"></div>
+            </div>
+
+            <!-- TAB 3: PROCEDIMIENTOS Y CONDICIONES -->
+            <div id="tab-proc" class="tab-content">
+                <div class="card-box">
+                    <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">📋 PROCEDIMIENTOS Y CONDICIONES - Detalle Visual 1x1</h3>
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label>🎯 Seleccionar Actividad:</label>
+                            <select id="sel-act-proc" class="form-control" onchange="renderizarVisualCategoria('proc')">
+                                <option value="ALL">-- Todas las actividades de Procedimientos --</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>👤 Filtrar por Asesor:</label>
+                            <select id="sel-asesor-proc" class="form-control" onchange="renderizarVisualCategoria('proc')">
+                                <option value="ALL">🌟 Todos los Asesores</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="container-visual-proc" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+
+            <!-- TAB 4: CALIDAD DE LA GESTIÓN -->
+            <div id="tab-gestion" class="tab-content">
+                <div class="card-box">
+                    <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">🎧 CALIDAD DE LA GESTIÓN - Detalle Visual 1x1</h3>
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label>🎯 Seleccionar Actividad:</label>
+                            <select id="sel-act-gestion" class="form-control" onchange="renderizarVisualCategoria('gestion')">
+                                <option value="ALL">-- Todas las actividades de Calidad --</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>👤 Filtrar por Asesor:</label>
+                            <select id="sel-asesor-gestion" class="form-control" onchange="renderizarVisualCategoria('gestion')">
+                                <option value="ALL">🌟 Todos los Asesores</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="container-visual-gestion" style="margin-top: 20px;"></div>
+                </div>
             </div>
         </div>
-
     </div>
 
     <script>
@@ -377,7 +473,20 @@
         const claveAudio2 = ["CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO"];
         const claveAudio3 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
 
-        window.addEventListener('DOMContentLoaded', () => { cargarDatosSheet(); });
+        function validarStaffAccess() {
+            let codigoIngresado = document.getElementById('staff-access-code').value.trim();
+            
+            // Validación exacta ignorando mayúsculas/minúsculas
+            if (codigoIngresado.toUpperCase() === "STAFF.BG") {
+                document.getElementById('login-screen').classList.remove('active');
+                document.getElementById('main-dashboard-screen').classList.add('active');
+                cargarDatosSheet();
+            } else {
+                // Si es incorrecto, simplemente limpia el campo sin arrojar alertas descriptivas
+                document.getElementById('staff-access-code').value = "";
+                document.getElementById('staff-access-code').focus();
+            }
+        }
 
         function cargarDatosSheet() {
             fetch(urlGoogleSheet)
