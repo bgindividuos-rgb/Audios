@@ -813,7 +813,6 @@
                 <header>
                     <h1 id="page-title">📊 Dashboard Principal</h1>
                     <div class="header-actions">
-                        <!-- Enlace apuntando correctamente a respuestas.html -->
                         <a href="respuestas.html" target="_blank" class="btn-secondary-galicia">📊 Ver Dashboard de Respuestas</a>
                         <div class="user-profile-badge">
                             <span>👤 <span id="display-user">Asesor</span></span>
@@ -972,7 +971,7 @@
                         <div class="card-container">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('gestion')">⬅️ Volver a Actividades</button>
                             <h2>💬 Actividad 2: ¿Qué responderías?</h2>
-                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Lee atentamente cada caso hipotético del cliente y respondé reconduciendo a la cobranza de manera activa.</p>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Lee atentamente cada caso hipotético del cliente y respondé reconduciendo a la cobranza.</p>
                             
                             <div id="act2-form-container"></div>
 
@@ -1212,11 +1211,13 @@
 
                         <div class="feedback-card">
                             <h4>💡 Diagnóstico y Plan de Acción Operativo</h4>
-                            <p id="feedback-text">Complete al menos una actividad para generar el análisis automatizado de fortalezas, oportunidades de mejora y recomendaciones.</p>
+                            <div id="feedback-text" style="font-size: 14px; color: var(--text-main); line-height: 1.6;">
+                                Complete al menos una actividad para generar el análisis automatizado de fortalezas, oportunidades de mejora y recomendaciones.
+                            </div>
                         </div>
 
                         <div class="card-container" style="margin-top: 25px;">
-                            <h3>📋 Historial Detallado de Registros (En Vivo desde Google Sheet)</h3>
+                            <h3>📋 Historial de Registros (En Vivo desde Google Sheet)</h3>
                             <table>
                                <thead>
                                    <tr>
@@ -1305,11 +1306,16 @@
         `;
 
         const casosActividad2 = [
-            'No tengo plata', 'Ya me llamaron un montón de veces',
-            'Ya dije la semana pasada que iba a pagar', 'Decime cuanto tengo que pagar y listo',
-            'A vos no te importa por que me atrasé', 'No quiero ningún plan de pagos, es mucho interés',
-            'Dejá escrito ahí que no me llamen más', 'Más que eso no te puedo pagar',
-            'No voy a hacer parciales porque con eso solo pago intereses', 'Dejá que pase a un estudio jurídico, no me importa'
+            "Cliente con atraso de 8 días de mora, sobr el motivo de atraso informa: 'No tengo plata'",
+            "Cliente con 90 días de mora, cuando consultamos motivo de atraso indica: 'Ya me llamaron un montón de veces'",
+            "Clienta con 34 días de mora, el mes anterior no pagó porque destinó su sueldo a gastos de problemas de salud. Al intentar actualizar la situación informa: 'Ya dije la semana pasada que iba a pagar'",
+            "Cliente con 74 días de mora, dice que hoy cancela la deuda. Tras consultar MDA responde: 'Decime cuanto tengo que pagar y listo'",
+            "Cliente con 15 días de mora, tras la pregunta de que problema lo llevó a la mora responde: 'A vos no te importa por que me atrasé'",
+            "Cliente desempleado, realiza changas semanalmente, dice que el mes próximo termina de cancelar todo. Se ofrece refinanciación y responde: 'No quiero ningún plan de pagos, es mucho interés'",
+            "Cliente con llamados frecuentes, siempre que se intenta pactar un cobro queda en llamada interrumpida, manifiesta: 'Dejá escrito ahí que no me llamen más'",
+            "Cliente con deuda de $5.000.000, dice que cobra $1.500.000 por mes y que solo puede destinar la mitad al pago de la deuda. Se ofrece un plan de pagos con cuotas de $950.000 y responde: 'Más de lo que te dije no te puedo pagar'",
+            "Cliente con refinanciación en mora, tiene 3 cuotas vencidas pero no llega a cubrirlas porque se quedó sin 1 de sus ingresos. Se ofrecen parciales y responde: 'No voy a hacer parciales porque con eso solo pago intereses'",
+            "Cliente con 56 días de mora, no quiere refinanciar porque su deuda es de +$100.000.000 y no llega a las cuotas. Ante el intento de la cobranza dice: 'Dejá que pase a un estudio jurídico, no me importa'"
         ];
 
         const casosActividad3Modular = [
@@ -1368,7 +1374,7 @@
                         titulo: "Paso 6: Cliente accede al plan pero quiere solo 6 cuotas. ¿Qué le explicás?",
                         opciones: [
                             { texto: "A- Que no le podemos dar ese plazo y que tiene que pagar 1 x 1", correcta: false },
-                            { texto: "B- Que no le podemos dar ese plazo, pero puede adelantar cuotas si dispone del dinero.", correcta: true },
+                            { texto: "B- Que não le podemos dar ese plazo, pero puede adelantar cuotas si dispone del dinero.", correcta: true },
                             { texto: "C- Que a modo excepcional le brindamos 6 cuotas.", correcta: false }
                         ],
                         justificacion: "Ante una negativa al requerimiento del cliente, intentá ofrecer una solución alterna en el momento."
@@ -1506,7 +1512,7 @@
                 refinanciacion: "- UVA: 12 a 36 cuotas<br>- Tradicional: 6 a 48 cuotas",
                 planv: "- 6, 9, 12, 18, 24, 30, 36, 42, 48",
                 planm: "- 6, 12, 18, 24, 36",
-                tipoValidacion: "estricta"
+                tipoValidacion: "intercambiable_planes"
             },
             {
                 condicion: "Tasa de interés",
@@ -1577,7 +1583,7 @@
                 opciones: [
                     "Multiplicando el valor UVA en la cuota por la cotización UVA en la fecha de vencimiento.",
                     "Multiplicando el monto original del préstamo por una comisión fija del 16%.",
-                    "Utilizando el valor UVA desde la fecha en que se firmó el acuerdo"
+                    "Utilizando el valor UVA desde la fecha en que se firmó el acuerdo de refinanciamiento"
                 ],
                 correcta: 0
             },
@@ -1586,7 +1592,8 @@
                 opciones: [
                     "12 a 36 cuotas - TNA 16%",
                     "6 a 48 cuotas - TNA 49% -90ddm / TNA 46% +90 ddm",
-                    "12 a 36 cuotas - TNA 63%"
+                    "12 a 36 cuotas - TNA 63% -90 ddm / TNA 54% +90 ddm",
+                    "24 a 36 cuotas - TNA 35%"
                 ],
                 correcta: 1
             },
@@ -1597,11 +1604,16 @@
             },
             {
                 enunciado: "¿Qué deudas incluye el Plan V en un único plan de cuotas?",
-                opciones: ["La deuda total de Visa o Amex del cliente", "Únicamente adelantos de efectivo recientes", "Solo compras en un solo comercio adherido"],
+                opciones: [
+                    "La deuda total de Visa o Amex del cliente",
+                    "Únicamente adelantos de efectivo recientes",
+                    "Solo compras en un solo comercio adherido",
+                    "Gastos de mantenimiento y comisiones bancarias"
+                ],
                 correcta: 0
             },
             {
-                enunciado: "¿Cuáles de las siguientes son condiciones generales para la refinanciación? (Múltiple)",
+                enunciado: "¿Cuáles de las siguientes son condiciones generales para la refinanciación? (Seleccione todas las que correspondan)",
                 opciones: [
                     "El titular debe ser menor de 80 años.",
                     "La refinanciación solo puede realizarse con el titular de la cuenta.",
@@ -1613,23 +1625,132 @@
             },
             {
                 enunciado: "Identifica los tres tipos de promesa mencionados.",
-                opciones: ["Promesa inmediata, diferida y contingente", "Promesa total, por producto y monto cliente", "Promesa total, prioritaria y parcial"],
+                opciones: [
+                    "Promesa inmediata, diferida y contingente",
+                    "Promesa flexible, escalonada y con garantía",
+                    "Promesa total, por producto y monto cliente",
+                    "Promesa total, prioritaria y parcial"
+                ],
                 correcta: 2
             },
             {
                 enunciado: "¿Cómo sabemos si el cliente aplica a refi caba?",
-                opciones: ["Revisamos si el domicilio registrado es en CABA", "Tiene que tener el banner en las campañas de gamora", "Le preguntamos si le llegó el mail con el ofrecimiento"],
+                opciones: [
+                    "Revisamos si el domicilio registrado es en CABA",
+                    "Tiene que tener el banner en las campañas de gamora",
+                    "Le preguntamos si le llegó el mail con el ofrecimiento"
+                ],
                 correcta: 1
             },
             {
                 enunciado: "¿Cuándo se paga la primera cuota del Plan V?",
-                opciones: ["En el próximo cierre de la tarjeta", "En el mismo día de adhesión", "Al segundo cierre posterior"],
+                opciones: [
+                    "En el próximo cierre de la tarjeta",
+                    "En el mismo día de adhesión",
+                    "Al segundo cierre posterior"
+                ],
                 correcta: 0
             },
             {
                 enunciado: "El plazo máximo para pactar una promesa depende principalmente de:",
-                opciones: ["La tasa de interés vigente", "La cantidad de productos contratados", "El tramo de mora del cliente"],
-                correcta: 2
+                opciones: [
+                    "La tasa de interés vigente",
+                    "La cantidad de productos contratados",
+                    "El monto original del contrato",
+                    "El tramo de mora del cliente"
+                ],
+                correcta: 3
+            },
+            {
+                enunciado: "¿Cuál es el objetivo principal al priorizar productos con mayor cantidad de días en mora al negociar una promesa?",
+                opciones: [
+                    "Que deje de aplicarse interés a la deuda",
+                    "Reducir la cantidad de días en mora y bajar de tramo",
+                    "Seleccionar productos con menor deuda para cerrar rápido"
+                ],
+                correcta: 1
+            },
+            {
+                enunciado: "Selecciona la afirmación correcta sobre el Plan V.",
+                opciones: [
+                    "La tarjeta no se da de baja al activarse el plan",
+                    "La tarjeta se bloquea hasta cancelar todo",
+                    "La tarjeta pierde su línea disponible",
+                    "La tarjeta migra a otra marca bancaria"
+                ],
+                correcta: 0
+            },
+            {
+                enunciado: "En el sistema Gamora, ¿para qué sirve la verificación del estado de las promesas?",
+                opciones: [
+                    "Corroborar si promesas están cumplidas, pendientes o quebradas",
+                    "Calcular intereses automáticos del préstamo",
+                    "Para ver si ya hizo un compromiso y ofrecer un plan de pagos directamente"
+                ],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Cuál es el objetivo principal al ofrecer Plan V Consolidado?",
+                opciones: [
+                    "Financiar la deuda manteniendo el producto activo",
+                    "Reducir la tasa de interés de la tarjeta",
+                    "Aumentar el límite de compras de la tarjeta"
+                ],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Cómo se determina la primer cuota de refi?",
+                opciones: [
+                    "Con el calendario a 45 días, priorizando el ofrecimiento el 5 del mes siguiente",
+                    "La primer fecha es en 45 días",
+                    "Del 5 al 20 del mes siguiente"
+                ],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Qué pasa con el saldo en dólares de tarjeta MasterCard cuando hago plan m?",
+                opciones: [
+                    "Queda por fuera del plan y se abona en el próximo resumen",
+                    "Se incluye en el plan, pesificando el monto con el tipo de cambio del día",
+                    "Se tiene que pagar primero y después podemos hacer el plan"
+                ],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué productos NO son refinanciables?",
+                opciones: [
+                    "Hipotecarios / Prendarios / Refinanciaciones activas",
+                    "Hipotecarios / Préstamos UVA",
+                    "Cuenta continuadora / Cuenta deudora"
+                ],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Qué pasa con al cuenta corriente si hago refi?",
+                opciones: [
+                    "Se incluye si o si para darse de baja",
+                    "No es un producto refinanciable",
+                    "Si no tiene saldo pendiente el cliente puede elegir incluirla o no"
+                ],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Cuál es el plazo de cuotas de Plan M?",
+                opciones: [
+                    "12 a 36",
+                    "6 a 36",
+                    "6 a 48"
+                ],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Por qué productos se puede hacer gestión multiproducto?",
+                opciones: [
+                    "Promesa de préstamos o tarjetas + Plan V/Plan M",
+                    "Promesa de préstamos + Refinanciación de tarjetas",
+                    "Promesa de tarjetas + Refinanciación"
+                ],
+                correcta: 0
             }
         ];
 
@@ -1650,17 +1771,50 @@
             {
                 categoria: "💳 Tarjetas de crédito",
                 preguntas: [
-                    "¿Cuál es el producto causante?", "¿Qué productos están activos?", "¿Cuánto es la deuda vencida actual?",
-                    "¿Cuál es el importe del resumen más vencido?", "¿Cuándo es el próximo vencimiento?", "¿Cuándo fue el último cierre?",
-                    "¿Cuándo realizó el último pago?", "¿En qué mes comenzó la deuda?", "¿Posee adicionales?", "¿Tiene débito automático?", "¿Posee Planes V activos?"
+                    "¿Cuál es o fue el producto causante?",
+                    "¿Qué productos están activos?",
+                    "¿Cuánto es la deuda vencida actual?",
+                    "¿Cuál es el importe del resumen más vencido en su tarjeta de crédito?",
+                    "¿Cuándo es el próximo vencimiento?",
+                    "¿Cuándo fue el último cierre en la tarjeta de crédito?",
+                    "¿Cuándo realizó el último pago?",
+                    "¿En qué mes comenzó la deuda?",
+                    "¿Posee adicionales en su tarjeta de crédito?",
+                    "¿Tiene la tarjeta de crédito adherida al débito automático? ¿A qué caja de ahorro?",
+                    "¿En la tarjeta de crédito posee Planes V activos?"
                 ]
             },
             {
                 categoria: "📋 Preguntas de refi",
                 preguntas: [
-                    "¿Tiene una refinanciación activa? ¿In UVA o tasa fija?", "¿La refinanciación es un préstamo? Justificar",
-                    "¿Cuándo se dió de alta?", "¿Qué productos están incluidos?", "¿Cuánto era el monto inicial?",
-                    "¿Cuántas cuotas tiene pendientes?", "¿Cuántas cuotas futuras le quedan?", "¿Cuál es el importe de la cuota?"
+                    "¿Tiene una refinanciación activa? ¿En UVA o tasa fija?",
+                    "¿La refinanciación es un préstamo? Justificar",
+                    "¿Cuándo se dio de alta?",
+                    "¿Qué productos están incluidos?",
+                    "¿Cuánto era el monto inicial?",
+                    "¿Cuál es la cantidad total de cuotas en la cuál hizo la refinanciación?",
+                    "¿Cuántas cuotas tiene pendientes de pago?",
+                    "¿Cuántas cuotas futuras le quedan para finalizar la refinanciación?",
+                    "¿Cuál es el importe de la cuota?",
+                    "¿Cuál es la cuota más antigua pendiente?"
+                ]
+            },
+            {
+                categoria: "🔄 Consumos por fuera",
+                preguntas: [
+                    "¿Qué consumos exactamente quedaron por fuera de la refinanciación?",
+                    "¿Corresponde que pague o que haga el reclamo?",
+                    "¿Sigue teniendo cuotas futuras pendientes o tiene la caída total de las cuotas?",
+                    "¿Se puede refinanciar nuevamente?"
+                ]
+            },
+            {
+                categoria: "💰 Caja de ahorro",
+                preguntas: [
+                    "¿Tiene movimientos recientes?",
+                    "¿Tiene caja de ahorro en pesos o en dólares?",
+                    "¿Recibe sus haberes por la Caja de BG?",
+                    "¿Observás ingresos recientes en el último mes? ¿De cuánto importe en total?"
                 ]
             }
         ];
@@ -1668,21 +1822,31 @@
         const pasosPlanVOriginal = [
             "Verificar que cumpla con las condiciones para acceder al plan.",
             "Ingresar en BC10 con el DU y copiar el N° de plástico (16 dígitos)",
-            "Ingresar en visa/amex con usuario y contraseña.",
-            "Seleccionar opción 22", "Seleccionar opción 18 (menos 15 ddm) / 19 (más 15ddm)",
-            "Pegar el número del plástico + INTRO", "Ingresar cantidad de cuotas + INTRO",
-            "Calcular el Pago extraordinario", "Click f6 para ver cuotas",
+            "Ingresar en visa/amex con usuario y contraseña correspondiente.",
+            "Seleccionar opción 22 + seleccionar opción 18 (menos 15 ddm) / 19 (más 15ddm)",
+            "Pegar el número del plástico + INTRO",
+            "Corroborar que la opción ingresada (18/19) is correcta.",
+            "Ingresar cantidad de cuotas + INTRO",
+            "Calcular el Pago extraordinario (restando monto total - monto financiado)",
+            "Click f6 para ver cuotas",
+            "En caso de tener que recalcular cuotas, volver a la selección 18/19 y repetir el procedimiento",
             "Confirmar el plan post validación de identidad + lectura de contrato con f9+f9"
         ];
 
         const pasosPlanMOriginal = [
             "Verificar que cumpla con las condiciones para acceder al plan.",
             "Ingresar en BC10 con el DU y copiar el N° de plástico (16 dígitos)",
-            "Ingresar en mastercard con usuario y contraseña.",
+            "Ingresar en mastercard con usuario y contraseña correspondiente.",
             "Ingresar en la opción 19 para corroborar estado de inhibición.",
+            "Ingresar en la primer opción: ACTUALIZACIÓN DE MARCAS DE INHIBICIÓN con INTRO - Tabular hasta Numero de tarjeta y pegar los 16 dígitos + intro",
+            "Corroborar estado actual: si dice SI modificar en estado nuevo escribiendo NO + intro - Vovler al menú principal con f3",
             "Ingresar en la opción 09 para simular el plan --> Pegar número de tarjeta",
-            "Realizar caida de cuotas a futuro: F1", "Ingresar en la opción F2 - Plan M Consolidado",
-            "Confirmar calculo deuda con INTRO e ingresar cuotas", "Confirmar alta con fecha de vencimiento + F12"
+            "Realizar caida de cuotas a futuro: F1 (seleccionar los consumos con 'S', confirmar con F12+intro - Volver con f3 a la página anterior",
+            "Ingresar en la opción F2 - Seleccionar con 'S' Plan M Consolidado + intro",
+            "Confirmar calculo deuda con INTRO e ingresar cantidad de cuotas con 3 dígitos + intro",
+            "En caso de tener que recalcular cuotas, volver con f3 a página anterior, ingresar cuotas + intro.",
+            "Si das de alta: agregá fecha de vencimiento de plastico (MM/AA) + F12",
+            "Si no das de alta: anular caida de cuotas (Menú inicial- Ingresar opción F4= F12 + Shift-F2) - Volver a inhibir (opción 19 completo - estado nuevo SI)"
         ];
 
         let pasosPlanVMezclados = [];
@@ -1741,7 +1905,7 @@
             const act2Container = document.getElementById('act2-form-container');
             act2Container.innerHTML = casosActividad2.map((caso, idx) => `
                 <div class="activity-item">
-                    <label><b>💬 Caso ${idx + 1}:</b> "${caso}"</label>
+                    <label><b>💬 Caso ${idx + 1}:</b> ${caso}</label>
                     <textarea class="form-control" id="act2_resp_${idx}" placeholder="✍️ Escribí tu respuesta reconduciendo activamente a la cobranza..."></textarea>
                 </div>
             `).join('');
@@ -1918,7 +2082,7 @@
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-sistemas-1', '🔍 Investigá al cliente')">
                             <div class="card-title" style="color: #FF6600; font-size: 20px;">🔍 Actividad 1: Investigá al cliente</div>
-                            <div class="card-desc" style="color: var(--text-main);">Búsqueda y extracción de datos básicos del cliente en los sistemas. (Permite reintentar)</div>
+                            <div class="card-desc" style="color: var(--text-main);">Búsqueda y extracción de datos detallados del cliente en los sistemas. (Permite reintentar)</div>
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
@@ -2271,7 +2435,7 @@
 
             for(let i = 0; i < casosActividad2.length; i++) {
                 let txt = document.getElementById(`act2_resp_${i}`).value.trim();
-                detalleTexto += `• Caso ${i+1} ("${casosActividad2[i]}"): "${txt}"\n`;
+                detalleTexto += `• Caso ${i+1}: "${txt}"\n`;
                 if(txt.length > 0) {
                     respondidos++;
                     let l = txt.toLowerCase();
@@ -2439,7 +2603,7 @@
                 document.getElementById('stat-cat-proc').innerText = "0 / 3";
                 document.getElementById('stat-cat-sistemas').innerText = "0 / 2";
                 document.getElementById('chart-precision-list').innerHTML = `<p style="font-size:13px; color:var(--text-muted);">Sin datos registrados.</p>`;
-                document.getElementById('feedback-text').innerText = "Complete actividades para visualizar el diagnóstico operativo.";
+                document.getElementById('feedback-text').innerText = "Complete al menos una actividad para generar el análisis automatizado de fortalezas, oportunidades de mejora y recomendaciones.";
                 document.getElementById('tabla-resultados-body').innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No hay registros disponibles.</td></tr>`;
                 return;
             }
@@ -2480,10 +2644,34 @@
             });
             document.getElementById('chart-precision-list').innerHTML = htmlPrec;
 
+            let actividadesCriticas = filtrados.filter(r => r.puntaje < 70);
+            let diagnosticoHTML = "";
+
+            if(promedio >= 90) {
+                diagnosticoHTML = `
+                    <p>🌟 <b>Desempeño sobresaliente:</b> El equipo / asesor demuestra un sólido dominio de los procesos operativos, calidad de gestión y uso de sistemas bancarios.</p>
+                    <p style="margin-top: 8px;">• <b>Fortalezas destacadas:</b> Precisión elevada en validaciones, cumplimiento normativo y excelente reconducción de cobranza.</p>
+                    <p style="margin-top: 8px;">• <b>Recomendación:</b> Mantener el estándar de calidad y servir de referente en la operatoria diaria.</p>
+                `;
+            } else if(promedio >= 65) {
+                diagnosticoHTML = `
+                    <p>⚠️ <b>Desempeño regular con áreas de mejora:</b> Se observa un rendimiento general aceptable, pero existen desvíos puntuales en actividades específicas.</p>
+                    <p style="margin-top: 8px;">• <b>Oportunidades de mejora detectadas:</b> Se registran puntajes menores en actividades vinculadas a <span style="color:var(--galicia-orange); font-weight:700;">${actividadesCriticas.length > 0 ? actividadesCriticas.map(a => a.actividad).join(', ') : 'procedimientos y validaciones'}</span>.</p>
+                    <p style="margin-top: 8px;">• <b>Plan de Acción Operativo:</b> Repasar los lineamientos institucionales en la matriz de planes de pago y reforzar la indagación de la situación económica antes de ofrecer alternativas.</p>
+                `;
+            } else {
+                diagnosticoHTML = `
+                    <p>🚨 <b>Atención requerida - Desvíos críticos:</b> El promedio actual refleja dificultades importantes en la asimilación de los procedimientos operativos y de gestión.</p>
+                    <p style="margin-top: 8px;">• <b>Desvíos principales identificados:</b> Errores recurrentes en protocolos de validación de identidad, manejo de objeciones y ordenamiento de pasos en sistemas.</p>
+                    <p style="margin-top: 8px;">• <b>Plan de Acción Operativo Urgente:</b> Se recomienda realizar un reentrenamiento guiado utilizando los simuladores interactivos de la plataforma y programar una sesión de refuerzo con el supervisor a cargo.</p>
+                `;
+            }
+
+            document.getElementById('feedback-text').innerHTML = diagnosticoHTML;
+
             let tbody = document.getElementById('tabla-resultados-body');
             tbody.innerHTML = "";
             filtrados.forEach(r => {
-                let detalleTooltip = (r.detalleRespuestas || "").replace(/\n/g, '<br>');
                 tbody.innerHTML += `
                     <tr>
                         <td>${r.fecha}</td>
@@ -2491,11 +2679,6 @@
                         <td>${r.actividad}</td>
                         <td><b>${r.puntaje} pts</b></td>
                         <td><span class="badge ${r.claseCss}">${r.clasificacion}</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" style="background: #FAFAFA; font-size: 12px; color: var(--text-muted); border-bottom: 2px solid var(--border-color); padding: 8px 16px;">
-                            <b>🔍 Detalle de respuestas 1x1:</b><br>${detalleTooltip || "Sin detalle almacenado"}
-                        </td>
                     </tr>
                 `;
             });
