@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📊 Dashboard Visual de Respuestas | Banco Galicia</title>
+    <title>📊 Panel de Respuestas y Evaluaciones | Banco Galicia</title>
     <style>
         :root {
             --galicia-orange: #FF6600;
@@ -28,42 +28,54 @@
         body {
             background-color: var(--neutral-bg);
             color: var(--text-main);
-            padding: 25px;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        #login-screen-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, #FFF3EB 0%, #FFE5D0 100%);
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .screen.active {
             display: flex;
+        }
+
+        #login-screen {
             justify-content: center;
             align-items: center;
-            z-index: 99999;
+            background: linear-gradient(135deg, #FFF3EB 0%, #FFE5D0 100%);
         }
 
         .login-card {
             background: var(--white);
             padding: 45px;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(255,102,0,0.15);
+            box-shadow: 0 15px 35px rgba(255,102,0,0.1);
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             text-align: center;
             border-top: 6px solid var(--galicia-orange);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .login-card h2 {
             margin-bottom: 8px;
             color: var(--text-main);
-            font-size: 24px;
+            font-size: 26px;
         }
 
         .login-card p {
             color: var(--text-muted);
-            font-size: 13px;
+            font-size: 14px;
             margin-bottom: 25px;
         }
 
@@ -80,25 +92,23 @@
             color: var(--text-main);
         }
 
-        .login-card input {
+        .login-card input, .form-control {
             width: 100%;
             padding: 12px 16px;
             border: 2px solid var(--border-color);
             border-radius: 10px;
-            font-size: 15px;
+            font-size: 14px;
             transition: all 0.2s;
             background: var(--white);
-            font-weight: 600;
-            text-align: center;
         }
 
-        .login-card input:focus {
+        .login-card input:focus, .form-control:focus {
             outline: none;
             border-color: var(--galicia-orange);
             box-shadow: 0 0 0 4px rgba(255,102,0,0.12);
         }
 
-        .btn-galicia-login {
+        .btn-galicia {
             background: linear-gradient(135deg, var(--galicia-orange) 0%, var(--galicia-dark-orange) 100%);
             color: var(--white);
             border: none;
@@ -109,231 +119,99 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.1s, box-shadow 0.2s;
+            margin-top: 10px;
             box-shadow: 0 4px 12px rgba(255,102,0,0.25);
         }
-        .btn-galicia-login:hover { transform: translateY(-2px); }
 
-        #dashboard-main-content {
-            display: none;
+        .btn-galicia:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255,102,0,0.35);
         }
 
-        .container {
-            max-width: 1450px;
-            margin: 0 auto;
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            background-color: var(--neutral-bg);
+            padding: 30px;
         }
 
         header {
+            background: var(--white);
+            padding: 20px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            border-radius: 14px;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 20px;
+            color: var(--text-main);
+        }
+
+        .card-container {
             background: var(--white);
-            padding: 20px 30px;
+            padding: 30px;
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             border: 1px solid var(--border-color);
             margin-bottom: 20px;
         }
 
-        header h1 { font-size: 22px; color: var(--text-main); }
-
-        .btn-header {
-            background: linear-gradient(135deg, var(--galicia-orange) 0%, var(--galicia-dark-orange) 100%);
-            color: var(--white);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .tabs-nav {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            background: var(--white);
-            border: 1px solid var(--border-color);
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .tab-btn:hover, .tab-btn.active {
-            background: #FFF3EB;
-            color: var(--galicia-orange);
-            border-color: #FFD0B5;
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        .card-box {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            margin-bottom: 20px;
-        }
-
-        .filters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .filter-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 14px;
-            background: var(--white);
-            font-weight: 600;
-        }
-
         .kpi-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .kpi-card {
             background: var(--white);
-            padding: 18px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 14px;
             border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
             border-left: 4px solid var(--galicia-orange);
         }
 
-        .kpi-card span { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
-        .kpi-card h3 { font-size: 22px; color: var(--text-main); margin-top: 4px; }
-
-        .eval-card {
-            background: var(--white);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        .kpi-card span {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        .eval-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--neutral-bg);
-            padding-bottom: 15px;
-            margin-bottom: 15px;
+        .kpi-card h4 {
+            font-size: 24px;
+            color: var(--text-main);
+            margin-top: 6px;
         }
 
-        .tabla-matriz-reporte {
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
-            background: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
+            margin-top: 15px;
         }
 
-        .tabla-matriz-reporte th {
-            background: linear-gradient(135deg, var(--galicia-orange) 0%, var(--galicia-dark-orange) 100%);
-            color: white;
-            text-align: center;
-            padding: 12px;
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
             font-size: 13px;
         }
 
-        .tabla-matriz-reporte td {
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            font-size: 12px;
-            vertical-align: top;
-            color: var(--text-main);
-            line-height: 1.5;
-        }
-
-        .tabla-matriz-reporte td.header-row {
-            background: var(--neutral-bg);
+        th {
+            background-color: var(--neutral-bg);
+            color: var(--text-muted);
             font-weight: 700;
-            width: 22%;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .items-grid-visual {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 12px;
-        }
-
-        .item-row-visual {
-            border-radius: 10px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .item-row-correct { background: #F0FDF4; border-color: #BBF7D0; }
-        .item-row-incorrect { background: #FEF2F2; border-color: #FECACA; }
-
-        .item-row-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .comparison-badge-container {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 4px;
-        }
-
-        .pill-status { padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
-        .pill-cumplido { background: #D1FAE5; color: #065F46; }
-        .pill-nocumplido { background: #FEE2E2; color: #991B1B; }
-        .pill-noaplica { background: #F3F4F6; color: #4B5563; }
-
-        .obs-box {
-            background: #FFF8F0;
-            border-left: 3px solid var(--galicia-orange);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            color: var(--text-main);
-            margin-top: 4px;
         }
 
         .badge {
-            padding: 5px 12px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: 700;
@@ -344,378 +222,138 @@
         .bg-oportunidades { background-color: var(--warning); }
         .bg-refuerzo { background-color: #F97316; }
         .bg-critico { background-color: var(--danger); }
-
-        .loading-state { text-align: center; padding: 40px; color: var(--text-muted); font-weight: 600; }
     </style>
 </head>
 <body>
 
-    <div id="login-screen-overlay">
+    <!-- Pantalla de Acceso Staff -->
+    <div id="login-screen" class="screen active">
         <div class="login-card">
             <h2>🟧 Banco Galicia</h2>
             <p>Panel Exclusivo de Respuestas y Evaluaciones</p>
             <div class="input-group">
                 <label>🔐 Ingrese Código de Acceso</label>
-                <!-- Atributos anti-autocompletado y placeholder solicitado -->
-                <input type="text" id="pass-code-field" name="random_unique_field_name" placeholder="INGRESÁ EL CÓDIGO DE ACCESO" autocomplete="off" onkeypress="if(event.key === 'Enter') chequearAccesoStaff()">
+                <input type="password" id="access-code" placeholder="INGRESÁ EL CÓDIGO DE ACCESO">
             </div>
-            <button class="btn-galicia-login" onclick="chequearAccesoStaff()">🚀 Ingresar al Dashboard</button>
+            <button class="btn-galicia" onclick="validarAccesoStaff()">🚀 Ingresar al Dashboard</button>
         </div>
     </div>
 
-    <div id="dashboard-main-content">
-        <div class="container">
+    <!-- Panel Principal Staff -->
+    <div id="main-app" class="screen">
+        <div class="main-content">
             <header>
-                <h1>📊 Dashboard Visual de Respuestas | Banco Galicia</h1>
-                <button class="btn-header" onclick="cargarDatosSheet()">🔄 Actualizar Datos</button>
+                <h1>📊 Panel General de Monitoreo y Evaluaciones</h1>
+                <button class="btn-galicia" style="width:auto; margin:0; padding:8px 16px;" onclick="location.reload()">🔄 Actualizar Datos</button>
             </header>
 
-            <div class="tabs-nav">
-                <button class="tab-btn active" onclick="cambiarTab('resumen', this)">📊 Resumen General</button>
-                <button class="tab-btn" onclick="cambiarTab('sistemas', this)">💻 Uso de Sistemas</button>
-                <button class="tab-btn" onclick="cambiarTab('proc', this)">📋 Procedimientos y Condiciones</button>
-                <button class="tab-btn" onclick="cambiarTab('gestion', this)">🎧 Calidad de la Gestión</button>
-            </div>
-
-            <div id="tab-resumen" class="tab-content active">
-                <div class="kpi-container">
-                    <div class="kpi-card"><span>📊 Total Evaluaciones</span><h3 id="kpi-total">0</h3></div>
-                    <div class="kpi-card"><span>⭐ Puntaje Promedio</span><h3 id="kpi-promedio">0 pts</h3></div>
-                    <div class="kpi-card"><span>🏆 Tasa de Aprobación</span><h3 id="kpi-aprobacion">0%</h3></div>
-                    <div class="kpi-card"><span>👤 Asesores Activos</span><h3 id="kpi-asesores">0</h3></div>
+            <div class="kpi-container">
+                <div class="kpi-card">
+                    <span>📊 Total Evaluaciones</span>
+                    <h4 id="kpi-total">0</h4>
                 </div>
-                <div class="card-box">
-                    <h3 style="margin-bottom: 15px; font-size: 16px; color: var(--galicia-orange);">📈 Promedio por Actividad</h3>
-                    <div id="resumen-barras-actividades"></div>
+                <div class="kpi-card">
+                    <span>⭐ Puntaje Promedio</span>
+                    <h4 id="kpi-promedio">0 pts</h4>
+                </div>
+                <div class="kpi-card">
+                    <span>👥 Asesores Evaluados</span>
+                    <h4 id="kpi-asesores">0</h4>
                 </div>
             </div>
 
-            <div id="tab-sistemas" class="tab-content">
-                <div class="card-box">
-                    <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">💻 USO DE SISTEMAS - Detalle Visual 1x1</h3>
-                    <div class="filters-grid">
-                        <div class="filter-group">
-                            <label>🎯 Seleccionar Actividad:</label>
-                            <select id="sel-act-sistemas" class="form-control" onchange="renderizarVisualCategoria('sistemas')">
-                                <option value="ALL">-- Todas las actividades de Sistemas --</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label>👤 Filtrar por Asesor:</label>
-                            <select id="sel-asesor-sistemas" class="form-control" onchange="renderizarVisualCategoria('sistemas')">
-                                <option value="ALL">🌟 Todos los Asesores</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="container-visual-sistemas" style="margin-top: 20px;"></div>
+            <div class="card-container">
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 6px;">🔍 Filtrar por Asesor:</label>
+                    <select id="filter-advisor" class="form-control" style="max-width: 350px;" onchange="renderizarTablaStaff()">
+                        <option value="ALL">🌟 Ver Todos los Asesores</option>
+                    </select>
                 </div>
-            </div>
 
-            <div id="tab-proc" class="tab-content">
-                <div class="card-box">
-                    <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">📋 PROCEDIMIENTOS Y CONDICIONES - Detalle Visual 1x1</h3>
-                    <div class="filters-grid">
-                        <div class="filter-group">
-                            <label>🎯 Seleccionar Actividad:</label>
-                            <select id="sel-act-proc" class="form-control" onchange="renderizarVisualCategoria('proc')">
-                                <option value="ALL">-- Todas las actividades de Procedimientos --</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label>👤 Filtrar por Asesor:</label>
-                            <select id="sel-asesor-proc" class="form-control" onchange="renderizarVisualCategoria('proc')">
-                                <option value="ALL">🌟 Todos los Asesores</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="container-visual-proc" style="margin-top: 20px;"></div>
-                </div>
-            </div>
-
-            <div id="tab-gestion" class="tab-content">
-                <div class="card-box">
-                    <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">🎧 CALIDAD DE LA GESTIÓN - Detalle Visual 1x1</h3>
-                    <div class="filters-grid">
-                        <div class="filter-group">
-                            <label>🎯 Seleccionar Actividad:</label>
-                            <select id="sel-act-gestion" class="form-control" onchange="renderizarVisualCategoria('gestion')">
-                                <option value="ALL">-- Todas las actividades de Calidad --</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label>👤 Filtrar por Asesor:</label>
-                            <select id="sel-asesor-gestion" class="form-control" onchange="renderizarVisualCategoria('gestion')">
-                                <option value="ALL">🌟 Todos los Asesores</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="container-visual-gestion" style="margin-top: 20px;"></div>
-                </div>
+                <h3>📋 Historial de Registros de la Plataforma</h3>
+                <table>
+                   <thead>
+                       <tr>
+                           <th>📅 Fecha</th>
+                           <th>👤 Asesor</th>
+                           <th>🎯 Actividad</th>
+                           <th>⭐ Puntaje</th>
+                           <th>🏆 Clasificación</th>
+                       </tr>
+                   </thead>
+                   <tbody id="tabla-resultados-body">
+                       <tr><td colspan="5" style="text-align:center; color:var(--text-muted);">Cargando registros...</td></tr>
+                   </tbody>
+                </table>
             </div>
         </div>
     </div>
 
     <script>
+        let registrosGlobales = [];
         const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbwmYkKxHXKSE5U1IoypYKBULNaJZl8rBQ0FRfnUNeRV67op3u0VoUJlH3GxeIsj/exec";
-        let datosGlobales = [];
 
-        const claveAudio1 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
-        const claveAudio2 = ["CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO"];
-        const claveAudio3 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
-
-        function chequearAccesoStaff() {
-            let txtBox = document.getElementById('pass-code-field');
-            let ingresado = txtBox.value.trim().toUpperCase();
-
-            if (ingresado === "STAFF.BG") {
-                document.getElementById('login-screen-overlay').style.display = 'none';
-                document.getElementById('dashboard-main-content').style.display = 'block';
-                cargarDatosSheet();
-            } else {
-                txtBox.value = "";
-                txtBox.focus();
+        function validarAccesoStaff() {
+            const codigo = document.getElementById('access-code').value.trim();
+            if (codigo.toLowerCase() !== "staff.individuos") {
+                alert("❌ Código de acceso incorrecto. Utilice 'staff.individuos'.");
+                return;
             }
+            document.getElementById('login-screen').classList.remove('active');
+            document.getElementById('main-app').classList.add('active');
+            cargarDatosRemotos();
         }
 
-        function cargarDatosSheet() {
+        function cargarDatosRemotos() {
+            if(!urlGoogleSheet) return;
             fetch(urlGoogleSheet)
-                .then(res => res.json())
+                .then(response => response.json())
                 .then(data => {
                     if(Array.isArray(data)) {
-                        datosGlobales = data;
-                        inicializarFiltrosYVistas();
+                        registrosGlobales = data;
+                        let asesores = [...new Set(registrosGlobales.map(r => r.asesor))];
+                        let select = document.getElementById('filter-advisor');
+                        let valAct = select.value;
+                        select.innerHTML = '<option value="ALL">🌟 Ver Todos los Asesores</option>';
+                        asesores.forEach(a => select.innerHTML += `<option value="${a}">👤 ${a}</option>`);
+                        select.value = valAct;
+                        renderizarTablaStaff();
                     }
                 })
-                .catch(err => console.error("Error al conectar:", err));
+                .catch(err => {
+                    console.error("Error al sincronizar:", err);
+                    document.getElementById('tabla-resultados-body').innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--danger);">Error al conectar con el servidor de registros.</td></tr>`;
+                });
         }
 
-        function cambiarTab(tabId, btn) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-            btn.classList.add('active');
-        }
+        function renderizarTablaStaff() {
+            let filtro = document.getElementById('filter-advisor').value;
+            let filtrados = filtro === "ALL" ? registrosGlobales : registrosGlobales.filter(r => r.asesor === filtro);
 
-        function inicializarFiltrosYVistas() {
-            let asesores = [...new Set(datosGlobales.map(r => r.asesor))].sort();
-
-            ['sistemas', 'proc', 'gestion'].forEach(cat => {
-                let selAsesor = document.getElementById(`sel-asesor-${cat}`);
-                selAsesor.innerHTML = '<option value="ALL">🌟 Todos los Asesores</option>';
-                asesores.forEach(a => { selAsesor.innerHTML += `<option value="${a}">👤 ${a}</option>`; });
-            });
-
-            poblarSelectActividades('sistemas', ["Investigá al cliente", "Planes de pago"]);
-            poblarSelectActividades('proc', ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"]);
-            poblarSelectActividades('gestion', ["Auditá la gestión", "responderías", "camino", "Caso"]);
-
-            renderizarResumenGeneral();
-            renderizarVisualCategoria('sistemas');
-            renderizarVisualCategoria('proc');
-            renderizarVisualCategoria('gestion');
-        }
-
-        function poblarSelectActividades(cat, keywords) {
-            let select = document.getElementById(`sel-act-${cat}`);
-            select.innerHTML = `<option value="ALL">-- Todas las actividades --</option>`;
-            let actividadesEnDatos = [...new Set(datosGlobales.map(r => r.actividad))];
-            actividadesEnDatos.forEach(act => {
-                if(keywords.some(k => act.includes(k))) {
-                    select.innerHTML += `<option value="${act}">🎯 ${act}</option>`;
-                }
-            });
-        }
-
-        function renderizarResumenGeneral() {
-            let total = datosGlobales.length;
-            let suma = datosGlobales.reduce((acc, curr) => acc + Number(curr.puntaje || 0), 0);
-            let promedio = total > 0 ? Math.round(suma / total) : 0;
-            let aprobados = datosGlobales.filter(r => Number(r.puntaje) >= 65).length;
-            let tasaAprobacion = total > 0 ? Math.round((aprobados / total) * 100) : 0;
-            let asesoresUnicos = new Set(datosGlobales.map(r => r.asesor)).size;
-
-            document.getElementById('kpi-total').innerText = total;
-            document.getElementById('kpi-promedio').innerText = promedio + " pts";
-            document.getElementById('kpi-aprobacion').innerText = tasaAprobacion + "%";
-            document.getElementById('kpi-asesores').innerText = asesoresUnicos;
-
-            let actividadesUnicas = [...new Set(datosGlobales.map(r => r.actividad))];
-            let html = "";
-            actividadesUnicas.forEach(act => {
-                let regs = datosGlobales.filter(r => r.actividad === act);
-                let prom = regs.length > 0 ? Math.round(regs.reduce((a,c) => a + Number(c.puntaje),0) / regs.length) : 0;
-                html += `
-                    <div style="margin-bottom: 12px;">
-                        <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:4px;">
-                            <span>📌 ${act}</span><span><b>${prom}%</b> (${regs.length} evaluaciones)</span>
-                        </div>
-                        <div style="width:100%; height:8px; background:var(--border-color); border-radius:4px; overflow:hidden;">
-                            <div style="height:100%; width:${prom}%; background:var(--galicia-orange); border-radius:4px;"></div>
-                        </div>
-                    </div>
-                `;
-            });
-            document.getElementById('resumen-barras-actividades').innerHTML = html || "<p style='color:var(--text-muted); font-size:13px;'>Sin registros todavía.</p>";
-        }
-
-        function renderizarVisualCategoria(cat) {
-            let keywords = cat === 'sistemas' ? ["Investigá al cliente", "Planes de pago"] :
-                           (cat === 'proc' ? ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"] : ["Auditá la gestión", "responderías", "camino", "Caso"]);
-
-            let selectAct = document.getElementById(`sel-act-${cat}`).value;
-            let selectAsesor = document.getElementById(`sel-asesor-${cat}`).value;
-
-            let filtrados = datosGlobales.filter(r => {
-                let matchCat = keywords.some(k => r.actividad.includes(k));
-                let matchAct = (selectAct === "ALL" || r.actividad === selectAct);
-                let matchAsesor = (selectAsesor === "ALL" || r.asesor === selectAsesor);
-                return matchCat && matchAct && matchAsesor;
-            });
-
-            let container = document.getElementById(`container-visual-${cat}`);
-            container.innerHTML = "";
+            document.getElementById('kpi-total').innerText = filtrados.length;
+            let unicosAsesores = [...new Set(filtrados.map(r => r.asesor))].length;
+            document.getElementById('kpi-asesores').innerText = unicosAsesores;
 
             if(filtrados.length === 0) {
-                container.innerHTML = `<p class="loading-state">No se encontraron registros visuales para los filtros seleccionados.</p>`;
+                document.getElementById('kpi-promedio').innerText = "0 pts";
+                document.getElementById('tabla-resultados-body').innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No hay registros disponibles.</td></tr>`;
                 return;
             }
 
+            let suma = filtrados.reduce((acc, curr) => acc + curr.puntaje, 0);
+            document.getElementById('kpi-promedio').innerText = Math.round(suma / filtrados.length) + " pts";
+
+            let tbody = document.getElementById('tabla-resultados-body');
+            tbody.innerHTML = "";
             filtrados.forEach(r => {
-                let claseCss = Number(r.puntaje) >= 90 ? "bg-dominado" : (Number(r.puntaje) >= 65 ? "bg-oportunidades" : (Number(r.puntaje) >= 40 ? "bg-refuerzo" : "bg-critico"));
-                let lineas = (r.detalleRespuestas || "").split('\n').filter(l => l.trim() !== "");
-                let contenidoHtml = "";
-
-                if(r.actividad.includes("Planes de Pago (Paso a Paso)")) {
-                    let condicionesMap = {};
-                    let condActual = "";
-
-                    lineas.forEach(linea => {
-                        if(linea.includes("• Condición [")) {
-                            let match = linea.match(/\[(.*?)\]/);
-                            if(match) {
-                                condActual = match[1];
-                                condicionesMap[condActual] = { ref: "", planv: "", planm: "" };
-                            }
-                        } else if(condActual && condicionesMap[condActual]) {
-                            if(linea.includes("Refinanciación:")) condicionesMap[condActual].ref = linea.split("Refinanciación:")[1].trim();
-                            else if(linea.includes("Plan V:")) condicionesMap[condActual].planv = linea.split("Plan V:")[1].trim();
-                            else if(linea.includes("Plan M:")) condicionesMap[condActual].planm = linea.split("Plan M:")[1].trim();
-                        }
-                    });
-
-                    contenidoHtml = `<div style="overflow-x: auto;"><table class="tabla-matriz-reporte"><thead><tr><th>Condición</th><th>REFINANCIACIÓN</th><th>PLAN V</th><th>PLAN M</th></tr></thead><tbody>`;
-                    for(let cond in condicionesMap) {
-                        let data = condicionesMap[cond];
-                        contenidoHtml += `<tr><td class="header-row"><b>${cond}</b></td><td>${data.ref || "-"}</td><td>${data.planv || "-"}</td><td>${data.planm || "-"}</td></tr>`;
-                    }
-                    contenidoHtml += `</tbody></table></div>`;
-
-                } else if(r.actividad.includes("Auditá")) {
-                    let claveActiva = r.actividad.includes("audio_2") ? claveAudio2 : (r.actividad.includes("audio_3") ? claveAudio3 : claveAudio1);
-
-                    contenidoHtml = `<div class="items-grid-visual">`;
-                    lineas.forEach((linea, idx) => {
-                        let textoLimpio = linea.split('(Obs:')[0];
-                        let estadoRespondido = "CUMPLIDO";
-                        if(textoLimpio.includes("NO CUMPLIDO")) estadoRespondido = "NO CUMPLIDO";
-                        else if(textoLimpio.includes("NO APLICA")) estadoRespondido = "NO APLICA";
-
-                        let estadoEsperado = (claveActiva[idx] || "CUMPLIDO").trim().toUpperCase();
-
-                        let esCorrecto = (estadoRespondido === estadoEsperado);
-                        let rowClass = esCorrecto ? "item-row-correct" : "item-row-incorrect";
-                        let pillClass = estadoRespondido === "CUMPLIDO" ? "pill-cumplido" : (estadoRespondido === "NO CUMPLIDO" ? "pill-nocumplido" : "pill-noaplica");
-                        
-                        let partesObs = linea.split('(Obs:');
-                        let textoPregunta = partesObs[0].split(':')[0].replace('•', '').trim();
-                        let observacion = partesObs[1] ? partesObs[1].replace(')', '').trim() : "";
-
-                        contenidoHtml += `
-                            <div class="item-row-visual ${rowClass}">
-                                <div class="item-row-header">
-                                    <span>${textoPregunta}</span>
-                                </div>
-                                <div class="comparison-badge-container">
-                                    <span style="color:var(--text-muted);">Esperado: <b style="color:var(--text-main);">${estadoEsperado}</b></span>
-                                    <span>|</span>
-                                    <span>Respondido: <span class="pill-status ${pillClass}">${estadoRespondido}</span></span>
-                                </div>
-                                ${observacion ? `<div class="obs-box">💡 <b>Oportunidad de mejora:</b> ${observacion}</div>` : ''}
-                            </div>
-                        `;
-                    });
-                    contenidoHtml += `</div>`;
-
-                } else {
-                    contenidoHtml = `<div style="display:flex; flex-direction:column; gap:8px;">`;
-                    lineas.forEach(linea => {
-                        let esCorrecto = true;
-                        let lineaUpper = linea.toUpperCase();
-
-                        if (lineaUpper.includes("ORDEN DADO:") && lineaUpper.includes("(REAL:")) {
-                            let matchDado = linea.match(/Orden dado:\s*(\d+)/i);
-                            let matchReal = linea.match(/\(Real:\s*(\d+)\)/i);
-                            if (matchDado && matchReal) {
-                                let ordenDado = parseInt(matchDado[1]);
-                                let ordenReal = parseInt(matchReal[1]);
-                                esCorrecto = (ordenDado === ordenReal);
-                            }
-                        } else if (lineaUpper.includes("MARCÓ ->") && lineaUpper.includes("(ESPERADO:")) {
-                            let partesMarco = lineaUpper.split("MARCÓ ->")[1].split("(ESPERADO:");
-                            let asesorVal = partesMarco[0].trim().replace(/[^A-ZÁÉÍÓÚ]/g, "");
-                            let esperadoVal = partesMarco[1].replace(/[^A-ZÁÉÍÓÚ]/g, "").trim();
-                            esCorrecto = (asesorVal === esperadoVal);
-                        } else if (linea.includes("[Correcta:")) {
-                            let partes = linea.split("[Correcta:");
-                            let respAsesor = partes[0].replace(/^[•\-\d\.\s]+/, "").toLowerCase().trim();
-                            if(respAsesor.includes(':')) respAsesor = respAsesor.split(':')[1].trim();
-                            respAsesor = respAsesor.replace(/["']/g, "").trim();
-
-                            let respCorrecta = partes[1].replace("]", "").toLowerCase().trim();
-                            if(respCorrecta.includes(':')) respCorrecta = respCorrecta.split(':')[1].trim();
-                            respCorrecta = respCorrecta.replace(/["']/g, "").trim();
-
-                            esCorrecto = (respAsesor === respCorrecta || respAsesor.includes(respCorrecta) || respCorrecta.includes(respAsesor));
-                        } else if (linea.includes("Incorrecto") || linea.includes("FALSO (Incorrecto)")) {
-                            esCorrecto = false;
-                        }
-
-                        let icono = esCorrecto ? "✅" : "❌";
-                        let rowBg = esCorrecto ? "#F0FDF4" : "#FEF2F2";
-                        let borderColor = esCorrecto ? "#BBF7D0" : "#FECACA";
-
-                        let esTituloSeccion = linea.trim().endsWith(":") && !linea.includes("Paso");
-                        if (esTituloSeccion) {
-                            contenidoHtml += `
-                                <div style="background:var(--neutral-bg); padding:10px 14px; border-radius:8px; font-size:13px; font-weight:700; color:var(--text-main); border:1px solid var(--border-color); margin-top:5px;">
-                                    ${linea.replace('•', '').trim()}
-                                </div>
-                            `;
-                        } else {
-                            contenidoHtml += `
-                                <div style="background:${rowBg}; padding:12px 16px; border-radius:8px; font-size:13px; display:flex; align-items:center; gap:12px; border:1px solid ${borderColor};">
-                                    <span style="font-size:16px;">${icono}</span>
-                                    <span style="flex:1; color:var(--text-main); font-weight:600;">${linea.replace('•', '').trim()}</span>
-                                </div>
-                            `;
-                        }
-                    });
-                    contenidoHtml += `</div>`;
-                }
-
-                container.innerHTML += `
-                    <div class="eval-card">
-                        <div class="eval-header">
-                            <div>
-                                <b style="font-size: 16px; color: var(--text-main);">👤 ${r.asesor}</b><br>
-                                <span style="font-size: 13px; color: var(--text-muted);">🎯 ${r.actividad} | 📅 ${r.fecha}</span>
-                            </div>
-                            <div>
-                                <span class="badge ${claseCss}">${r.clasificacion} (${r.puntaje} pts)</span>
-                            </div>
-                        </div>
-                        ${contenidoHtml}
-                    </div>
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${r.fecha}</td>
+                        <td><b>${r.asesor}</b></td>
+                        <td>${r.actividad}</td>
+                        <td><b>${r.puntaje} pts</b></td>
+                        <td><span class="badge ${r.claseCss}">${r.clasificacion}</span></td>
+                    </tr>
                 `;
             });
         }
