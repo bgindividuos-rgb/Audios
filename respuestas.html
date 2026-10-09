@@ -357,8 +357,8 @@
             <p>Panel Exclusivo de Respuestas y Evaluaciones</p>
             <div class="input-group">
                 <label>🔐 Ingrese Código de Acceso</label>
-                <!-- Forzado a texto plano visible y sin autocompletado previo -->
-                <input type="text" id="input-codigo-staff" placeholder="STAFF.BG" autocomplete="new-password" onkeypress="if(event.key === 'Enter') chequearAccesoStaff()">
+                <!-- Limpio, sin texto precargado para que escribas tu clave libremente -->
+                <input type="text" id="input-codigo-staff" placeholder="Ingrese el código" autocomplete="off" onkeypress="if(event.key === 'Enter') chequearAccesoStaff()">
             </div>
             <button class="btn-galicia-login" onclick="chequearAccesoStaff()">🚀 Ingresar al Dashboard</button>
         </div>
@@ -468,7 +468,6 @@
             let txtBox = document.getElementById('input-codigo-staff');
             let ingresado = txtBox.value.trim().toUpperCase();
 
-            // Acepta STAFF.BG sin importar si usan mayúsculas o minúsculas
             if (ingresado === "STAFF.BG") {
                 document.getElementById('login-screen-overlay').style.display = 'none';
                 document.getElementById('dashboard-main-content').style.display = 'block';
