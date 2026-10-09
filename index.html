@@ -696,7 +696,6 @@
             font-size: 15px;
         }
 
-        /* Estilos para Planilla de Arrastre de Procedimientos Act 3 */
         .tabla-matriz-interactiva {
             width: 100%;
             border-collapse: collapse;
@@ -814,8 +813,8 @@
                 <header>
                     <h1 id="page-title">📊 Dashboard Principal</h1>
                     <div class="header-actions">
-                        <!-- Botón para abrir el Dashboard de Respuestas en otra pestaña -->
-                        <a href="respuesta.html" target="_blank" class="btn-secondary-galicia">📊 Ver Dashboard de Respuestas</a>
+                        <!-- Enlace apuntando correctamente a respuestas.html -->
+                        <a href="respuestas.html" target="_blank" class="btn-secondary-galicia">📊 Ver Dashboard de Respuestas</a>
                         <div class="user-profile-badge">
                             <span>👤 <span id="display-user">Asesor</span></span>
                         </div>
@@ -1716,7 +1715,6 @@
         });
 
         function reiniciarFormulariosUI() {
-            // Calidad Act 1
             const formContainer = document.getElementById('form-items-container');
             const itemsGestionMod = [
                 "Se presenta correctamente.", "Presenta la deuda de manera clara.", "Realiza una pregunta por vez.",
@@ -1740,7 +1738,6 @@
                 </div>
             `).join('');
 
-            // Calidad Act 2
             const act2Container = document.getElementById('act2-form-container');
             act2Container.innerHTML = casosActividad2.map((caso, idx) => `
                 <div class="activity-item">
@@ -1749,7 +1746,6 @@
                 </div>
             `).join('');
 
-            // Procedimientos Act 1 (MC)
             const procMcContainer = document.getElementById('proc-mc-container');
             procMcContainer.innerHTML = preguntasProcMC.map((p, pIdx) => `
                 <div class="activity-item">
@@ -1766,7 +1762,6 @@
                 </div>
             `).join('');
 
-            // Procedimientos Act 2 (V/F)
             const procVfContainer = document.getElementById('proc-vf-container');
             procVfContainer.innerHTML = preguntasProcVF.map((p, pIdx) => `
                 <div class="activity-item">
@@ -1779,7 +1774,6 @@
                 </div>
             `).join('');
 
-            // Sistemas Act 1
             const sys1Container = document.getElementById('sys-investiga-container');
             let globalIdx = 0;
             sys1Container.innerHTML = bloquesSys1.map(bloque => `
@@ -2091,7 +2085,6 @@
             }
         }
 
-        // Planilla de Arrastre Procedimientos Act 3
         function iniciarPlanillaPasoAPaso() {
             abrirSeccionUnica('sec-proc-3', '📊 Actividad: Planes de Pago (Paso a Paso)');
             idxCondicionPaso = 0;
@@ -2397,10 +2390,6 @@
                 detalleRespuestas: detalleTexto
             };
 
-            registrosGlobales.push(nuevoRegistro);
-
-            const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbwmYkKxHXKSE5U1IoypYKBULNaJZl8rBQ0FRfnUNeRV67op3u0VoUJlH3GxeIsj/exec";
-
             if (urlGoogleSheet) {
                 fetch(urlGoogleSheet, {
                     method: "POST",
@@ -2414,7 +2403,6 @@
         }
 
         function sincronizarResultadosRemotos() {
-            const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbwmYkKxHXKSE5U1IoypYKBULNaJZl8rBQ0FRfnUNeRV67op3u0VoUJlH3GxeIsj/exec";
             if(!urlGoogleSheet) return;
             
             fetch(urlGoogleSheet)
