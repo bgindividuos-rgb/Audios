@@ -362,8 +362,8 @@
             <p>Panel Exclusivo de Respuestas y Evaluaciones</p>
             <div class="input-group">
                 <label>🔐 Ingrese Código de Acceso</label>
-                <!-- Cambiado a type="text" para ver claramente lo que se escribe -->
-                <input type="text" id="staff-access-code" placeholder="STAFF.BG" autocomplete="off" onkeypress="if(event.key === 'Enter') validarStaffAccess()">
+                <!-- Forzado a type="text" con ID totalmente renovado para evitar caché de navegador -->
+                <input type="text" id="staff-custom-key" placeholder="STAFF.BG" autocomplete="off" onkeypress="if(event.key === 'Enter') validarStaffAccess()">
             </div>
             <button class="btn-galicia" onclick="validarStaffAccess()">🚀 Ingresar al Dashboard</button>
         </div>
@@ -475,16 +475,17 @@
         const claveAudio3 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
 
         function validarStaffAccess() {
-            let codigoIngresado = document.getElementById('staff-access-code').value.trim();
+            let campoInput = document.getElementById('staff-custom-key');
+            let codigoIngresado = campoInput.value.trim().toUpperCase();
             
-            // Validación exacta ignorando mayúsculas/minúsculas
-            if (codigoIngresado.toUpperCase() === "STAFF.BG") {
+            // Comprobación exacta con STAFF.BG
+            if (codigoIngresado === "STAFF.BG") {
                 document.getElementById('login-screen').classList.remove('active');
                 document.getElementById('main-dashboard-screen').classList.add('active');
                 cargarDatosSheet();
             } else {
-                document.getElementById('staff-access-code').value = "";
-                document.getElementById('staff-access-code').focus();
+                campoInput.value = "";
+                campoInput.focus();
             }
         }
 
