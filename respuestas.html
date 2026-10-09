@@ -31,33 +31,25 @@
             padding: 25px;
         }
 
-        .screen {
-            display: none;
-            width: 100%;
-            height: 100%;
-        }
-        .screen.active {
-            display: block;
-        }
-
-        #login-screen {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #FFF3EB 0%, #FFE5D0 100%);
+        /* Pantalla de bloqueo / login */
+        #login-screen-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
-            z-index: 9999;
+            height: 100vh;
+            background: linear-gradient(135deg, #FFF3EB 0%, #FFE5D0 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
         }
 
         .login-card {
             background: var(--white);
             padding: 45px;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(255,102,0,0.1);
+            box-shadow: 0 15px 35px rgba(255,102,0,0.15);
             width: 100%;
             max-width: 420px;
             text-align: center;
@@ -94,17 +86,38 @@
             padding: 12px 16px;
             border: 2px solid var(--border-color);
             border-radius: 10px;
-            font-size: 14px;
+            font-size: 15px;
             transition: all 0.2s;
             background: var(--white);
-            font-weight: 600;
+            font-weight: 700;
             text-align: center;
+            letter-spacing: 1px;
         }
 
         .login-card input:focus {
             outline: none;
             border-color: var(--galicia-orange);
             box-shadow: 0 0 0 4px rgba(255,102,0,0.12);
+        }
+
+        .btn-galicia-login {
+            background: linear-gradient(135deg, var(--galicia-orange) 0%, var(--galicia-dark-orange) 100%);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(255,102,0,0.25);
+        }
+        .btn-galicia-login:hover { transform: translateY(-2px); }
+
+        /* Contenido del Dashboard (Oculto hasta autenticarse) */
+        #dashboard-main-content {
+            display: none;
         }
 
         .container {
@@ -125,21 +138,6 @@
         }
 
         header h1 { font-size: 22px; color: var(--text-main); }
-
-        .btn-galicia {
-            background: linear-gradient(135deg, var(--galicia-orange) 0%, var(--galicia-dark-orange) 100%);
-            color: var(--white);
-            border: none;
-            padding: 14px;
-            width: 100%;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(255,102,0,0.25);
-        }
-        .btn-galicia:hover { transform: translateY(-2px); }
 
         .btn-header {
             background: linear-gradient(135deg, var(--galicia-orange) 0%, var(--galicia-dark-orange) 100%);
@@ -355,22 +353,21 @@
 </head>
 <body>
 
-    <!-- Pantalla de Acceso al Dashboard -->
-    <div id="login-screen" class="screen active">
+    <!-- Ventana flotante de Acceso (Bloquea hasta ingresar STAFF.BG) -->
+    <div id="login-screen-overlay">
         <div class="login-card">
             <h2>🟧 Banco Galicia</h2>
-            <p>Panel Exclusivo de Respuestas y Evaluaciones</p>
+            <p>Acceso Restringido al Dashboard de Respuestas</p>
             <div class="input-group">
                 <label>🔐 Ingrese Código de Acceso</label>
-                <!-- Forzado a type="text" con ID totalmente renovado para evitar caché de navegador -->
-                <input type="text" id="staff-custom-key" placeholder="STAFF.BG" autocomplete="off" onkeypress="if(event.key === 'Enter') validarStaffAccess()">
+                <input type="text" id="staff-code-input" placeholder="STAFF.BG" autocomplete="off" onkeypress="if(event.key === 'Enter') verificarClaveStaff()">
             </div>
-            <button class="btn-galicia" onclick="validarStaffAccess()">🚀 Ingresar al Dashboard</button>
+            <button class="btn-galicia-login" onclick="verificarClaveStaff()">🚀 Ingresar al Dashboard</button>
         </div>
     </div>
 
-    <!-- Contenido Principal del Dashboard -->
-    <div id="main-dashboard-screen" class="screen">
+    <!-- Contenido del Dashboard -->
+    <div id="dashboard-main-content">
         <div class="container">
             <header>
                 <h1>📊 Dashboard Visual de Respuestas | Banco Galicia</h1>
@@ -474,18 +471,19 @@
         const claveAudio2 = ["CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO"];
         const claveAudio3 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
 
-        function validarStaffAccess() {
-            let campoInput = document.getElementById('staff-custom-key');
-            let codigoIngresado = campoInput.value.trim().toUpperCase();
-            
-            // Comprobación exacta con STAFF.BG
-            if (codigoIngresado === "STAFF.BG") {
-                document.getElementById('login-screen').classList.remove('active');
-                document.getElementById('main-dashboard-screen').classList.add('active');
+        function verificarClaveStaff() {
+            let inputField = document.getElementById('staff-code-input');
+            let valorIngresado = inputField.value.trim().toUpperCase();
+
+            // Valida sin importar si escriben staff.bg, STAFF.BG, Staff.bg, etc.
+            if (valorIngresado === "STAFF.BG") {
+                document.getElementById('login-screen-overlay').style.display = 'none';
+                document.getElementById('dashboard-main-content').style.display = 'block';
                 cargarDatosSheet();
             } else {
-                campoInput.value = "";
-                campoInput.focus();
+                // Si es incorrecto, limpia silenciosamente sin alertas
+                inputField.value = "";
+                inputField.focus();
             }
         }
 
