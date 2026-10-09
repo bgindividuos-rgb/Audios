@@ -31,7 +31,6 @@
             padding: 25px;
         }
 
-        /* Pantalla de bloqueo / login */
         #login-screen-overlay {
             position: fixed;
             top: 0;
@@ -86,7 +85,7 @@
             padding: 12px 16px;
             border: 2px solid var(--border-color);
             border-radius: 10px;
-            font-size: 15px;
+            font-size: 16px;
             transition: all 0.2s;
             background: var(--white);
             font-weight: 700;
@@ -115,7 +114,6 @@
         }
         .btn-galicia-login:hover { transform: translateY(-2px); }
 
-        /* Contenido del Dashboard (Oculto hasta autenticarse) */
         #dashboard-main-content {
             display: none;
         }
@@ -353,20 +351,19 @@
 </head>
 <body>
 
-    <!-- Ventana flotante de Acceso (Bloquea hasta ingresar STAFF.BG) -->
     <div id="login-screen-overlay">
         <div class="login-card">
             <h2>🟧 Banco Galicia</h2>
-            <p>Acceso Restringido al Dashboard de Respuestas</p>
+            <p>Panel Exclusivo de Respuestas y Evaluaciones</p>
             <div class="input-group">
                 <label>🔐 Ingrese Código de Acceso</label>
-                <input type="text" id="staff-code-input" placeholder="STAFF.BG" autocomplete="off" onkeypress="if(event.key === 'Enter') verificarClaveStaff()">
+                <!-- Forzado a texto plano visible y sin autocompletado previo -->
+                <input type="text" id="input-codigo-staff" placeholder="STAFF.BG" autocomplete="new-password" onkeypress="if(event.key === 'Enter') chequearAccesoStaff()">
             </div>
-            <button class="btn-galicia-login" onclick="verificarClaveStaff()">🚀 Ingresar al Dashboard</button>
+            <button class="btn-galicia-login" onclick="chequearAccesoStaff()">🚀 Ingresar al Dashboard</button>
         </div>
     </div>
 
-    <!-- Contenido del Dashboard -->
     <div id="dashboard-main-content">
         <div class="container">
             <header>
@@ -381,7 +378,6 @@
                 <button class="tab-btn" onclick="cambiarTab('gestion', this)">🎧 Calidad de la Gestión</button>
             </div>
 
-            <!-- TAB 1: RESUMEN GENERAL -->
             <div id="tab-resumen" class="tab-content active">
                 <div class="kpi-container">
                     <div class="kpi-card"><span>📊 Total Evaluaciones</span><h3 id="kpi-total">0</h3></div>
@@ -395,7 +391,6 @@
                 </div>
             </div>
 
-            <!-- TAB 2: USO DE SISTEMAS -->
             <div id="tab-sistemas" class="tab-content">
                 <div class="card-box">
                     <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">💻 USO DE SISTEMAS - Detalle Visual 1x1</h3>
@@ -417,7 +412,6 @@
                 </div>
             </div>
 
-            <!-- TAB 3: PROCEDIMIENTOS Y CONDICIONES -->
             <div id="tab-proc" class="tab-content">
                 <div class="card-box">
                     <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">📋 PROCEDIMIENTOS Y CONDICIONES - Detalle Visual 1x1</h3>
@@ -439,7 +433,6 @@
                 </div>
             </div>
 
-            <!-- TAB 4: CALIDAD DE LA GESTIÓN -->
             <div id="tab-gestion" class="tab-content">
                 <div class="card-box">
                     <h3 style="margin-bottom: 15px; color: var(--galicia-orange);">🎧 CALIDAD DE LA GESTIÓN - Detalle Visual 1x1</h3>
@@ -471,19 +464,18 @@
         const claveAudio2 = ["CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO"];
         const claveAudio3 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
 
-        function verificarClaveStaff() {
-            let inputField = document.getElementById('staff-code-input');
-            let valorIngresado = inputField.value.trim().toUpperCase();
+        function chequearAccesoStaff() {
+            let txtBox = document.getElementById('input-codigo-staff');
+            let ingresado = txtBox.value.trim().toUpperCase();
 
-            // Valida sin importar si escriben staff.bg, STAFF.BG, Staff.bg, etc.
-            if (valorIngresado === "STAFF.BG") {
+            // Acepta STAFF.BG sin importar si usan mayúsculas o minúsculas
+            if (ingresado === "STAFF.BG") {
                 document.getElementById('login-screen-overlay').style.display = 'none';
                 document.getElementById('dashboard-main-content').style.display = 'block';
                 cargarDatosSheet();
             } else {
-                // Si es incorrecto, limpia silenciosamente sin alertas
-                inputField.value = "";
-                inputField.focus();
+                txtBox.value = "";
+                txtBox.focus();
             }
         }
 
