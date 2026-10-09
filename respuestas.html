@@ -362,7 +362,8 @@
             <p>Panel Exclusivo de Respuestas y Evaluaciones</p>
             <div class="input-group">
                 <label>🔐 Ingrese Código de Acceso</label>
-                <input type="password" id="staff-access-code" placeholder="••••••••••••" onkeypress="if(event.key === 'Enter') validarStaffAccess()">
+                <!-- Cambiado a type="text" para ver claramente lo que se escribe -->
+                <input type="text" id="staff-access-code" placeholder="STAFF.BG" autocomplete="off" onkeypress="if(event.key === 'Enter') validarStaffAccess()">
             </div>
             <button class="btn-galicia" onclick="validarStaffAccess()">🚀 Ingresar al Dashboard</button>
         </div>
@@ -482,7 +483,6 @@
                 document.getElementById('main-dashboard-screen').classList.add('active');
                 cargarDatosSheet();
             } else {
-                // Si es incorrecto, simplemente limpia el campo sin arrojar alertas descriptivas
                 document.getElementById('staff-access-code').value = "";
                 document.getElementById('staff-access-code').focus();
             }
