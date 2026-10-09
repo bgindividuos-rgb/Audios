@@ -85,12 +85,11 @@
             padding: 12px 16px;
             border: 2px solid var(--border-color);
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 15px;
             transition: all 0.2s;
             background: var(--white);
-            font-weight: 700;
+            font-weight: 600;
             text-align: center;
-            letter-spacing: 1px;
         }
 
         .login-card input:focus {
@@ -357,8 +356,8 @@
             <p>Panel Exclusivo de Respuestas y Evaluaciones</p>
             <div class="input-group">
                 <label>🔐 Ingrese Código de Acceso</label>
-                <!-- Limpio, sin texto precargado para que escribas tu clave libremente -->
-                <input type="text" id="input-codigo-staff" placeholder="Ingrese el código" autocomplete="off" onkeypress="if(event.key === 'Enter') chequearAccesoStaff()">
+                <!-- Atributos anti-autocompletado y placeholder solicitado -->
+                <input type="text" id="pass-code-field" name="random_unique_field_name" placeholder="INGRESÁ EL CÓDIGO DE ACCESO" autocomplete="off" onkeypress="if(event.key === 'Enter') chequearAccesoStaff()">
             </div>
             <button class="btn-galicia-login" onclick="chequearAccesoStaff()">🚀 Ingresar al Dashboard</button>
         </div>
@@ -465,7 +464,7 @@
         const claveAudio3 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
 
         function chequearAccesoStaff() {
-            let txtBox = document.getElementById('input-codigo-staff');
+            let txtBox = document.getElementById('pass-code-field');
             let ingresado = txtBox.value.trim().toUpperCase();
 
             if (ingresado === "STAFF.BG") {
