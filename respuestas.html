@@ -549,13 +549,11 @@
                     contenidoHtml += `</div>`;
 
                 } else {
-                    // Evaluación universal y robusta (incluye reglas de Ordenamiento y Verdadero/Falso)
                     contenidoHtml = `<div style="display:flex; flex-direction:column; gap:8px;">`;
                     lineas.forEach(linea => {
                         let esCorrecto = true;
                         let lineaUpper = linea.toUpperCase();
 
-                        // 1. Validación para Ordenamiento: Compara "Orden dado: X (Real: Y)"
                         if (lineaUpper.includes("ORDEN DADO:") && lineaUpper.includes("(REAL:")) {
                             let matchDado = linea.match(/Orden dado:\s*(\d+)/i);
                             let matchReal = linea.match(/\(Real:\s*(\d+)\)/i);
@@ -564,16 +562,12 @@
                                 let ordenReal = parseInt(matchReal[1]);
                                 esCorrecto = (ordenDado === ordenReal);
                             }
-                        } 
-                        // 2. Validación para Verdadero/Falso con etiqueta "MARCÓ -> X (ESPERADO: Y)"
-                        else if (lineaUpper.includes("MARCÓ ->") && lineaUpper.includes("(ESPERADO:")) {
+                        } else if (lineaUpper.includes("MARCÓ ->") && lineaUpper.includes("(ESPERADO:")) {
                             let partesMarco = lineaUpper.split("MARCÓ ->")[1].split("(ESPERADO:");
                             let asesorVal = partesMarco[0].trim().replace(/[^A-ZÁÉÍÓÚ]/g, "");
                             let esperadoVal = partesMarco[1].replace(/[^A-ZÁÉÍÓÚ]/g, "").trim();
                             esCorrecto = (asesorVal === esperadoVal);
-                        } 
-                        // 3. Validación para formato [Correcta: ...]
-                        else if (linea.includes("[Correcta:")) {
+                        } else if (linea.includes("[Correcta:")) {
                             let partes = linea.split("[Correcta:");
                             let respAsesor = partes[0].replace(/^[•\-\d\.\s]+/, "").toLowerCase().trim();
                             if(respAsesor.includes(':')) respAsesor = respAsesor.split(':')[1].trim();
@@ -584,9 +578,7 @@
                             respCorrecta = respCorrecta.replace(/["']/g, "").trim();
 
                             esCorrecto = (respAsesor === respCorrecta || respAsesor.includes(respCorrecta) || respCorrecta.includes(respAsesor));
-                        } 
-                        // 4. Marcas explícitas de error
-                        else if (linea.includes("Incorrecto") || linea.includes("FALSO (Incorrecto)")) {
+                        } else if (linea.includes("Incorrecto") || linea.includes("FALSO (Incorrecto)")) {
                             esCorrecto = false;
                         }
 
@@ -594,7 +586,6 @@
                         let rowBg = esCorrecto ? "#F0FDF4" : "#FEF2F2";
                         let borderColor = esCorrecto ? "#BBF7D0" : "#FECACA";
 
-                        // Si es título de sección (ej: "PLAN V:", "PLAN M:"), se muestra neutro sin tilde/cruz
                         let esTituloSeccion = linea.trim().endsWith(":") && !linea.includes("Paso");
                         if (esTituloSeccion) {
                             contenidoHtml += `
