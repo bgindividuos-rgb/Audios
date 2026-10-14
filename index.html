@@ -813,7 +813,8 @@
                 <header>
                     <h1 id="page-title">📊 Dashboard Principal</h1>
                     <div class="header-actions">
-                        <a href="respuestas.html" target="_blank" class="btn-secondary-galicia">📊 Ver Dashboard de Respuestas</a>
+                        <!-- Botón protegido para ver el dashboard de respuestas (Oculto por defecto) -->
+                        <a href="respuestas.html" target="_blank" class="btn-secondary-galicia" id="btn-ver-respuestas" style="display: none;">📊 Ver Dashboard de Respuestas</a>
                         <div class="user-profile-badge">
                             <span>👤 <span id="display-user">Asesor</span></span>
                         </div>
@@ -1266,6 +1267,17 @@
             "Zingg, Facundo", "GONZALEZ, MARTIN", "REY, SOFIA", "ALVAREZ, VALENTINA", 
             "OLIVA, MICAELA LIHUEN DEL VALLE", "CAGLIERO, ROCIO DE LOURDES", "VILTES, MARIANA", 
             "DIAZ, JESUS ALEJANDRO"
+        ];
+
+        // Lista de personal autorizado para ver el Dashboard de Respuestas
+        const staffAutorizados = [
+            "CAGLIERO, ROCIO DE LOURDES",
+            "OLIVA, MICAELA LIHUEN DEL VALLE",
+            "VILTES, MARIANA",
+            "REY, SOFIA",
+            "DIAZ, JESUS ALEJANDRO",
+            "ALVAREZ, VALENTINA",
+            "GONZALEZ, MARTIN"
         ];
 
         const claveAudio1 = [
@@ -1994,6 +2006,16 @@
 
             usuarioActual = nombre;
             document.getElementById('display-user').innerText = usuarioActual;
+
+            // Validar acceso exclusivo al Dashboard de Respuestas según el staff autorizado
+            const btnRespuestas = document.getElementById('btn-ver-respuestas');
+            if (btnRespuestas) {
+                if (staffAutorizados.includes(usuarioActual)) {
+                    btnRespuestas.style.display = 'inline-flex';
+                } else {
+                    btnRespuestas.style.display = 'none';
+                }
+            }
             
             document.getElementById('login-screen').classList.remove('active');
             document.getElementById('main-app').classList.add('active');
