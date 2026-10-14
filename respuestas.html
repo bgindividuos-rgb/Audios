@@ -381,8 +381,6 @@
         const claveAudio1 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
         const claveAudio2 = ["CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO"];
         const claveAudio3 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
-        
-        // 👇 Clave de respuestas correcta para el Audio 4 agregada en respuestas.html
         const claveAudio4 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -530,10 +528,16 @@
                     contenidoHtml += `</tbody></table></div>`;
 
                 } else if(r.actividad.includes("Auditá")) {
-                    // 👇 Corrección en el selector de clave activa para que reconozca correctamente audio_4
-                    let claveActiva = r.actividad.includes("audio_2") ? claveAudio2 : 
-                                      (r.actividad.includes("audio_3") ? claveAudio3 : 
-                                      (r.actividad.includes("audio_4") ? claveAudio4 : claveAudio1));
+                    // 👇 Validación robusta y case-insensitive para seleccionar la clave del audio correcta
+                    let actLower = r.actividad.toLowerCase();
+                    let claveActiva = claveAudio1;
+                    if (actLower.includes("audio_2") || actLower.includes("audio 2")) {
+                        claveActiva = claveAudio2;
+                    } else if (actLower.includes("audio_3") || actLower.includes("audio 3")) {
+                        claveActiva = claveAudio3;
+                    } else if (actLower.includes("audio_4") || actLower.includes("audio 4")) {
+                        claveActiva = claveAudio4;
+                    }
 
                     contenidoHtml = `<div class="items-grid-visual">`;
                     lineas.forEach((linea, idx) => {
