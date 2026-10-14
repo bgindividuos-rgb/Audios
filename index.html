@@ -940,6 +940,7 @@
                                     <option value="audio_1">Audio 1 - Refinanciación (DU: 24017232)</option>
                                     <option value="audio_2">Audio 2 - Plan V (DU: 29328602)</option>
                                     <option value="audio_3">Audio 3 - Promesa de pago (DU: 32090812)</option>
+                                    <option value="audio_4">Audio 4 - Promesa de pago (DU: 35725979)</option>
                                 </select>
 
                                 <div class="audio-player-wrapper">
@@ -1269,7 +1270,6 @@
             "DIAZ, JESUS ALEJANDRO"
         ];
 
-        // Lista de personal autorizado para ver el Dashboard de Respuestas
         const staffAutorizados = [
             "CAGLIERO, ROCIO DE LOURDES",
             "OLIVA, MICAELA LIHUEN DEL VALLE",
@@ -1296,6 +1296,13 @@
             "CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", 
             "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", 
             "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"
+        ];
+
+        // 👇 Clave de respuestas para el Audio 4
+        const claveAudio4 = [
+            "CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", 
+            "NO CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", 
+            "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO"
         ];
 
         const feedbackTextoAudio2 = `
@@ -2007,7 +2014,6 @@
             usuarioActual = nombre;
             document.getElementById('display-user').innerText = usuarioActual;
 
-            // Validar acceso exclusivo al Dashboard de Respuestas según el staff autorizado
             const btnRespuestas = document.getElementById('btn-ver-respuestas');
             if (btnRespuestas) {
                 if (staffAutorizados.includes(usuarioActual)) {
@@ -2147,11 +2153,17 @@
                 document.getElementById('info-du').innerText = "29328602";
                 document.getElementById('info-fecha').innerText = "04/09/2026";
                 audioSource.src = "https://raw.githubusercontent.com/bgindividuos-rgb/Audios/1ac480e3ec15696fc71ee820aa60fd1e37f90ce0/Plan%20V%20DU-29328602.mp3";
-            } else {
+            } else if(val === 'audio_3') {
                 document.getElementById('info-gestion').innerText = "PROMESA DE PAGO";
                 document.getElementById('info-du').innerText = "32090812";
                 document.getElementById('info-fecha').innerText = "15/09/2026";
                 audioSource.src = "https://raw.githubusercontent.com/bgindividuos-rgb/Audios/1ac480e3ec15696fc71ee820aa60fd1e37f90ce0/Promesa%20de%20pago%20DU-32090812.mp3";
+            } else if(val === 'audio_4') {
+                // 👇 Enlace directo (Raw) configurado para el Audio 4
+                document.getElementById('info-gestion').innerText = "PROMESA DE PAGO";
+                document.getElementById('info-du').innerText = "35725979";
+                document.getElementById('info-fecha').innerText = "07/10/2026";
+                audioSource.src = "https://raw.githubusercontent.com/bgindividuos-rgb/Audios/850b3b48544e1fedffe1b0dc5ced788b7d456d09/0111571354640-248333991-20261007143919.mp3";
             }
             player.load();
         }
@@ -2420,7 +2432,10 @@
 
         function finalizarActividad1() {
             let audioSeleccionado = document.getElementById('audio-select').value;
-            let claveActiva = audioSeleccionado === 'audio_1' ? claveAudio1 : (audioSeleccionado === 'audio_2' ? claveAudio2 : claveAudio3);
+            // 👇 Validación del audio seleccionado para tomar su clave de respuestas correspondiente
+            let claveActiva = audioSeleccionado === 'audio_1' ? claveAudio1 : 
+                              (audioSeleccionado === 'audio_2' ? claveAudio2 : 
+                              (audioSeleccionado === 'audio_3' ? claveAudio3 : claveAudio4));
             let detalleTexto = "";
             let aciertos = 0;
 
@@ -2443,8 +2458,7 @@
             let puntaje = Math.round((aciertos / 12) * 100);
             registrarResultado(`Calidad - Auditá la gestión (${audioSeleccionado})`, puntaje, detalleTexto);
 
-            let feedbackHtml = audioSeleccionado === 'audio_1' ? `<b>✅ Evaluación procesada.</b> Puntaje: ${puntaje}/100` :
-                (audioSeleccionado === 'audio_2' ? feedbackTextoAudio2 + `<br><b>⭐ Puntaje Final:</b> ${puntaje}/100` : feedbackTextoAudio3 + `<br><b>⭐ Puntaje Final:</b> ${puntaje}/100`);
+            let feedbackHtml = `<b>✅ Evaluación procesada para ${audioSeleccionado}.</b> Puntaje: ${puntaje}/100`;
 
             document.getElementById('feedback-gestion-content').innerHTML = feedbackHtml;
             document.getElementById('feedback-gestion-container').style.display = 'block';
