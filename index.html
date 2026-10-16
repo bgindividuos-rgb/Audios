@@ -868,7 +868,7 @@
                                     <div class="progress-card-body">
                                         <div class="progress-stats">
                                             <span>Completado</span>
-                                            <span id="val-gestion-det">0 / 3 Actividades</span>
+                                            <span id="val-gestion-det">0 / 4 Actividades</span>
                                         </div>
                                         <div class="progress-bar-bg">
                                             <div class="progress-bar-fill" id="bar-gestion" style="width: 0%;"></div>
@@ -1009,6 +1009,24 @@
                                     <h4>💡 Resultado del Caso Práctico</h4>
                                     <div id="feedback-act3-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ACTIVIDAD NUEVA 4: CREACIÓN DE SPEECH PARA OBJECIONES (CALIDAD) -->
+                    <div id="sec-activity-4" class="section-view" style="display: none;">
+                        <div class="card-container">
+                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('gestion')">⬅️ Volver a Actividades</button>
+                            <h2>🗣️ Actividad 4: Creación de Speech para Objeciones</h2>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> En base a las siguientes objeciones, creá speech modelos para responder. Debés responder cada punto obligatoriamente para finalizar la actividad.</p>
+                            
+                            <div id="act4-form-container"></div>
+
+                            <button id="btn-finalizar-act4" class="btn-galicia" onclick="finalizarActividad4()">🎯 Finalizar y Enviar Speeches</button>
+
+                            <div id="feedback-act4-container" class="feedback-card" style="display:none;">
+                                <h4>💡 Resultado de Creación de Speeches</h4>
+                                <div id="feedback-act4-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
                             </div>
                         </div>
                     </div>
@@ -1174,7 +1192,7 @@
                                     <div class="precision-bar-container">
                                         <div class="precision-info">
                                             <span>🎧 Calidad de la Gestión</span>
-                                            <span id="stat-cat-gestion">0 / 3</span>
+                                            <span id="stat-cat-gestion">0 / 4</span>
                                         </div>
                                         <div class="precision-bar-bg">
                                             <div class="precision-bar-fill" id="bar-cat-gestion" style="width: 0%; background: #E96151;"></div>
@@ -1298,31 +1316,24 @@
             "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"
         ];
 
-        // 👇 Clave de respuestas corregida para el Audio 4 (Ítem 4 ajustado a NO CUMPLIDO)
         const claveAudio4 = [
             "CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", 
             "NO CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", 
             "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO"
         ];
 
-        const feedbackTextoAudio2 = `
-            <b>📌 Resumen de la Gestión:</b> Cliente con Visa en mora - 14 ddm.<br>
-            • Presentación ok, presentación de deuda ok. Puede abonar post 20 del mes, solo puede cubrir Master.<br>
-            • Ofrece financiar Visa por producto causante.<br>
-            • Da elección de promesa por Visa o Plan V.<br>
-            • No se indaga sobre la situación económica del cliente.<br>
-            • Informa condiciones del plan y presenta propuesta.<br>
-            • Asesora sobre fechas de pago al acceder al plan.<br>
-            • <b>❌ Validación de identidad:</b> Responde mal numeración de domicilio y adicionales en Visa (debía rechazar la propuesta).<br>
-            • Cierre legal correcto, finaliza asesoramiento correspondiente.
-        `;
-
-        const feedbackTextoAudio3 = `
-            <b>📌 Resumen de la Gestión:</b> Cliente con 14 ddm, multiproducto.<br>
-            • Consulta pregunta sobre posibilidad de pago hoy. Manifiesta baja en ventas en su comercio, entre el día del contacto y próximo jueves lo cubre.<br>
-            • Especifica productos en mora, asegura cobertura de todos.<br>
-            • Toma compromiso por el plazo estimado por el cliente, asegura montos de cada producto, realiza cierre con repaso.
-        `;
+        const objecionesActividad4 = [
+            "1. “No tengo plata, no puedo pagar nada”.",
+            "2. “Cobro recién el mes que viene”.",
+            "3. “Tengo otras prioridades, primero tengo que comer”.",
+            "4. “Me quedé sin trabajo y no sé cuándo voy a volver a tener ingresos”.",
+            "5. “No voy a pagar ese monto, es demasiado”.",
+            "6. “Aunque me ofrezcan cuotas, no puedo pagarlas”.",
+            "7. “La semana que viene veo qué puedo hacer”.",
+            "8. “Cuando tenga plata, pago”.",
+            "9. \"Yo ya pagué y me siguen reclamando”.",
+            "10. “No voy a poner plata si igual voy a seguir debiendo”."
+        ];
 
         const casosActividad2 = [
             "Cliente con atraso de 8 días de mora, sobr el motivo de atraso informa: 'No tengo plata'",
@@ -1840,7 +1851,7 @@
 
         const pasosPlanVOriginal = [
             "Verificar que cumpla con las condiciones para acceder al plan.",
-            "Ingresar en BC10 con el DU y copiar el N° de plástico (16 dígitos)",
+            "Ingresar in BC10 con el DU y copiar el N° de plástico (16 dígitos)",
             "Ingresar en visa/amex con usuario y contraseña correspondiente.",
             "Seleccionar opción 22 + seleccionar opción 18 (menos 15 ddm) / 19 (más 15ddm)",
             "Pegar el número del plástico + INTRO",
@@ -1926,6 +1937,15 @@
                 <div class="activity-item">
                     <label><b>💬 Caso ${idx + 1}:</b> ${caso}</label>
                     <textarea class="form-control" id="act2_resp_${idx}" placeholder="✍️ Escribí tu respuesta reconduciendo activamente a la cobranza..."></textarea>
+                </div>
+            `).join('');
+
+            // 👇 Renderizado de la Actividad 4 (Creación de Speech para Objeciones)
+            const act4Container = document.getElementById('act4-form-container');
+            act4Container.innerHTML = objecionesActividad4.map((objText, idx) => `
+                <div class="activity-item">
+                    <label><b>🗣️ ${objText}</b></label>
+                    <textarea class="form-control" id="act4_resp_${idx}" placeholder="✍️ Escribí tu speech modelo para responder a esta objeción..."></textarea>
                 </div>
             `).join('');
 
@@ -2078,6 +2098,13 @@
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
+                    <div class="activity-card-wrapper">
+                        <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-activity-4', '🗣️ Actividad 4: Creación de Speech para Objeciones')">
+                            <div class="card-title" style="color: #E96151; font-size: 20px;">🗣️ Actividad 4: Creación de Speech para Objeciones</div>
+                            <div class="card-desc" style="color: var(--text-main);">Construcción de speech modelos para resolver objeciones frecuentes de clientes en mora.</div>
+                        </div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
+                    </div>
                 `;
             } else if(cat === 'proc') {
                 titulo.innerText = "📋 PROCEDIMIENTOS Y CONDICIONES GENERALES - Actividades";
@@ -2159,7 +2186,6 @@
                 document.getElementById('info-fecha').innerText = "15/09/2026";
                 audioSource.src = "https://raw.githubusercontent.com/bgindividuos-rgb/Audios/1ac480e3ec15696fc71ee820aa60fd1e37f90ce0/Promesa%20de%20pago%20DU-32090812.mp3";
             } else if(val === 'audio_4') {
-                // 👇 Enlace directo (Raw) configurado para el Audio 4
                 document.getElementById('info-gestion').innerText = "PROMESA DE PAGO";
                 document.getElementById('info-du').innerText = "35725979";
                 document.getElementById('info-fecha').innerText = "07/10/2026";
@@ -2181,16 +2207,16 @@
         function actualizarProgresosDashboard() {
             let regsAsesor = registrosGlobales.filter(r => r.asesor === usuarioActual);
 
-            let gestionComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino")).length, 3);
+            let gestionComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino") || r.actividad.includes("Objeciones")).length, 4);
             let procComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad") || r.actividad.includes("Planes de Pago (Paso a Paso)")).length, 3);
             let sysComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Investigá") || r.actividad.includes("Planes de pago")).length, 2);
 
-            let pctGestion = Math.round((gestionComp / 3) * 100);
+            let pctGestion = Math.round((gestionComp / 4) * 100);
             let pctProc = Math.round((procComp / 3) * 100);
             let pctSys = Math.round((sysComp / 2) * 100);
 
             document.getElementById('val-gestion-txt').innerText = `${pctGestion}%`;
-            document.getElementById('val-gestion-det').innerText = `${gestionComp} / 3 Actividades`;
+            document.getElementById('val-gestion-det').innerText = `${gestionComp} / 4 Actividades`;
             document.getElementById('bar-gestion').style.width = `${pctGestion}%`;
 
             document.getElementById('val-proc-txt').innerText = `${pctProc}%`;
@@ -2432,7 +2458,6 @@
 
         function finalizarActividad1() {
             let audioSeleccionado = document.getElementById('audio-select').value;
-            // 👇 Validación del audio seleccionado para tomar su clave de respuestas correspondiente
             let claveActiva = audioSeleccionado === 'audio_1' ? claveAudio1 : 
                               (audioSeleccionado === 'audio_2' ? claveAudio2 : 
                               (audioSeleccionado === 'audio_3' ? claveAudio3 : claveAudio4));
@@ -2482,6 +2507,31 @@
             let puntaje = Math.round((validas / casosActividad2.length) * 100);
             registrarResultado("Calidad - Actividad 2: ¿Qué responderías?", puntaje, detalleTexto);
             alert(`🎉 Actividad 2 finalizada. Puntaje: ${puntaje}/100`);
+        }
+
+        // 👇 Lógica de validación para la Actividad 4 (Exige responder cada punto SI O SI)
+        function finalizarActividad4() {
+            let detalleTexto = "";
+            let respondidosCompletos = 0;
+
+            for(let i = 0; i < objecionesActividad4.length; i++) {
+                let txt = document.getElementById(`act4_resp_${i}`).value.trim();
+                if(txt === "") {
+                    alert(`⚠️ Por favor respondé el punto ${i + 1} ("${objecionesActividad4[i]}") con tu speech modelo.`);
+                    document.getElementById(`act4_resp_${i}`).focus();
+                    return;
+                }
+                respondidosCompletos++;
+                detalleTexto += `• ${objecionesActividad4[i]}\n  Speech: "${txt}"\n`;
+            }
+
+            // Si respondió todos los puntos, obtiene 100 puntos
+            let puntaje = (respondidosCompletos === objecionesActividad4.length) ? 100 : 0;
+            registrarResultado("Calidad - Actividad 4: Creación de Speech para Objeciones", puntaje, detalleTexto);
+
+            document.getElementById('feedback-act4-content').innerHTML = `🎉 <b>¡Actividad completada con éxito!</b> Has redactado los speech modelos para las 10 objeciones obligatorias. Puntaje: <b>100 / 100 pts</b>.`;
+            document.getElementById('feedback-act4-container').style.display = 'block';
+            alert("🎉 Actividad 4 finalizada y registrada correctamente.");
         }
 
         function finalizarProcMC() {
@@ -2635,7 +2685,7 @@
             if(filtrados.length === 0) {
                 document.getElementById('kpi-promedio').innerText = "0 pts";
                 document.getElementById('kpi-estado').innerText = "Sin datos";
-                document.getElementById('stat-cat-gestion').innerText = "0 / 3";
+                document.getElementById('stat-cat-gestion').innerText = "0 / 4";
                 document.getElementById('stat-cat-proc').innerText = "0 / 3";
                 document.getElementById('stat-cat-sistemas').innerText = "0 / 2";
                 document.getElementById('chart-precision-list').innerHTML = `<p style="font-size:13px; color:var(--text-muted);">Sin datos registrados.</p>`;
@@ -2649,12 +2699,12 @@
             document.getElementById('kpi-promedio').innerText = promedio + " pts";
             document.getElementById('kpi-estado').innerText = promedio >= 90 ? "🏆 DOMINADO" : promedio >= 65 ? "⚠️ OPORTUNIDADES" : "🚨 REFUERZO";
 
-            let gestionCount = Math.min(filtrados.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino") || r.actividad.includes("Caso")).length, 3);
+            let gestionCount = Math.min(filtrados.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino") || r.actividad.includes("Objeciones")).length, 4);
             let procCount = Math.min(filtrados.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad") || r.actividad.includes("Planes de Pago (Paso a Paso)")).length, 3);
             let sysCount = Math.min(filtrados.filter(r => r.actividad.includes("Investigá") || r.actividad.includes("Planes de pago")).length, 2);
 
-            document.getElementById('stat-cat-gestion').innerText = `${gestionCount} / 3`;
-            document.getElementById('bar-cat-gestion').style.width = `${Math.min((gestionCount/3)*100, 100)}%`;
+            document.getElementById('stat-cat-gestion').innerText = `${gestionCount} / 4`;
+            document.getElementById('bar-cat-gestion').style.width = `${Math.min((gestionCount/4)*100, 100)}%`;
 
             document.getElementById('stat-cat-proc').innerText = `${procCount} / 3`;
             document.getElementById('bar-cat-proc').style.width = `${Math.min((procCount/3)*100, 100)}%`;
@@ -2663,7 +2713,7 @@
             document.getElementById('bar-cat-sistemas').style.width = `${Math.min((sysCount/2)*100, 100)}%`;
 
             const listadoActividades = [
-                "Auditá la gestión", "Actividad 2: ¿Qué responderías?", "Elegí el camino correcto", "Caso 1", "Caso 2", "Caso 3",
+                "Auditá la gestión", "Actividad 2: ¿Qué responderías?", "Elegí el camino correcto", "Creación de Speech para Objeciones", "Caso 1", "Caso 2", "Caso 3",
                 "Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)", "Investigá al cliente", "Planes de pago"
             ];
 
