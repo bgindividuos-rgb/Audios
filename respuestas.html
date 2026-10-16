@@ -419,7 +419,8 @@
 
             poblarSelectActividades('sistemas', ["Investigá al cliente", "Planes de pago"]);
             poblarSelectActividades('proc', ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"]);
-            poblarSelectActividades('gestion', ["Auditá la gestión", "responderías", "camino", "Caso"]);
+            // 👇 Se incluye "Objeciones" para que el selector capture la nueva actividad de calidad
+            poblarSelectActividades('gestion', ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones"]);
 
             renderizarResumenGeneral();
             renderizarVisualCategoria('sistemas');
@@ -472,8 +473,9 @@
         }
 
         function renderizarVisualCategoria(cat) {
+            // 👇 Se incluye "Objeciones" en las keywords de la categoría de gestión
             let keywords = cat === 'sistemas' ? ["Investigá al cliente", "Planes de pago"] :
-                           (cat === 'proc' ? ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"] : ["Auditá la gestión", "responderías", "camino", "Caso"]);
+                           (cat === 'proc' ? ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"] : ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones"]);
 
             let selActElem = document.getElementById(`sel-act-${cat}`);
             let selAsesorElem = document.getElementById(`sel-asesor-${cat}`);
@@ -528,7 +530,6 @@
                     contenidoHtml += `</tbody></table></div>`;
 
                 } else if(r.actividad.includes("Auditá")) {
-                    // 👇 Validación robusta y case-insensitive para seleccionar la clave del audio correcta
                     let actLower = r.actividad.toLowerCase();
                     let claveActiva = claveAudio1;
                     if (actLower.includes("audio_2") || actLower.includes("audio 2")) {
