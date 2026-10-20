@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚦 Semáforo de Gestión en Vivo | Banco Galicia</title>
+    <style>
+        :root {
+            --galicia-orange: #FF6600;
+            --galicia-dark-orange: #E05A00;
+            --neutral-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--neutral-bg);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .asesor-card-container {
+            background: var(--white);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .brand-header {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--galicia-orange);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .semaforo-box {
+            background: #1E293B;
+            padding: 25px 20px;
+            border-radius: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            width: 150px;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .luz {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            opacity: 0.25;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+
+        #luz-rojo { background: var(--danger); }
+        #luz-amarillo { background: var(--warning); }
+        #luz-verde { background: var(--success); }
+
+        .mensaje-box {
+            width: 100%;
+            background: var(--neutral-bg);
+            border: 2px solid var(--border-color);
+            padding: 22px;
+            border-radius: 14px;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .mensaje-box h4 {
+            color: var(--text-main);
+            font-size: 18px;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .mensaje-box p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .asesor-info-badge {
+            margin-top: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="asesor-card-container">
+        <div class="brand-header">
+            <span>🖥️ Vista del Asesor (En Vivo)</span>
+        </div>
+        
+        <div class="semaforo-box">
+            <div id="luz-rojo" class="luz"></div>
+            <div id="luz-amarillo" class="luz"></div>
+            <div id="luz-verde" class="luz"></div>
+        </div>
+
+        <div class="mensaje-box">
+            <h4 id="semaforo-titulo-estado">VERDE — CONTINUÁ</h4>
+            <p id="semaforo-texto-estado">“Estás aplicando correctamente el procedimiento. Podés continuar con la gestión”.</p>
+        </div>
+
+        <div class="asesor-info-badge">
+            Banco Galicia • Calidad y Desarrollo de Gestión
+        </div>
+    </div>
+
+    <script>
+        function actualizarEstadoSemaforo() {
+            const estadoGuardado = localStorage.getItem('galicia_semaforo_estado') || 'VERDE';
+            
+            const luzR = document.getElementById('luz-rojo');
+            const luzA = document.getElementById('luz-amarillo');
+            const luzV = document.getElementById('luz-verde');
+            const tituloEstado = document.getElementById('semaforo-titulo-estado');
+            const textoEstado = document.getElementById('semaforo-texto-estado');
+
+            luzR.style.opacity = "0.25";
+            luzA.style.opacity = "0.25";
+            luzV.style.opacity = "0.25";
+            luzR.style.transform = "scale(1)";
+            luzA.style.transform = "scale(1)";
+            luzV.style.transform = "scale(1)";
+
+            if(estadoGuardado === "VERDE") {
+                luzV.style.opacity = "1";
+                luzV.style.transform = "scale(1.06)";
+                tituloEstado.innerText = "VERDE — CONTINUÁ";
+                textoEstado.innerText = "“Estás aplicando correctamente el procedimiento. Podés continuar con la gestión”.";
+            } else if(estadoGuardado === "AMARILLO") {
+                luzA.style.opacity = "1";
+                luzA.style.transform = "scale(1.06)";
+                tituloEstado.innerText = "AMARILLO — PAUSÁ Y ANALIZÁ";
+                textoEstado.innerText = "“Detenete un momento. Revisá la información disponible y determiná qué necesitás preguntar o verificar antes de avanzar”.";
+            } else if(estadoGuardado === "ROJO") {
+                luzR.style.opacity = "1";
+                luzR.style.transform = "scale(1.06)";
+                tituloEstado.innerText = "ROJO — DETENÉ Y CORREGÍ";
+                textoEstado.innerText = "“Se detectó un posible desvío en el procedimiento. Revisá lo que hiciste e identificá cómo deberías corregirlo antes de continuar”.";
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', actualizarEstadoSemaforo);
+        window.addEventListener('storage', actualizarEstadoSemaforo);
+        setInterval(actualizarEstadoSemaforo, 300);
+    </script>
+</body>
+</html>
