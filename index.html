@@ -1692,7 +1692,7 @@
                 correcta: 3
             },
             {
-                enunciado: "¿Cuál es el objetivo principal al priorizar productos con mayor cantidad de días en mora al negociar una promesa?",
+                enunciado: "¿Cuál es el objetivo principal al priorizar productos con mayor cantidad de días in mora al negociar una promesa?",
                 opciones: [
                     "Que deje de aplicarse interés a la deuda",
                     "Reducir la cantidad de días en mora y bajar de tramo",
@@ -1865,7 +1865,7 @@
 
         const pasosPlanMOriginal = [
             "Verificar que cumpla con las condiciones para acceder al plan.",
-            "Ingresar en BC10 con el DU y copiar el N° de plástico (16 dígitos)",
+            "Ingresar in BC10 con el DU y copiar el N° de plástico (16 dígitos)",
             "Ingresar en mastercard con usuario y contraseña correspondiente.",
             "Ingresar en la opción 19 para corroborar estado de inhibición.",
             "Ingresar en la primer opción: ACTUALIZACIÓN DE MARCAS DE INHIBICIÓN con INTRO - Tabular hasta Numero de tarjeta y pegar los 16 dígitos + intro",
@@ -1895,6 +1895,22 @@
             let originalConIndices = array.map((texto, originalIdx) => ({ texto, originalIdx }));
             originalConIndices.sort(() => Math.random() - 0.5);
             return originalConIndices;
+        }
+
+        // 👇 Función auxiliar robusta para formatear fechas ISO o sucias al formato deseado (Ej: 15/10/2026 1:53:58 p.m.)
+        function formatearFechaHora(fechaStr) {
+            if (!fechaStr) return "";
+            try {
+                let d = new Date(fechaStr);
+                if (isNaN(d.getTime())) return fechaStr; // Si no es fecha válida, devuelve tal cual
+                let opcionesFecha = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                let opcionesHora = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
+                let fechaFormateada = d.toLocaleDateString('es-AR', opcionesFecha);
+                let horaFormateada = d.toLocaleTimeString('es-AR', opcionesHora).toLowerCase();
+                return `${fechaFormateada} ${horaFormateada}`;
+            } catch (e) {
+                return fechaStr;
+            }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -1940,7 +1956,6 @@
                 </div>
             `).join('');
 
-            // 👇 Renderizado de la Actividad 4 (Creación de Speech para Objeciones)
             const act4Container = document.getElementById('act4-form-container');
             act4Container.innerHTML = objecionesActividad4.map((objText, idx) => `
                 <div class="activity-item">
@@ -2509,7 +2524,6 @@
             alert(`🎉 Actividad 2 finalizada. Puntaje: ${puntaje}/100`);
         }
 
-        // 👇 Lógica de validación para la Actividad 4 (Exige responder cada punto SI O SI)
         function finalizarActividad4() {
             let detalleTexto = "";
             let respondidosCompletos = 0;
@@ -2525,7 +2539,6 @@
                 detalleTexto += `• ${objecionesActividad4[i]}\n  Speech: "${txt}"\n`;
             }
 
-            // Si respondió todos los puntos, obtiene 100 puntos
             let puntaje = (respondidosCompletos === objecionesActividad4.length) ? 100 : 0;
             registrarResultado("Calidad - Actividad 4: Creación de Speech para Objeciones", puntaje, detalleTexto);
 
@@ -2631,7 +2644,7 @@
             let claseCss = puntaje >= 90 ? "bg-dominado" : puntaje >= 65 ? "bg-oportunidades" : puntaje >= 40 ? "bg-refuerzo" : "bg-critico";
 
             let nuevoRegistro = {
-                fecha: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(),
+                fecha: new Date().toISOString(), // Guarda en formato ISO estándar para garantizar consistencia
                 asesor: usuarioActual,
                 actividad: actividadNombre,
                 puntaje: puntaje,
@@ -2758,9 +2771,11 @@
             let tbody = document.getElementById('tabla-resultados-body');
             tbody.innerHTML = "";
             filtrados.forEach(r => {
+                // 👇 Se aplica la función de formato de fecha/hora aquí para que se visualice correctamente en la tabla
+                let fechaFormateada = formatearFechaHora(r.fecha);
                 tbody.innerHTML += `
                     <tr>
-                        <td>${r.fecha}</td>
+                        <td>${fechaFormateada}</td>
                         <td><b>${r.asesor}</b></td>
                         <td>${r.actividad}</td>
                         <td><b>${r.puntaje} pts</b></td>
