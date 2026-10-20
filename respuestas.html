@@ -383,6 +383,22 @@
         const claveAudio3 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
         const claveAudio4 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
 
+        // 👇 Función auxiliar robusta para formatear fechas ISO o sucias al formato deseado (Ej: 15/10/2026 1:24:52 p.m.)
+        function formatearFechaHora(fechaStr) {
+            if (!fechaStr) return "";
+            try {
+                let d = new Date(fechaStr);
+                if (isNaN(d.getTime())) return fechaStr; // Si no es fecha válida, devuelve tal cual
+                let opcionesFecha = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                let opcionesHora = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
+                let fechaFormateada = d.toLocaleDateString('es-AR', opcionesFecha);
+                let horaFormateada = d.toLocaleTimeString('es-AR', opcionesHora).toLowerCase();
+                return `${fechaFormateada} ${horaFormateada}`;
+            } catch (e) {
+                return fechaStr;
+            }
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             cargarDatosSheet();
         });
@@ -419,7 +435,6 @@
 
             poblarSelectActividades('sistemas', ["Investigá al cliente", "Planes de pago"]);
             poblarSelectActividades('proc', ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"]);
-            // 👇 Se incluye "Objeciones" para que el selector capture la nueva actividad de calidad
             poblarSelectActividades('gestion', ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones"]);
 
             renderizarResumenGeneral();
@@ -473,7 +488,6 @@
         }
 
         function renderizarVisualCategoria(cat) {
-            // 👇 Se incluye "Objeciones" en las keywords de la categoría de gestión
             let keywords = cat === 'sistemas' ? ["Investigá al cliente", "Planes de pago"] :
                            (cat === 'proc' ? ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"] : ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones"]);
 
@@ -630,12 +644,15 @@
                     contenidoHtml += `</div>`;
                 }
 
+                // 👇 Se aplica el formateador de fecha y hora aquí para que las tarjetas muestren el formato correcto
+                let fechaFormateada = formatearFechaHora(r.fecha);
+
                 container.innerHTML += `
                     <div class="eval-card">
                         <div class="eval-header">
                             <div>
                                 <b style="font-size: 16px; color: var(--text-main);">👤 ${r.asesor}</b><br>
-                                <span style="font-size: 13px; color: var(--text-muted);">🎯 ${r.actividad} | 📅 ${r.fecha}</span>
+                                <span style="font-size: 13px; color: var(--text-muted);">🎯 ${r.actividad} | 📅 ${fechaFormateada}</span>
                             </div>
                             <div>
                                 <span class="badge ${claseCss}">${r.clasificacion} (${r.puntaje} pts)</span>
