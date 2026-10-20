@@ -868,7 +868,7 @@
                                     <div class="progress-card-body">
                                         <div class="progress-stats">
                                             <span>Completado</span>
-                                            <span id="val-gestion-det">0 / 4 Actividades</span>
+                                            <span id="val-gestion-det">0 / 5 Actividades</span>
                                         </div>
                                         <div class="progress-bar-bg">
                                             <div class="progress-bar-fill" id="bar-gestion" style="width: 0%;"></div>
@@ -913,7 +913,7 @@
 
                             <div class="dashboard-card cat-card-gestion" onclick="abrirCategoria('gestion')">
                                 <div class="card-title">🎧 CALIDAD DE LA GESTIÓN</div>
-                                <div class="card-desc">Auditoría de audios, casos hipotéticos de reconducción y resolución secuencial de cobros.</div>
+                                <div class="card-desc">Auditoría de audios, casos hipotéticos, role play con semáforo y resolución secuencial de cobros.</div>
                             </div>
                         </div>
                     </div>
@@ -1027,6 +1027,86 @@
                             <div id="feedback-act4-container" class="feedback-card" style="display:none;">
                                 <h4>💡 Resultado de Creación de Speeches</h4>
                                 <div id="feedback-act4-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ACTIVIDAD NUEVA 5: ROLE PLAY - SEMÁFORO DE GESTIÓN (CALIDAD) -->
+                    <div id="sec-activity-semaforo" class="section-view" style="display: none;">
+                        <div class="card-container" style="max-width: 1200px; margin: 0 auto;">
+                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('gestion')">⬅️ Volver a Actividades</button>
+                            <h2>🚦 Role Play – Semáforo de Gestión</h2>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Herramienta en tiempo real para simulaciones de cobranzas. El asesor visualiza el estado actual y el supervisor controla el panel privado para cambiar el color, registrar el motivo y puntuar la sesión.</p>
+                            
+                            <!-- Botón para abrir la pantalla del asesor en pestaña aparte -->
+                            <div style="margin-bottom: 25px;">
+                                <a href="semaforo-asesor.html" target="_blank" class="btn-galicia" style="text-align: center; text-decoration: none; display: block; background: linear-gradient(135deg, #1E293B 0%, #334155 100%);">🌐 Abrir Pantalla del Asesor en Pestaña Aparte</a>
+                            </div>
+
+                            <!-- Selector de Asesor para la Simulación -->
+                            <div style="background: #FFF3EB; border: 1px solid #FFD0B5; padding: 20px; border-radius: 14px; margin-bottom: 25px;">
+                                <label style="font-weight: 700; color: var(--galicia-orange); display: block; margin-bottom: 8px;">👤 Seleccionar Asesor evaluado en el Role Play:</label>
+                                <select id="semaforo-advisor-select" class="form-control" style="background: var(--white); font-weight: 600;">
+                                    <option value="">-- Seleccionar Asesor --</option>
+                                </select>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                                <!-- Columna Izquierda: Vista de Control Previa / Simulación -->
+                                <div style="background: #FAFAFA; border: 2px solid var(--border-color); border-radius: 16px; padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: space-between;">
+                                    <h3 style="color: var(--text-main); margin-bottom: 20px; font-size: 18px;">🖥️ Vista Previa (Panel Interno)</h3>
+                                    
+                                    <!-- Semáforo Vertical Grande -->
+                                    <div style="background: #1E293B; padding: 25px 20px; border-radius: 30px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 140px; align-items: center;">
+                                        <div id="luz-rojo" style="width: 80px; height: 80px; border-radius: 50%; background: #EF4444; opacity: 0.25; box-shadow: inset 0 4px 8px rgba(0,0,0,0.4); transition: all 0.3s;"></div>
+                                        <div id="luz-amarillo" style="width: 80px; height: 80px; border-radius: 50%; background: #F59E0B; opacity: 0.25; box-shadow: inset 0 4px 8px rgba(0,0,0,0.4); transition: all 0.3s;"></div>
+                                        <div id="luz-verde" style="width: 80px; height: 80px; border-radius: 50%; background: #10B981; opacity: 0.25; box-shadow: inset 0 4px 8px rgba(0,0,0,0.4); transition: all 0.3s;"></div>
+                                    </div>
+
+                                    <!-- Mensaje Asociado al Color Activo -->
+                                    <div id="semaforo-mensaje-box" style="margin-top: 25px; width: 100%; background: var(--white); border: 2px solid var(--border-color); padding: 20px; border-radius: 12px; text-align: center; min-height: 120px; display: flex; flex-direction: column; justify-content: center;">
+                                        <h4 id="semaforo-titulo-estado" style="color: var(--text-main); font-size: 16px; margin-bottom: 8px;">VERDE — CONTINUÁ</h4>
+                                        <p id="semaforo-texto-estado" style="color: var(--text-muted); font-size: 13px; line-height: 1.5;">“Estás aplicando correctamente el procedimiento. Podés continuar con la gestión”.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Columna Derecha: Panel de Control Privado de la Supervisora -->
+                                <div style="background: var(--white); border: 2px solid var(--border-color); border-radius: 16px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between;">
+                                    <div>
+                                        <h3 style="color: var(--galicia-orange); margin-bottom: 15px; font-size: 18px;">🔒 Panel de Control (Supervisora)</h3>
+                                        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Seleccioná el estado del semáforo e ingresá el motivo detallado de la decisión:</p>
+
+                                        <div class="input-group">
+                                            <label>🎯 Seleccionar Color del Semáforo:</label>
+                                            <select id="select-color-semaforo" class="form-control" onchange="cambiarColorSemaforoPrivado()">
+                                                <option value="VERDE">🟢 VERDE — Continuá</option>
+                                                <option value="AMARILLO">🟡 AMARILLO — Pausá y Analizá</option>
+                                                <option value="ROJO">🔴 ROJO — Detené y Corregí</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group" style="margin-top: 20px;">
+                                            <label>✍️ Motivo / Observación de la decisión:</label>
+                                            <textarea id="textarea-motivo-semaforo" class="form-control" placeholder="Ej: Realiza las preguntas de indagación necesarias y continúa según el procedimiento..."></textarea>
+                                        </div>
+
+                                        <button class="btn-galicia" style="margin-top: 15px; background: linear-gradient(135deg, var(--text-main) 0%, #334155 100%);" onclick="registrarPasoSemaforo()">➕ Registrar este Estado en el Historial</button>
+                                    </div>
+
+                                    <div style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                                        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--text-muted);">
+                                            <span>⏱️ Estados registrados: <b id="count-estados-semaforo" style="color: var(--text-main);">0</b></span>
+                                            <span>🟢 V: <b id="cnt-v">0</b> | 🟡 A: <b id="cnt-a">0</b> | 🔴 R: <b id="cnt-r">0</b></span>
+                                        </div>
+                                        <button class="btn-galicia" style="background: linear-gradient(135deg, var(--success) 0%, #059669 100%);" onclick="finalizarActividadSemaforo()">🎯 FINALIZAR ACTIVIDAD Y ENVIAR</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Contenedor de Resultado del Role Play -->
+                            <div id="feedback-semaforo-container" class="feedback-card" style="display:none; margin-top: 25px;">
+                                <h4>💡 Resumen y Diagnóstico de la Simulación</h4>
+                                <div id="feedback-semaforo-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
                             </div>
                         </div>
                     </div>
@@ -1192,7 +1272,7 @@
                                     <div class="precision-bar-container">
                                         <div class="precision-info">
                                             <span>🎧 Calidad de la Gestión</span>
-                                            <span id="stat-cat-gestion">0 / 4</span>
+                                            <span id="stat-cat-gestion">0 / 5</span>
                                         </div>
                                         <div class="precision-bar-bg">
                                             <div class="precision-bar-fill" id="bar-cat-gestion" style="width: 0%; background: #E96151;"></div>
@@ -1489,7 +1569,7 @@
                         titulo: "Paso 2: Vemos que había pactado un pago parcial de $200.000 a fin del mes anterior. ¿Cómo sigo?",
                         opciones: [
                             { texto: "A- Le pido un nuevo pago para esta semana", correcta: false },
-                            { texto: "B- Corroboro el pago y vuelvo a consultar sobre la situación actual.", correcta: true }
+                            { texto: "B- Corroborar el pago y vuelvo a consultar sobre la situación actual.", correcta: true }
                         ],
                         justificacion: "Corroboramos el pago y actualizamos la cuenta."
                     },
@@ -1866,7 +1946,7 @@
         const pasosPlanMOriginal = [
             "Verificar que cumpla con las condiciones para acceder al plan.",
             "Ingresar in BC10 con el DU y copiar el N° de plástico (16 dígitos)",
-            "Ingresar en mastercard con usuario y contraseña correspondiente.",
+            "Ingresar in mastercard con usuario y contraseña correspondiente.",
             "Ingresar en la opción 19 para corroborar estado de inhibición.",
             "Ingresar en la primer opción: ACTUALIZACIÓN DE MARCAS DE INHIBICIÓN con INTRO - Tabular hasta Numero de tarjeta y pegar los 16 dígitos + intro",
             "Corroborar estado actual: si dice SI modificar en estado nuevo escribiendo NO + intro - Vovler al menú principal con f3",
@@ -1889,6 +1969,10 @@
         let aciertosTotalesPasoAPaso = 0;
         let planillaDetalleGuardado = [];
 
+        // Variables para la actividad de Role Play - Semáforo de Gestión
+        let startTimeSemaforo = null;
+        let historialSemaforoRegistros = [];
+
         const urlGoogleSheet = "https://script.google.com/macros/s/AKfycbwmYkKxHXKSE5U1IoypYKBULNaJZl8rBQ0FRfnUNeRV67op3u0VoUJlH3GxeIsj/exec";
 
         function mezclarArray(array) {
@@ -1897,12 +1981,11 @@
             return originalConIndices;
         }
 
-        // 👇 Función auxiliar robusta para formatear fechas ISO o sucias al formato deseado (Ej: 15/10/2026 1:53:58 p.m.)
         function formatearFechaHora(fechaStr) {
             if (!fechaStr) return "";
             try {
                 let d = new Date(fechaStr);
-                if (isNaN(d.getTime())) return fechaStr; // Si no es fecha válida, devuelve tal cual
+                if (isNaN(d.getTime())) return fechaStr;
                 let opcionesFecha = { day: '2-digit', month: '2-digit', year: 'numeric' };
                 let opcionesHora = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
                 let fechaFormateada = d.toLocaleDateString('es-AR', opcionesFecha);
@@ -1915,11 +1998,18 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             const selectAsesor = document.getElementById('advisor-name-select');
+            const selectSemaforoAsesor = document.getElementById('semaforo-advisor-select');
+            
             listaAsesores.sort().forEach(nombre => {
-                let opt = document.createElement('option');
-                opt.value = nombre;
-                opt.textContent = nombre;
-                selectAsesor.appendChild(opt);
+                let opt1 = document.createElement('option');
+                opt1.value = nombre;
+                opt1.textContent = nombre;
+                selectAsesor.appendChild(opt1);
+
+                let opt2 = document.createElement('option');
+                opt2.value = nombre;
+                opt2.textContent = nombre;
+                selectSemaforoAsesor.appendChild(opt2);
             });
             reiniciarFormulariosUI();
         });
@@ -2095,21 +2185,21 @@
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-activity-1', '🎧 Actividad 1: Auditá la gestión')">
                             <div class="card-title" style="color: #E96151; font-size: 20px;">🎧 Actividad 1: Auditá la gestión</div>
-                            <div class="card-desc" style="color: var(--text-main);">Evaluación interactiva de cumplimiento de procesos sobre auditoría de audios reales. (Permite reintentar)</div>
+                            <div class="card-desc" style="color: var(--text-main);">Evaluación interactiva de cumplimiento de procesos sobre auditoría de audios reales.</div>
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-activity-2', '💬 Actividad 2: ¿Qué responderías?')">
                             <div class="card-title" style="color: #E96151; font-size: 20px;">💬 Actividad 2: ¿Qué responderías?</div>
-                            <div class="card-desc" style="color: var(--text-main);">Casos hipotéticos orientados a la reconducción de objeciones hacia la cobranza efectiva. (Permite reintentar)</div>
+                            <div class="card-desc" style="color: var(--text-main);">Casos hipotéticos orientados a la reconducción de objeciones hacia la cobranza efectiva.</div>
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="abrirSeccionUnica('sec-activity-3', '🔀 Actividad 3: Elegí el camino correcto')">
                             <div class="card-title" style="color: #E96151; font-size: 20px;">🔀 Actividad 3: Elegí el camino correcto</div>
-                            <div class="card-desc" style="color: var(--text-main);">Resolución secuencial de casos prácticos con múltiples escenarios. (Permite reintentar)</div>
+                            <div class="card-desc" style="color: var(--text-main);">Resolución secuencial de casos prácticos con múltiples escenarios.</div>
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
@@ -2120,6 +2210,13 @@
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
+                    <div class="activity-card-wrapper">
+                        <div class="activity-card-inner" onclick="iniciarRolePlaySemaforo()">
+                            <div class="card-title" style="color: #E96151; font-size: 20px;">🚦 Role Play – Semáforo de Gestión</div>
+                            <div class="card-desc" style="color: var(--text-main);">Simulación en tiempo real con semáforo visual para asesor y panel privado de supervisión.</div>
+                        </div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
+                    </div>
                 `;
             } else if(cat === 'proc') {
                 titulo.innerText = "📋 PROCEDIMIENTOS Y CONDICIONES GENERALES - Actividades";
@@ -2127,21 +2224,21 @@
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-proc-1', '📋 Herramientas de cobranza')">
                             <div class="card-title" style="color: #FF9955; font-size: 20px;">📋 Actividad 1: Herramientas de cobranza</div>
-                            <div class="card-desc" style="color: var(--text-main);">Multiple choice sobre condiciones generales y herramientas de cobranza. (Permite reintentar)</div>
+                            <div class="card-desc" style="color: var(--text-main);">Multiple choice sobre condiciones generales y herramientas de cobranza.</div>
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-proc-2', '🛡️ Validación de Identidad')">
                             <div class="card-title" style="color: #FF9955; font-size: 20px;">🛡️ Actividad 2: Validación de Identidad</div>
-                            <div class="card-desc" style="color: var(--text-main);">Evaluación de verdadero o falso sobre protocolos de validación. (Permite reintentar)</div>
+                            <div class="card-desc" style="color: var(--text-main);">Evaluación de verdadero o falso sobre protocolos de validación.</div>
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="iniciarPlanillaPasoAPaso()">
                             <div class="card-title" style="color: #FF9955; font-size: 20px;">📊 Actividad 3: Planes de Pago (Paso a Paso)</div>
-                            <div class="card-desc" style="color: var(--text-main);">Matriz interactiva completa con validación flexible. (Permite reintentar)</div>
+                            <div class="card-desc" style="color: var(--text-main);">Matriz interactiva completa con validación flexible.</div>
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
@@ -2152,14 +2249,14 @@
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-sistemas-1', '🔍 Investigá al cliente')">
                             <div class="card-title" style="color: #FF6600; font-size: 20px;">🔍 Actividad 1: Investigá al cliente</div>
-                            <div class="card-desc" style="color: var(--text-main);">Búsqueda y extracción de datos detallados del cliente en los sistemas. (Permite reintentar)</div>
+                            <div class="card-desc" style="color: var(--text-main);">Búsqueda y extracción de datos detallados del cliente en los sistemas.</div>
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
                     <div class="activity-card-wrapper">
                         <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-sistemas-2', '⚙️ Planes de pago')">
                             <div class="card-title" style="color: #FF6600; font-size: 20px;">⚙️ Actividad 2: Planes de pago (Plan V - Plan M)</div>
-                            <div class="card-desc" style="color: var(--text-main);">Ordenamiento secuencial de pasos para simular planes de pago. (Permite reintentar)</div>
+                            <div class="card-desc" style="color: var(--text-main);">Ordenamiento secuencial de pasos para simular planes de pago.</div>
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
@@ -2178,6 +2275,153 @@
             if(seccionId === 'sec-activity-3') {
                 volverASelectorCasos();
             }
+        }
+
+        // Lógica de Role Play - Semáforo de Gestión
+        function iniciarRolePlaySemaforo() {
+            if (!staffAutorizados.includes(usuarioActual)) {
+                alert("⛔ Acceso restringido: Esta actividad de Role Play está reservada exclusivamente para integrantes del Staff.");
+                return;
+            }
+            abrirSeccionUnica('sec-activity-semaforo', '🚦 Role Play – Semáforo de Gestión');
+            startTimeSemaforo = new Date();
+            historialSemaforoRegistros = [];
+            document.getElementById('semaforo-advisor-select').value = "";
+            document.getElementById('textarea-motivo-semaforo').value = "";
+            document.getElementById('feedback-semaforo-container').style.display = 'none';
+            actualizarInterfazSemaforoVisual("VERDE");
+            actualizarContadoresSemaforoUI();
+        }
+
+        function cambiarColorSemaforoPrivado() {
+            let colorSel = document.getElementById('select-color-semaforo').value;
+            localStorage.setItem('galicia_semaforo_estado', colorSel);
+            actualizarInterfazSemaforoVisual(colorSel);
+        }
+
+        function actualizarInterfazSemaforoVisual(color) {
+            let luzR = document.getElementById('luz-rojo');
+            let luzA = document.getElementById('luz-amarillo');
+            let luzV = document.getElementById('luz-verde');
+            let tituloEstado = document.getElementById('semaforo-titulo-estado');
+            let textoEstado = document.getElementById('semaforo-texto-estado');
+
+            luzR.style.opacity = "0.25";
+            luzA.style.opacity = "0.25";
+            luzV.style.opacity = "0.25";
+            luzR.style.transform = "scale(1)";
+            luzA.style.transform = "scale(1)";
+            luzV.style.transform = "scale(1)";
+
+            if(color === "VERDE") {
+                luzV.style.opacity = "1";
+                luzV.style.transform = "scale(1.05)";
+                tituloEstado.innerText = "VERDE — CONTINUÁ";
+                textoEstado.innerText = "“Estás aplicando correctamente el procedimiento. Podés continuar con la gestión”.";
+            } else if(color === "AMARILLO") {
+                luzA.style.opacity = "1";
+                luzA.style.transform = "scale(1.05)";
+                tituloEstado.innerText = "AMARILLO — PAUSÁ Y ANALIZÁ";
+                textoEstado.innerText = "“Detenete un momento. Revisá la información disponible y determiná qué necesitás preguntar o verificar antes de avanzar”.";
+            } else if(color === "ROJO") {
+                luzR.style.opacity = "1";
+                luzR.style.transform = "scale(1.05)";
+                tituloEstado.innerText = "ROJO — DETENÉ Y CORREGÍ";
+                textoEstado.innerText = "“Se detectó un posible desvío en el procedimiento. Revisá lo que hiciste e identificá cómo deberías corregirlo antes de continuar”.";
+            }
+        }
+
+        function registrarPasoSemaforo() {
+            let asesorElegido = document.getElementById('semaforo-advisor-select').value;
+            if(!asesorElegido) {
+                alert("⚠️ Por favor seleccione primero al asesor que está realizando la simulación.");
+                return;
+            }
+            let colorSel = document.getElementById('select-color-semaforo').value;
+            let motivo = document.getElementById('textarea-motivo-semaforo').value.trim();
+
+            if(!motivo) {
+                alert("⚠️ Por favor ingrese el motivo u observación que explica la decisión del color.");
+                document.getElementById('textarea-motivo-semaforo').focus();
+                return;
+            }
+
+            historialSemaforoRegistros.push({
+                color: colorSel,
+                motivo: motivo,
+                hora: new Date().toLocaleTimeString('es-AR')
+            });
+
+            document.getElementById('textarea-motivo-semaforo').value = "";
+            actualizarContadoresSemaforoUI();
+            alert(`✅ Estado ${colorSel} registrado correctamente en el historial.`);
+        }
+
+        function actualizarContadoresSemaforoUI() {
+            document.getElementById('count-estados-semaforo').innerText = historialSemaforoRegistros.length;
+            let cntV = historialSemaforoRegistros.filter(r => r.color === "VERDE").length;
+            let cntA = historialSemaforoRegistros.filter(r => r.color === "AMARILLO").length;
+            let cntR = historialSemaforoRegistros.filter(r => r.color === "ROJO").length;
+            document.getElementById('cnt-v').innerText = cntV;
+            document.getElementById('cnt-a').innerText = cntA;
+            document.getElementById('cnt-r').innerText = cntR;
+        }
+
+        function finalizarActividadSemaforo() {
+            let asesorElegido = document.getElementById('semaforo-advisor-select').value;
+            if(!asesorElegido) {
+                alert("⚠️ Por favor seleccione al asesor evaluado.");
+                return;
+            }
+            if(historialSemaforoRegistros.length === 0) {
+                alert("⚠️ Debe registrar al menos un estado en el semáforo antes de finalizar.");
+                return;
+            }
+
+            let endTime = new Date();
+            let duracionMs = endTime - startTimeSemaforo;
+            let minutos = Math.floor(duracionMs / 60000);
+            let segundos = Math.floor((duracionMs % 60000) / 1000);
+            let duracionStr = `${minutos} min ${segundos} seg`;
+
+            let cntV = historialSemaforoRegistros.filter(r => r.color === "VERDE").length;
+            let cntA = historialSemaforoRegistros.filter(r => r.color === "AMARILLO").length;
+            let cntR = historialSemaforoRegistros.filter(r => r.color === "ROJO").length;
+            let totalCambios = historialSemaforoRegistros.length;
+
+            let sumaPuntajes = historialSemaforoRegistros.reduce((acc, curr) => {
+                return acc + (curr.color === "VERDE" ? 100 : (curr.color === "AMARILLO" ? 70 : 40));
+            }, 0);
+            let puntajeFinal = Math.round(sumaPuntajes / totalCambios);
+
+            let detalleTexto = `Asesor Evaluado en Role Play: ${asesorElegido}\n`;
+            detalleTexto += `Duración de sesión: ${duracionStr}\n`;
+            detalleTexto += `Conteo - Verdes: ${cntV}, Amarillos: ${cntA}, Rojos: ${cntR}\n`;
+            detalleTexto += `Historial de Decisiones y Comentarios:\n`;
+            historialSemaforoRegistros.forEach((h, idx) => {
+                detalleTexto += `  ${idx + 1}. [${h.color}] (${h.hora}) - Comentario: "${h.motivo}"\n`;
+            });
+
+            let usuarioAnterior = usuarioActual;
+            usuarioActual = asesorElegido;
+            registrarResultado("Role Play – Semáforo de Gestión", puntajeFinal, detalleTexto);
+            usuarioActual = usuarioAnterior;
+
+            let resumenHtml = `
+                <p>🎉 <b>¡Role Play finalizado con éxito!</b> Resultado registrado a nombre de: <b>${asesorElegido}</b></p>
+                <ul style="margin: 10px 0 10px 20px; line-height: 1.6;">
+                    <li><b>Fecha y hora:</b> ${formatearFechaHora(new Date().toISOString())}</li>
+                    <li><b>Duración de sesión:</b> ${duracionStr}</li>
+                    <li><b>Cantidad de selecciones:</b> 🟢 ${cntV} Verdes | 🟡 ${cntA} Amarillos | 🔴 ${cntR} Rojos</li>
+                    <li><b>Puntaje de Calidad Asignado:</b> <b>${puntajeFinal} pts</b></li>
+                </ul>
+                <p><b>Historial de Comentarios y Observaciones:</b></p>
+                <pre style="background:var(--white); padding:10px; border-radius:8px; border:1px solid var(--border-color); font-size:12px; margin-top:5px; white-space:pre-wrap;">${detalleTexto}</pre>
+            `;
+
+            document.getElementById('feedback-semaforo-content').innerHTML = resumenHtml;
+            document.getElementById('feedback-semaforo-container').style.display = 'block';
+            alert(`🎉 Role Play finalizado. Puntaje asignado: ${puntajeFinal}/100 pts.`);
         }
 
         function cambiarAudioActividad1() {
@@ -2222,16 +2466,16 @@
         function actualizarProgresosDashboard() {
             let regsAsesor = registrosGlobales.filter(r => r.asesor === usuarioActual);
 
-            let gestionComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino") || r.actividad.includes("Objeciones")).length, 4);
+            let gestionComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino") || r.actividad.includes("Objeciones") || r.actividad.includes("Semáforo")).length, 5);
             let procComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad") || r.actividad.includes("Planes de Pago (Paso a Paso)")).length, 3);
             let sysComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Investigá") || r.actividad.includes("Planes de pago")).length, 2);
 
-            let pctGestion = Math.round((gestionComp / 4) * 100);
+            let pctGestion = Math.round((gestionComp / 5) * 100);
             let pctProc = Math.round((procComp / 3) * 100);
             let pctSys = Math.round((sysComp / 2) * 100);
 
             document.getElementById('val-gestion-txt').innerText = `${pctGestion}%`;
-            document.getElementById('val-gestion-det').innerText = `${gestionComp} / 4 Actividades`;
+            document.getElementById('val-gestion-det').innerText = `${gestionComp} / 5 Actividades`;
             document.getElementById('bar-gestion').style.width = `${pctGestion}%`;
 
             document.getElementById('val-proc-txt').innerText = `${pctProc}%`;
@@ -2644,7 +2888,7 @@
             let claseCss = puntaje >= 90 ? "bg-dominado" : puntaje >= 65 ? "bg-oportunidades" : puntaje >= 40 ? "bg-refuerzo" : "bg-critico";
 
             let nuevoRegistro = {
-                fecha: new Date().toISOString(), // Guarda en formato ISO estándar para garantizar consistencia
+                fecha: new Date().toISOString(),
                 asesor: usuarioActual,
                 actividad: actividadNombre,
                 puntaje: puntaje,
@@ -2698,7 +2942,7 @@
             if(filtrados.length === 0) {
                 document.getElementById('kpi-promedio').innerText = "0 pts";
                 document.getElementById('kpi-estado').innerText = "Sin datos";
-                document.getElementById('stat-cat-gestion').innerText = "0 / 4";
+                document.getElementById('stat-cat-gestion').innerText = "0 / 5";
                 document.getElementById('stat-cat-proc').innerText = "0 / 3";
                 document.getElementById('stat-cat-sistemas').innerText = "0 / 2";
                 document.getElementById('chart-precision-list').innerHTML = `<p style="font-size:13px; color:var(--text-muted);">Sin datos registrados.</p>`;
@@ -2712,12 +2956,12 @@
             document.getElementById('kpi-promedio').innerText = promedio + " pts";
             document.getElementById('kpi-estado').innerText = promedio >= 90 ? "🏆 DOMINADO" : promedio >= 65 ? "⚠️ OPORTUNIDADES" : "🚨 REFUERZO";
 
-            let gestionCount = Math.min(filtrados.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino") || r.actividad.includes("Objeciones")).length, 4);
+            let gestionCount = Math.min(filtrados.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino") || r.actividad.includes("Objeciones") || r.actividad.includes("Semáforo")).length, 5);
             let procCount = Math.min(filtrados.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad") || r.actividad.includes("Planes de Pago (Paso a Paso)")).length, 3);
             let sysCount = Math.min(filtrados.filter(r => r.actividad.includes("Investigá") || r.actividad.includes("Planes de pago")).length, 2);
 
-            document.getElementById('stat-cat-gestion').innerText = `${gestionCount} / 4`;
-            document.getElementById('bar-cat-gestion').style.width = `${Math.min((gestionCount/4)*100, 100)}%`;
+            document.getElementById('stat-cat-gestion').innerText = `${gestionCount} / 5`;
+            document.getElementById('bar-cat-gestion').style.width = `${Math.min((gestionCount/5)*100, 100)}%`;
 
             document.getElementById('stat-cat-proc').innerText = `${procCount} / 3`;
             document.getElementById('bar-cat-proc').style.width = `${Math.min((procCount/3)*100, 100)}%`;
@@ -2726,7 +2970,7 @@
             document.getElementById('bar-cat-sistemas').style.width = `${Math.min((sysCount/2)*100, 100)}%`;
 
             const listadoActividades = [
-                "Auditá la gestión", "Actividad 2: ¿Qué responderías?", "Elegí el camino correcto", "Creación de Speech para Objeciones", "Caso 1", "Caso 2", "Caso 3",
+                "Auditá la gestión", "Actividad 2: ¿Qué responderías?", "Elegí el camino correcto", "Creación de Speech para Objeciones", "Semáforo de Gestión", "Caso 1", "Caso 2", "Caso 3",
                 "Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)", "Investigá al cliente", "Planes de pago"
             ];
 
@@ -2771,7 +3015,6 @@
             let tbody = document.getElementById('tabla-resultados-body');
             tbody.innerHTML = "";
             filtrados.forEach(r => {
-                // 👇 Se aplica la función de formato de fecha/hora aquí para que se visualice correctamente en la tabla
                 let fechaFormateada = formatearFechaHora(r.fecha);
                 tbody.innerHTML += `
                     <tr>
