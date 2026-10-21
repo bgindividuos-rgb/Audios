@@ -383,12 +383,11 @@
         const claveAudio3 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
         const claveAudio4 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
 
-        // 👇 Función auxiliar robusta para formatear fechas ISO o sucias al formato deseado (Ej: 15/10/2026 1:24:52 p.m.)
         function formatearFechaHora(fechaStr) {
             if (!fechaStr) return "";
             try {
                 let d = new Date(fechaStr);
-                if (isNaN(d.getTime())) return fechaStr; // Si no es fecha válida, devuelve tal cual
+                if (isNaN(d.getTime())) return fechaStr;
                 let opcionesFecha = { day: '2-digit', month: '2-digit', year: 'numeric' };
                 let opcionesHora = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
                 let fechaFormateada = d.toLocaleDateString('es-AR', opcionesFecha);
@@ -435,7 +434,7 @@
 
             poblarSelectActividades('sistemas', ["Investigá al cliente", "Planes de pago"]);
             poblarSelectActividades('proc', ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"]);
-            poblarSelectActividades('gestion', ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones"]);
+            poblarSelectActividades('gestion', ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones", "Semáforo"]);
 
             renderizarResumenGeneral();
             renderizarVisualCategoria('sistemas');
@@ -489,7 +488,7 @@
 
         function renderizarVisualCategoria(cat) {
             let keywords = cat === 'sistemas' ? ["Investigá al cliente", "Planes de pago"] :
-                           (cat === 'proc' ? ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"] : ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones"]);
+                           (cat === 'proc' ? ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"] : ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones", "Semáforo"]);
 
             let selActElem = document.getElementById(`sel-act-${cat}`);
             let selAsesorElem = document.getElementById(`sel-asesor-${cat}`);
@@ -587,6 +586,45 @@
                     });
                     contenidoHtml += `</div>`;
 
+                } else if(r.actividad.includes("Semáforo")) {
+                    // Renderizado visual específico para el Role Play - Semáforo de Gestión
+                    contenidoHtml = `<div style="display:flex; flex-direction:column; gap:10px;">`;
+                    lineas.forEach(linea => {
+                        let bgItem = "var(--neutral-bg)";
+                        let borderItem = "var(--border-color)";
+                        let icono = "🚦";
+
+                        if(linea.includes("[VERDE]")) {
+                            bgItem = "#F0FDF4"; borderItem = "#BBF7D0"; icono = "🟢";
+                        } else if(linea.includes("[AMARILLO]")) {
+                            bgItem = "#FEFCE8"; borderItem = "#FEF08A"; icono = "🟡";
+                        } else if(linea.includes("[ROJO]")) {
+                            bgItem = "#FEF2F2"; borderItem = "#FECACA"; icono = "🔴";
+                        }
+
+                        if(linea.includes("Asesor Evaluado") || linea.includes("Duración") || linea.includes("Conteo")) {
+                            contenidoHtml += `
+                                <div style="background:var(--white); padding:10px 14px; border-radius:8px; font-size:13px; font-weight:600; color:var(--text-main); border:1px solid var(--border-color);">
+                                    📌 ${linea}
+                                </div>
+                            `;
+                        } else if(linea.includes("Historial de Decisiones")) {
+                            contenidoHtml += `
+                                <div style="margin-top:6px; font-size:13px; font-weight:700; color:var(--galicia-orange);">
+                                    📝 ${linea}
+                                </div>
+                            `;
+                        } else {
+                            contenidoHtml += `
+                                <div style="background:${bgItem}; padding:12px 16px; border-radius:8px; font-size:13px; display:flex; align-items:flex-start; gap:12px; border:1px solid ${borderItem};">
+                                    <span style="font-size:16px; margin-top:2px;">${icono}</span>
+                                    <span style="flex:1; color:var(--text-main); font-weight:500; line-height:1.5;">${linea.trim()}</span>
+                                </div>
+                            `;
+                        }
+                    });
+                    contenidoHtml += `</div>`;
+
                 } else {
                     contenidoHtml = `<div style="display:flex; flex-direction:column; gap:8px;">`;
                     lineas.forEach(linea => {
@@ -644,7 +682,6 @@
                     contenidoHtml += `</div>`;
                 }
 
-                // 👇 Se aplica el formateador de fecha y hora aquí para que las tarjetas muestren el formato correcto
                 let fechaFormateada = formatearFechaHora(r.fecha);
 
                 container.innerHTML += `
