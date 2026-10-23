@@ -587,96 +587,135 @@
                     contenidoHtml += `</div>`;
 
                 } else if(r.actividad.includes("Semáforo")) {
-                    // Renderizado visual específico para el Role Play - Semáforo de Gestión
-                    contenidoHtml = `<div style="display:flex; flex-direction:column; gap:10px;">`;
+                    // 👇 Agrupamos dinámicamente las acciones sucesivas dentro del mismo bloque del último estado
+                    let bloquesUnificados = [];
+                    let bloqueActual = null;
+
                     lineas.forEach(linea => {
-                        let bgItem = "var(--neutral-bg)";
-                        let borderItem = "var(--border-color)";
-                        let icono = "🚦";
+                        let lineaUpper = linea.toUpperCase();
+                        let esCabeceraEstado = lineaUpper.includes("[VERDE]") || lineaUpper.includes("[AMARILLO]") || lineaUpper.includes("[ROJO]");
 
-                        if(linea.includes("[VERDE]")) {
-                            bgItem = "#F0FDF4"; borderItem = "#BBF7D0"; icono = "🟢";
-                        } else if(linea.includes("[AMARILLO]")) {
-                            bgItem = "#FEFCE8"; borderItem = "#FEF08A"; icono = "🟡";
-                        } else if(linea.includes("[ROJO]")) {
-                            bgItem = "#FEF2F2"; borderItem = "#FECACA"; icono = "🔴";
-                        }
+                        if (esCabeceraEstado) {
+                            let color = "verde";
+                            if (lineaUpper.includes("[AMARILLO]")) color = "amarillo";
+                            else if (lineaUpper.includes("[ROJO]")) color = "rojo";
 
-                        if(linea.includes("Asesor Evaluado") || linea.includes("Duración") || linea.includes("Conteo")) {
-                            contenidoHtml += `
-                                <div style="background:var(--white); padding:10px 14px; border-radius:8px; font-size:13px; font-weight:600; color:var(--text-main); border:1px solid var(--border-color);">
-                                    📌 ${linea}
-                                </div>
-                            `;
-                        } else if(linea.includes("Historial de Decisiones")) {
-                            contenidoHtml += `
-                                <div style="margin-top:6px; font-size:13px; font-weight:700; color:var(--galicia-orange);">
-                                    📝 ${linea}
-                                </div>
-                            `;
+                            bloqueActual = { color: color, items: [linea] };
+                            bloquesUnificados.push(bloqueActual);
                         } else {
-                            contenidoHtml += `
-                                <div style="background:${bgItem}; padding:12px 16px; border-radius:8px; font-size:13px; display:flex; align-items:flex-start; gap:12px; border:1px solid ${borderItem};">
-                                    <span style="font-size:16px; margin-top:2px;">${icono}</span>
-                                    <span style="flex:1; color:var(--text-main); font-weight:500; line-height:1.5;">${linea.trim()}</span>
-                                </div>
-                            `;
+                            if (!bloqueActual) {
+                                bloqueActual = { color: "verde", items: [] };
+                                bloquesUnificados.push(bloqueActual);
+                            }
+                            bloqueActual.items.push(linea);
                         }
+                    });
+
+                    contenidoHtml = `<div style="display:flex; flex-direction:column; gap:12px;">`;
+                    bloquesUnificados.forEach(bloque => {
+                        let bgItem = "#F0FDF4";
+                        let borderItem = "#BBF7D0";
+
+                        if (bloque.color === "amarillo") {
+                            bgItem = "#FEFCE8"; borderItem = "#FEF08A";
+                        } else if (bloque.color === "rojo") {
+                            bgItem = "#FEF2F2"; borderItem = "#FECACA";
+                        }
+
+                        let htmlItemsUnificados = "";
+                        bloque.items.forEach(item => {
+                            let itemUpper = item.toUpperCase();
+                            let iconoItem = "🚦";
+                            if (itemUpper.includes("[VERDE]")) iconoItem = "🟢";
+                            else if (itemUpper.includes("[AMARILLO]")) iconoItem = "🟡";
+                            else if (itemUpper.includes("[ROJO]")) iconoItem = "🔴";
+
+                            if (item.includes("Asesor Evaluado") || item.includes("Duración") || item.includes("Conteo")) {
+                                htmlItemsUnificados += `<div style="background:var(--white); padding:8px 12px; border-radius:6px; font-size:13px; font-weight:600; color:var(--text-main); border:1px solid var(--border-color); margin-bottom:6px;">📌 ${item}</div>`;
+                            } else if (item.includes("Historial de Decisiones")) {
+                                htmlItemsUnificados += `<div style="margin-top:4px; margin-bottom:6px; font-size:13px; font-weight:700; color:var(--galicia-orange);">📝 ${item}</div>`;
+                            } else {
+                                htmlItemsUnificados += `
+                                    <div style="display:flex; align-items:flex-start; gap:10px; margin-top:6px;">
+                                        <span style="font-size:15px; margin-top:1px;">${iconoItem}</span>
+                                        <span style="flex:1; color:var(--text-main); font-weight:500; line-height:1.4;">${item.trim()}</span>
+                                    </div>
+                                `;
+                            }
+                        });
+
+                        contenidoHtml += `
+                            <div style="background:${bgItem}; padding:14px 16px; border-radius:10px; border:1px solid ${borderItem};">
+                                ${htmlItemsUnificados}
+                            </div>
+                        `;
                     });
                     contenidoHtml += `</div>`;
 
                 } else {
                     contenidoHtml = `<div style="display:flex; flex-direction:column; gap:8px;">`;
                     lineas.forEach(linea => {
-                        let esCorrecto = true;
-                        let lineaUpper = linea.toUpperCase();
+                        let textoLimpio = linea.replace('•', '').trim();
+                        let esConsignaObjecion = r.actividad.includes("Creación de Speech para Objeciones") && (textoLimpio.startsWith("1.") || textoLimpio.startsWith("2.") || textoLimpio.startsWith("3.") || textoLimpio.startsWith("4.") || textoLimpio.startsWith("5.") || textoLimpio.startsWith("6.") || textoLimpio.startsWith("7.") || textoLimpio.startsWith("8.") || textoLimpio.startsWith("9.") || textoLimpio.startsWith("10."));
 
-                        if (lineaUpper.includes("ORDEN DADO:") && lineaUpper.includes("(REAL:")) {
-                            let matchDado = linea.match(/Orden dado:\s*(\d+)/i);
-                            let matchReal = linea.match(/\(Real:\s*(\d+)\)/i);
-                            if (matchDado && matchReal) {
-                                let ordenDado = parseInt(matchDado[1]);
-                                let ordenReal = parseInt(matchReal[1]);
-                                esCorrecto = (ordenDado === ordenReal);
-                            }
-                        } else if (lineaUpper.includes("MARCÓ ->") && lineaUpper.includes("(ESPERADO:")) {
-                            let partesMarco = lineaUpper.split("MARCÓ ->")[1].split("(ESPERADO:");
-                            let asesorVal = partesMarco[0].trim().replace(/[^A-ZÁÉÍÓÚ]/g, "");
-                            let esperadoVal = partesMarco[1].replace(/[^A-ZÁÉÍÓÚ]/g, "").trim();
-                            esCorrecto = (asesorVal === esperadoVal);
-                        } else if (linea.includes("[Correcta:")) {
-                            let partes = linea.split("[Correcta:");
-                            let respAsesor = partes[0].replace(/^[•\-\d\.\s]+/, "").toLowerCase().trim();
-                            if(respAsesor.includes(':')) respAsesor = respAsesor.split(':')[1].trim();
-                            respAsesor = respAsesor.replace(/["']/g, "").trim();
-
-                            let respCorrecta = partes[1].replace("]", "").toLowerCase().trim();
-                            if(respCorrecta.includes(':')) respCorrecta = respCorrecta.split(':')[1].trim();
-                            respCorrecta = respCorrecta.replace(/["']/g, "").trim();
-
-                            esCorrecto = (respAsesor === respCorrecta || respAsesor.includes(respCorrecta) || respCorrecta.includes(respAsesor));
-                        } else if (linea.includes("Incorrecto") || linea.includes("FALSO (Incorrecto)")) {
-                            esCorrecto = false;
-                        }
-
-                        let icono = esCorrecto ? "✅" : "❌";
-                        let rowBg = esCorrecto ? "#F0FDF4" : "#FEF2F2";
-                        let borderColor = esCorrecto ? "#BBF7D0" : "#FECACA";
-
-                        let esTituloSeccion = linea.trim().endsWith(":") && !linea.includes("Paso");
-                        if (esTituloSeccion) {
+                        if (esConsignaObjecion) {
                             contenidoHtml += `
-                                <div style="background:var(--neutral-bg); padding:10px 14px; border-radius:8px; font-size:13px; font-weight:700; color:var(--text-main); border:1px solid var(--border-color); margin-top:5px;">
-                                    ${linea.replace('•', '').trim()}
+                                <div style="background:#FFF3EB; padding:12px 16px; border-radius:8px; font-size:13px; display:flex; align-items:center; gap:12px; border:1px solid #FFD0B5; margin-top:6px;">
+                                    <span style="font-size:16px;">💬</span>
+                                    <span style="flex:1; color:var(--galicia-orange); font-weight:700;">${textoLimpio}</span>
                                 </div>
                             `;
                         } else {
-                            contenidoHtml += `
-                                <div style="background:${rowBg}; padding:12px 16px; border-radius:8px; font-size:13px; display:flex; align-items:center; gap:12px; border:1px solid ${borderColor};">
-                                    <span style="font-size:16px;">${icono}</span>
-                                    <span style="flex:1; color:var(--text-main); font-weight:600;">${linea.replace('•', '').trim()}</span>
-                                </div>
-                            `;
+                            let esCorrecto = true;
+                            let lineaUpper = linea.toUpperCase();
+
+                            if (lineaUpper.includes("ORDEN DADO:") && lineaUpper.includes("(REAL:")) {
+                                let matchDado = linea.match(/Orden dado:\s*(\d+)/i);
+                                let matchReal = linea.match(/\(Real:\s*(\d+)\)/i);
+                                if (matchDado && matchReal) {
+                                    let ordenDado = parseInt(matchDado[1]);
+                                    let ordenReal = parseInt(matchReal[1]);
+                                    esCorrecto = (ordenDado === ordenReal);
+                                }
+                            } else if (lineaUpper.includes("MARCÓ ->") && lineaUpper.includes("(ESPERADO:")) {
+                                let partesMarco = lineaUpper.split("MARCÓ ->")[1].split("(ESPERADO:");
+                                let asesorVal = partesMarco[0].trim().replace(/[^A-ZÁÉÍÓÚ]/g, "");
+                                let esperadoVal = partesMarco[1].replace(/[^A-ZÁÉÍÓÚ]/g, "").trim();
+                                esCorrecto = (asesorVal === esperadoVal);
+                            } else if (linea.includes("[Correcta:")) {
+                                let partes = linea.split("[Correcta:");
+                                let respAsesor = partes[0].replace(/^[•\-\d\.\s]+/, "").toLowerCase().trim();
+                                if(respAsesor.includes(':')) respAsesor = respAsesor.split(':')[1].trim();
+                                respAsesor = respAsesor.replace(/["']/g, "").trim();
+
+                                let respCorrecta = partes[1].replace("]", "").toLowerCase().trim();
+                                if(respCorrecta.includes(':')) respCorrecta = respCorrecta.split(':')[1].trim();
+                                respCorrecta = respCorrecta.replace(/["']/g, "").trim();
+
+                                esCorrecto = (respAsesor === respCorrecta || respAsesor.includes(respCorrecta) || respCorrecta.includes(respAsesor));
+                            } else if (linea.includes("Incorrecto") || linea.includes("FALSO (Incorrecto)")) {
+                                esCorrecto = false;
+                            }
+
+                            let icono = esCorrecto ? "✅" : "❌";
+                            let rowBg = esCorrecto ? "#F0FDF4" : "#FEF2F2";
+                            let borderColor = esCorrecto ? "#BBF7D0" : "#FECACA";
+
+                            let esTituloSeccion = linea.trim().endsWith(":") && !linea.includes("Paso");
+                            if (esTituloSeccion) {
+                                contenidoHtml += `
+                                    <div style="background:var(--neutral-bg); padding:10px 14px; border-radius:8px; font-size:13px; font-weight:700; color:var(--text-main); border:1px solid var(--border-color); margin-top:5px;">
+                                        ${textoLimpio}
+                                    </div>
+                                `;
+                            } else {
+                                contenidoHtml += `
+                                    <div style="background:${rowBg}; padding:12px 16px; border-radius:8px; font-size:13px; display:flex; align-items:center; gap:12px; border:1px solid ${borderColor};">
+                                        <span style="font-size:16px;">${icono}</span>
+                                        <span style="flex:1; color:var(--text-main); font-weight:600;">${textoLimpio}</span>
+                                    </div>
+                                `;
+                            }
                         }
                     });
                     contenidoHtml += `</div>`;
