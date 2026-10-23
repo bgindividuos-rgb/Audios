@@ -535,10 +535,38 @@
                         }
                     });
 
+                    // Función auxiliar para transformar el texto plano almacenado en tarjetitas individuales estilo tarjeta de plataforma
+                    function formatearComoTarjetas(textoCelda) {
+                        if (!textoCelda || textoCelda === "-") return "-";
+                        // Limpia formato array JSON si estuviera presente
+                        let limpio = textoCelda.replace(/^\[["']|["']\]$/g, '').replace(/\\n/g, '\n');
+                        let items = limpio.split('\n').map(i => i.trim().replace(/^-\s*/, '')).filter(i => i.length > 0);
+                        
+                        if (items.length === 0) return textoCelda;
+
+                        let htmlTarjetas = `<div style="display: flex; flex-direction: column; gap: 8px;">`;
+                        items.forEach(item => {
+                            htmlTarjetas += `
+                                <div style="background: var(--white); border-left: 4px solid var(--galicia-orange); padding: 10px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--text-main); box-shadow: 0 2px 6px rgba(0,0,0,0.03); border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+                                    - ${item}
+                                </div>
+                            `;
+                        });
+                        htmlTarjetas += `</div>`;
+                        return htmlTarjetas;
+                    }
+
                     contenidoHtml = `<div style="overflow-x: auto;"><table class="tabla-matriz-reporte"><thead><tr><th>Condición</th><th>REFINANCIACIÓN</th><th>PLAN V</th><th>PLAN M</th></tr></thead><tbody>`;
                     for(let cond in condicionesMap) {
                         let data = condicionesMap[cond];
-                        contenidoHtml += `<tr><td class="header-row"><b>${cond}</b></td><td>${data.ref || "-"}</td><td>${data.planv || "-"}</td><td>${data.planm || "-"}</td></tr>`;
+                        contenidoHtml += `
+                            <tr>
+                                <td class="header-row"><b>${cond}</b></td>
+                                <td>${formatearComoTarjetas(data.ref)}</td>
+                                <td>${formatearComoTarjetas(data.planv)}</td>
+                                <td>${formatearComoTarjetas(data.planm)}</td>
+                            </tr>
+                        `;
                     }
                     contenidoHtml += `</tbody></table></div>`;
 
@@ -587,7 +615,6 @@
                     contenidoHtml += `</div>`;
 
                 } else if(r.actividad.includes("Semáforo")) {
-                    // 👇 Agrupamos dinámicamente las acciones sucesivas dentro del mismo bloque del último estado
                     let bloquesUnificados = [];
                     let bloqueActual = null;
 
