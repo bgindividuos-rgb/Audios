@@ -433,7 +433,7 @@
             });
 
             poblarSelectActividades('sistemas', ["Investigá al cliente", "Planes de pago"]);
-            poblarSelectActividades('proc', ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"]);
+            poblarSelectActividades('proc', ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)", "Tipificaciones"]);
             poblarSelectActividades('gestion', ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones", "Semáforo"]);
 
             renderizarResumenGeneral();
@@ -488,7 +488,7 @@
 
         function renderizarVisualCategoria(cat) {
             let keywords = cat === 'sistemas' ? ["Investigá al cliente", "Planes de pago"] :
-                           (cat === 'proc' ? ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)"] : ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones", "Semáforo"]);
+                           (cat === 'proc' ? ["Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)", "Tipificaciones"] : ["Auditá la gestión", "responderías", "camino", "Caso", "Objeciones", "Semáforo"]);
 
             let selActElem = document.getElementById(`sel-act-${cat}`);
             let selAsesorElem = document.getElementById(`sel-asesor-${cat}`);
@@ -535,10 +535,8 @@
                         }
                     });
 
-                    // Función auxiliar para transformar el texto plano almacenado en tarjetitas individuales estilo tarjeta de plataforma
                     function formatearComoTarjetas(textoCelda) {
                         if (!textoCelda || textoCelda === "-") return "-";
-                        // Limpia formato array JSON si estuviera presente
                         let limpio = textoCelda.replace(/^\[["']|["']\]$/g, '').replace(/\\n/g, '\n');
                         let items = limpio.split('\n').map(i => i.trim().replace(/^-\s*/, '')).filter(i => i.length > 0);
                         
@@ -677,6 +675,41 @@
                             </div>
                         `;
                     });
+                    contenidoHtml += `</div>`;
+
+                } else if(r.actividad.includes("Tipificaciones")) {
+                    // Renderizado visual ordenado en tarjetas para la Actividad 4 de Tipificaciones
+                    contenidoHtml = `<div style="display:flex; flex-direction:column; gap:10px;">`;
+                    let preguntaActual = "";
+                    let respuestaActual = "";
+
+                    lineas.forEach(linea => {
+                        if (linea.startsWith("• 1.") || linea.startsWith("• 2.") || linea.startsWith("• 3.") || linea.startsWith("• 4.") || linea.startsWith("• 5.") || linea.startsWith("• 6.") || linea.startsWith("• 7.") || linea.startsWith("• 8.") || linea.startsWith("• 9.") || linea.startsWith("• 10.") || linea.startsWith("• 11.") || linea.startsWith("• 12.")) {
+                            if (preguntaActual) {
+                                contenidoHtml += `
+                                    <div style="background:var(--white); padding:14px 18px; border-radius:10px; border:1px solid var(--border-color); border-left:4px solid var(--galicia-orange);">
+                                        <div style="font-size:13px; font-weight:700; color:var(--galicia-orange); margin-bottom:6px;">${preguntaActual}</div>
+                                        <div style="font-size:13px; color:var(--text-main); line-height:1.5; background:var(--neutral-bg); padding:10px; border-radius:6px; border:1px solid var(--border-color);">${respuestaActual || "Sin respuesta"}</div>
+                                    </div>
+                                `;
+                            }
+                            preguntaActual = linea.replace('•', '').trim();
+                            respuestaActual = "";
+                        } else if (linea.includes("Respuesta:")) {
+                            respuestaActual = linea.split("Respuesta:")[1].replace(/["']/g, "").trim();
+                        } else {
+                            respuestaActual += " " + linea.trim();
+                        }
+                    });
+
+                    if (preguntaActual) {
+                        contenidoHtml += `
+                            <div style="background:var(--white); padding:14px 18px; border-radius:10px; border:1px solid var(--border-color); border-left:4px solid var(--galicia-orange);">
+                                <div style="font-size:13px; font-weight:700; color:var(--galicia-orange); margin-bottom:6px;">${preguntaActual}</div>
+                                <div style="font-size:13px; color:var(--text-main); line-height:1.5; background:var(--neutral-bg); padding:10px; border-radius:6px; border:1px solid var(--border-color);">${respuestaActual.trim() || "Sin respuesta"}</div>
+                            </div>
+                        `;
+                    }
                     contenidoHtml += `</div>`;
 
                 } else {
