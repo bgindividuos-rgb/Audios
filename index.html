@@ -884,7 +884,7 @@
                                     <div class="progress-card-body">
                                         <div class="progress-stats">
                                             <span>Completado</span>
-                                            <span id="val-proc-det">0 / 3 Actividades</span>
+                                            <span id="val-proc-det">0 / 4 Actividades</span>
                                         </div>
                                         <div class="progress-bar-bg">
                                             <div class="progress-bar-fill" id="bar-proc" style="width: 0%;"></div>
@@ -908,7 +908,7 @@
 
                             <div class="dashboard-card cat-card-proc" onclick="abrirCategoria('proc')">
                                 <div class="card-title">📋 PROCEDIMIENTOS Y CONDICIONES</div>
-                                <div class="card-desc">Herramientas de cobranza, validación de identidad y planilla interactiva completa de planes de pago.</div>
+                                <div class="card-desc">Herramientas de cobranza, validación de identidad, planilla interactiva de planes de pago y tipificaciones.</div>
                             </div>
 
                             <div class="dashboard-card cat-card-gestion" onclick="abrirCategoria('gestion')">
@@ -1013,7 +1013,7 @@
                         </div>
                     </div>
 
-                    <!-- ACTIVIDAD NUEVA 4: CREACIÓN DE SPEECH PARA OBJECIONES (CALIDAD) -->
+                    <!-- ACTIVIDAD 4: CREACIÓN DE SPEECH PARA OBJECIONES (CALIDAD) -->
                     <div id="sec-activity-4" class="section-view" style="display: none;">
                         <div class="card-container">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('gestion')">⬅️ Volver a Actividades</button>
@@ -1031,7 +1031,7 @@
                         </div>
                     </div>
 
-                    <!-- ACTIVIDAD NUEVA 5: ROLE PLAY - SEMÁFORO DE GESTIÓN (CALIDAD) -->
+                    <!-- ROLE PLAY - SEMÁFORO DE GESTIÓN (CALIDAD) -->
                     <div id="sec-activity-semaforo" class="section-view" style="display: none;">
                         <div class="card-container" style="max-width: 1200px; margin: 0 auto;">
                             <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('gestion')">⬅️ Volver a Actividades</button>
@@ -1188,6 +1188,24 @@
                         </div>
                     </div>
 
+                    <!-- PROCEDIMIENTOS ACT 4: TIPIFICACIONES Y PROCEDIMIENTOS -->
+                    <div id="sec-proc-4" class="section-view" style="display: none;">
+                        <div class="card-container">
+                            <button class="btn-galicia" style="width: auto; padding: 8px 16px; margin-bottom: 15px; background:transparent; color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;" onclick="abrirCategoria('proc')">⬅️ Volver a Actividades</button>
+                            <h2>📝 Actividad 4: Tipificaciones y procedimientos</h2>
+                            <p style="font-style:italic; color:var(--text-muted); margin: 10px 0 20px 0; font-size:13px;"><b>Consigna:</b> Respondé detalladamente cada uno de los siguientes interrogantes operativos. Debés responder obligatoriamente todos los puntos para finalizar.</p>
+                            
+                            <div id="proc-tipif-form-container"></div>
+
+                            <button id="btn-finalizar-proctipif" class="btn-galicia" onclick="finalizarProcTipif()">🎯 Finalizar y Enviar Respuestas</button>
+
+                            <div id="feedback-proctipif-container" class="feedback-card" style="display:none;">
+                                <h4>💡 Resultado de Tipificaciones y Procedimientos</h4>
+                                <div id="feedback-proctipif-content" style="font-size: 14px; color: var(--text-main); line-height: 1.6;"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- SISTEMAS ACT 1: INVESTIGÁ AL CLIENTE -->
                     <div id="sec-sistemas-1" class="section-view" style="display: none;">
                         <div class="card-container">
@@ -1281,7 +1299,7 @@
                                     <div class="precision-bar-container">
                                         <div class="precision-info">
                                             <span>📋 Procedimientos y Condiciones</span>
-                                            <span id="stat-cat-proc">0 / 3</span>
+                                            <span id="stat-cat-proc">0 / 4</span>
                                         </div>
                                         <div class="precision-bar-bg">
                                             <div class="precision-bar-fill" id="bar-cat-proc" style="width: 0%; background: #FF9955;"></div>
@@ -1413,6 +1431,21 @@
             "8. “Cuando tenga plata, pago”.",
             "9. \"Yo ya pagué y me siguen reclamando”.",
             "10. “No voy a poner plata si igual voy a seguir debiendo”."
+        ];
+
+        const tipificacionesPreguntasAct4 = [
+            "1. El titular atiende, escucha la presentación de deuda y confirma que va a pagar mañana. ¿Qué tenés que definir antes de tipificar?",
+            "2. Atiende el cónyuge del titular. Escucha el motivo del llamado, pero el titular no está presente. ¿Cómo seguís?",
+            "3. El titular manifiesta que pagó por pago fácil ayer, pero el pago no figura en Visa. ¿Qué información solicitas y cómo tipificas?",
+            "4. Un cliente desempleado manifiesta que no puede pagar. ¿Qué preguntas debes realizar?",
+            "5. Un cliente manifiesta desconocer la deuda. ¿Cuál es el mejor siguiente paso?",
+            "6. El asesor ingresa a Visa para verificar un pago realizado hoy por la app y no lo encuentra. ¿Qué debe hacer?",
+            "7. Atiende el titular y menciona no poder hablar porque está trabajando. ¿Cómo se cierra la gestión?",
+            "8. El cliente tiene deuda vencida y el asesor desconoce si corresponde ofrecer Plan V, Plan M o refinanciación. ¿Qué determina el acceso a cada uno de los planes?",
+            "9. El cliente se compromete a pagar, pero no se definió cuándo ni cómo lo hará. ¿Qué corresponde?",
+            "10. Atiende un tercero que dice no ser encargado de pagos, tampoco se encuentra cónyuge ni titular. ¿Qué debes preguntar y cómo tipificas?",
+            "11. El cliente informa que tiene dificultades económicas, pero no explica cuáles. ¿Qué pregunta ayuda más?",
+            "12. El cliente está enojado porque dice que ya comentó muchas veces el motivo de atraso ¿Cómo seguís?"
         ];
 
         const casosActividad2 = [
@@ -1904,7 +1937,7 @@
                     "¿Cuánto era el monto inicial?",
                     "¿Cuál es la cantidad total de cuotas en la cuál hizo la refinanciación?",
                     "¿Cuántas cuotas tiene pendientes de pago?",
-                    "¿Cuántas cuotas futuras le quedan para finalizar la refinanciación?",
+                    "¿Cuántas cuotas tiene pendientes de pago en total?",
                     "¿Cuál es el importe de la cuota?",
                     "¿Cuál es la cuota más antigua pendiente?"
                 ]
@@ -2051,6 +2084,14 @@
                 <div class="activity-item">
                     <label><b>🗣️ ${objText}</b></label>
                     <textarea class="form-control" id="act4_resp_${idx}" placeholder="✍️ Escribí tu speech modelo para responder a esta objeción..."></textarea>
+                </div>
+            `).join('');
+
+            const procTipifContainer = document.getElementById('proc-tipif-form-container');
+            procTipifContainer.innerHTML = tipificacionesPreguntasAct4.map((pregunta, idx) => `
+                <div class="activity-item">
+                    <label><b>📝 ${pregunta}</b></label>
+                    <textarea class="form-control" id="proctipif_resp_${idx}" placeholder="✍️ Escribí tu respuesta detallada y tipificación correspondiente..."></textarea>
                 </div>
             `).join('');
 
@@ -2239,6 +2280,13 @@
                         <div class="activity-card-inner" onclick="iniciarPlanillaPasoAPaso()">
                             <div class="card-title" style="color: #FF9955; font-size: 20px;">📊 Actividad 3: Planes de Pago (Paso a Paso)</div>
                             <div class="card-desc" style="color: var(--text-main);">Matriz interactiva completa con validación flexible.</div>
+                        </div>
+                        <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
+                    </div>
+                    <div class="activity-card-wrapper">
+                        <div class="activity-card-inner" onclick="reiniciarFormulariosUI(); abrirSeccionUnica('sec-proc-4', '📝 Actividad 4: Tipificaciones y procedimientos')">
+                            <div class="card-title" style="color: #FF9955; font-size: 20px;">📝 Actividad 4: Tipificaciones y procedimientos</div>
+                            <div class="card-desc" style="color: var(--text-main);">Resolución obligatoria de interrogantes sobre tipificaciones y circuitos operativos.</div>
                         </div>
                         <div class="activity-status-badge"><span>Estado:</span><span class="status-pill status-pending">Disponible</span></div>
                     </div>
@@ -2467,11 +2515,11 @@
             let regsAsesor = registrosGlobales.filter(r => r.asesor === usuarioActual);
 
             let gestionComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino") || r.actividad.includes("Objeciones") || r.actividad.includes("Semáforo")).length, 5);
-            let procComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad") || r.actividad.includes("Planes de Pago (Paso a Paso)")).length, 3);
+            let procComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad") || r.actividad.includes("Planes de Pago (Paso a Paso)") || r.actividad.includes("Tipificaciones")).length, 4);
             let sysComp = Math.min(regsAsesor.filter(r => r.actividad.includes("Investigá") || r.actividad.includes("Planes de pago")).length, 2);
 
             let pctGestion = Math.round((gestionComp / 5) * 100);
-            let pctProc = Math.round((procComp / 3) * 100);
+            let pctProc = Math.round((procComp / 4) * 100);
             let pctSys = Math.round((sysComp / 2) * 100);
 
             document.getElementById('val-gestion-txt').innerText = `${pctGestion}%`;
@@ -2479,7 +2527,7 @@
             document.getElementById('bar-gestion').style.width = `${pctGestion}%`;
 
             document.getElementById('val-proc-txt').innerText = `${pctProc}%`;
-            document.getElementById('val-proc-det').innerText = `${procComp} / 3 Actividades`;
+            document.getElementById('val-proc-det').innerText = `${procComp} / 4 Actividades`;
             document.getElementById('bar-proc').style.width = `${pctProc}%`;
 
             document.getElementById('val-sistemas-txt').innerText = `${pctSys}%`;
@@ -2791,6 +2839,29 @@
             alert("🎉 Actividad 4 finalizada y registrada correctamente.");
         }
 
+        function finalizarProcTipif() {
+            let detalleTexto = "";
+            let respondidosCompletos = 0;
+
+            for(let i = 0; i < tipificacionesPreguntasAct4.length; i++) {
+                let txt = document.getElementById(`proctipif_resp_${i}`).value.trim();
+                if(txt === "") {
+                    alert(`⚠️ Por favor respondé la pregunta ${i + 1} antes de finalizar.`);
+                    document.getElementById(`proctipif_resp_${i}`).focus();
+                    return;
+                }
+                respondidosCompletos++;
+                detalleTexto += `• ${tipificacionesPreguntasAct4[i]}\n  Respuesta: "${txt}"\n`;
+            }
+
+            let puntaje = (respondidosCompletos === tipificacionesPreguntasAct4.length) ? 100 : 0;
+            registrarResultado("Procedimientos - Tipificaciones y procedimientos", puntaje, detalleTexto);
+
+            document.getElementById('feedback-proctipif-content').innerHTML = `🎉 <b>¡Actividad completada con éxito!</b> Has respondido los ${tipificacionesPreguntasAct4.length} interrogantes obligatorios. Puntaje: <b>100 / 100 pts</b>.`;
+            document.getElementById('feedback-proctipif-container').style.display = 'block';
+            alert("🎉 Actividad de Tipificaciones y procedimientos finalizada y registrada correctamente.");
+        }
+
         function finalizarProcMC() {
             let detalleTexto = "";
             let aciertos = 0;
@@ -2943,7 +3014,7 @@
                 document.getElementById('kpi-promedio').innerText = "0 pts";
                 document.getElementById('kpi-estado').innerText = "Sin datos";
                 document.getElementById('stat-cat-gestion').innerText = "0 / 5";
-                document.getElementById('stat-cat-proc').innerText = "0 / 3";
+                document.getElementById('stat-cat-proc').innerText = "0 / 4";
                 document.getElementById('stat-cat-sistemas').innerText = "0 / 2";
                 document.getElementById('chart-precision-list').innerHTML = `<p style="font-size:13px; color:var(--text-muted);">Sin datos registrados.</p>`;
                 document.getElementById('feedback-text').innerText = "Complete al menos una actividad para generar el análisis automatizado de fortalezas, oportunidades de mejora y recomendaciones.";
@@ -2957,21 +3028,21 @@
             document.getElementById('kpi-estado').innerText = promedio >= 90 ? "🏆 DOMINADO" : promedio >= 65 ? "⚠️ OPORTUNIDADES" : "🚨 REFUERZO";
 
             let gestionCount = Math.min(filtrados.filter(r => r.actividad.includes("Auditá") || r.actividad.includes("responderías") || r.actividad.includes("camino") || r.actividad.includes("Objeciones") || r.actividad.includes("Semáforo")).length, 5);
-            let procCount = Math.min(filtrados.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad") || r.actividad.includes("Planes de Pago (Paso a Paso)")).length, 3);
+            let procCount = Math.min(filtrados.filter(r => r.actividad.includes("Herramientas de cobranza") || r.actividad.includes("Validación de Identidad") || r.actividad.includes("Planes de Pago (Paso a Paso)") || r.actividad.includes("Tipificaciones")).length, 4);
             let sysCount = Math.min(filtrados.filter(r => r.actividad.includes("Investigá") || r.actividad.includes("Planes de pago")).length, 2);
 
             document.getElementById('stat-cat-gestion').innerText = `${gestionCount} / 5`;
             document.getElementById('bar-cat-gestion').style.width = `${Math.min((gestionCount/5)*100, 100)}%`;
 
-            document.getElementById('stat-cat-proc').innerText = `${procCount} / 3`;
-            document.getElementById('bar-cat-proc').style.width = `${Math.min((procCount/3)*100, 100)}%`;
+            document.getElementById('stat-cat-proc').innerText = `${procCount} / 4`;
+            document.getElementById('bar-cat-proc').style.width = `${Math.min((procCount/4)*100, 100)}%`;
 
             document.getElementById('stat-cat-sistemas').innerText = `${sysCount} / 2`;
             document.getElementById('bar-cat-sistemas').style.width = `${Math.min((sysCount/2)*100, 100)}%`;
 
             const listadoActividades = [
                 "Auditá la gestión", "Actividad 2: ¿Qué responderías?", "Elegí el camino correcto", "Creación de Speech para Objeciones", "Semáforo de Gestión", "Caso 1", "Caso 2", "Caso 3",
-                "Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)", "Investigá al cliente", "Planes de pago"
+                "Herramientas de cobranza", "Validación de Identidad", "Planes de Pago (Paso a Paso)", "Tipificaciones y procedimientos", "Investigá al cliente", "Planes de pago"
             ];
 
             let htmlPrec = "";
