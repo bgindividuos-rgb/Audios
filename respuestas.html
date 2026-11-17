@@ -171,6 +171,8 @@
             border-bottom: 2px solid var(--neutral-bg);
             padding-bottom: 15px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .tabla-matriz-reporte {
@@ -273,6 +275,63 @@
         .bg-critico { background-color: var(--danger); }
 
         .loading-state { text-align: center; padding: 40px; color: var(--text-muted); font-weight: 600; }
+
+        /* Controles de calificación Staff */
+        .grading-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .grading-score-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #FFF3EB;
+            border: 1.5px solid #FFD0B5;
+            padding: 6px 10px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .grading-score-box label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--galicia-dark-orange);
+            text-transform: uppercase;
+        }
+
+        .grading-score-input {
+            width: 72px;
+            padding: 5px 8px;
+            border: 1.5px solid var(--galicia-orange);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-main);
+            background: var(--white);
+        }
+
+        .grading-score-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255,102,0,0.18);
+        }
+
+        .grading-footer-bar {
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: #FFF8F3;
+            border: 1.5px solid #FFD0B5;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
     </style>
 </head>
 <body>
@@ -383,6 +442,18 @@
         const claveAudio3 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO APLICA", "NO APLICA", "CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
         const claveAudio4 = ["CUMPLIDO", "CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "NO CUMPLIDO", "NO CUMPLIDO", "NO APLICA", "NO CUMPLIDO", "CUMPLIDO", "NO CUMPLIDO", "CUMPLIDO", "CUMPLIDO"];
 
+        function esPuntajePendiente(puntaje) {
+            return puntaje === null || puntaje === undefined || String(puntaje).trim() === "" || isNaN(Number(puntaje));
+        }
+
+        function requiereCalificacionManual(actividad) {
+            if (!actividad) return false;
+            return actividad.includes("responderías") ||
+                   actividad.includes("Creación de Speech para Objeciones") ||
+                   actividad.includes("Tipificaciones") ||
+                   actividad.includes("Investigá al cliente");
+        }
+
         function formatearFechaHora(fechaStr) {
             if (!fechaStr) return "";
             try {
@@ -407,7 +478,7 @@
                 .then(res => res.json())
                 .then(data => {
                     if(Array.isArray(data)) {
-                        datosGlobales = data;
+                        datosGlobales = data.map((item, idx) => ({ ...item, _globalIdx: idx }));
                         inicializarFiltrosYVistas();
                     }
                 })
@@ -456,26 +527,29 @@
 
         function renderizarResumenGeneral() {
             let total = datosGlobales.length;
-            let suma = datosGlobales.reduce((acc, curr) => acc + Number(curr.puntaje || 0), 0);
-            let promedio = total > 0 ? Math.round(suma / total) : 0;
-            let aprobados = datosGlobales.filter(r => Number(r.puntaje) >= 65).length;
-            let tasaAprobacion = total > 0 ? Math.round((aprobados / total) * 100) : 0;
+            let evaluados = datosGlobales.filter(r => !esPuntajePendiente(r.puntaje));
+            let suma = evaluados.reduce((acc, curr) => acc + Number(curr.puntaje || 0), 0);
+            let promedio = evaluados.length > 0 ? Math.round(suma / evaluados.length) : 0;
+            let aprobados = evaluados.filter(r => Number(r.puntaje) >= 65).length;
+            let tasaAprobacion = evaluados.length > 0 ? Math.round((aprobados / evaluados.length) * 100) : 0;
             let asesoresUnicos = new Set(datosGlobales.map(r => r.asesor)).size;
 
             document.getElementById('kpi-total').innerText = total;
-            document.getElementById('kpi-promedio').innerText = promedio + " pts";
-            document.getElementById('kpi-aprobacion').innerText = tasaAprobacion + "%";
+            document.getElementById('kpi-promedio').innerText = evaluados.length > 0 ? (promedio + " pts") : "Pendiente";
+            document.getElementById('kpi-aprobacion').innerText = evaluados.length > 0 ? (tasaAprobacion + "%") : "Pendiente";
             document.getElementById('kpi-asesores').innerText = asesoresUnicos;
 
             let actividadesUnicas = [...new Set(datosGlobales.map(r => r.actividad))];
             let html = "";
             actividadesUnicas.forEach(act => {
                 let regs = datosGlobales.filter(r => r.actividad === act);
-                let prom = regs.length > 0 ? Math.round(regs.reduce((a,c) => a + Number(c.puntaje),0) / regs.length) : 0;
+                let regsEval = regs.filter(r => !esPuntajePendiente(r.puntaje));
+                let prom = regsEval.length > 0 ? Math.round(regsEval.reduce((a,c) => a + Number(c.puntaje),0) / regsEval.length) : 0;
+                let etiquetaProm = regsEval.length > 0 ? `${prom}%` : "Pendiente";
                 html += `
                     <div style="margin-bottom: 12px;">
                         <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:4px;">
-                            <span>📌 ${act}</span><span><b>${prom}%</b> (${regs.length} evaluaciones)</span>
+                            <span>📌 ${act}</span><span><b>${etiquetaProm}</b> (${regs.length} evaluaciones)</span>
                         </div>
                         <div style="width:100%; height:8px; background:var(--border-color); border-radius:4px; overflow:hidden;">
                             <div style="height:100%; width:${prom}%; background:var(--galicia-orange); border-radius:4px;"></div>
@@ -484,6 +558,171 @@
                 `;
             });
             document.getElementById('resumen-barras-actividades').innerHTML = html || "<p style='color:var(--text-muted); font-size:13px;'>Sin registros todavía.</p>";
+        }
+
+        function extraerNotaItem(texto) {
+            let match = texto.match(/\[Nota:\s*(\d+(?:\.\d+)?)\s*pts\]/i);
+            return match ? match[1] : "";
+        }
+
+        function limpiarEtiquetaNota(texto) {
+            return texto.replace(/\s*\[Nota:\s*\d+(?:\.\d+)?\s*pts\]/gi, "").trim();
+        }
+
+        function crearInputCalificacionHTML(cardId, itemIdx, notaExistente = "") {
+            return `
+                <div class="grading-score-box">
+                    <label for="grade_${cardId}_${itemIdx}">Puntaje:</label>
+                    <input type="number" min="0" max="100" step="1"
+                           id="grade_${cardId}_${itemIdx}"
+                           class="grading-score-input grade-input-${cardId}"
+                           data-item-idx="${itemIdx}"
+                           value="${notaExistente}"
+                           placeholder="0-100"
+                           oninput="recalcularPromedioCard('${cardId}')">
+                    <span style="font-size:11px; font-weight:700; color:var(--text-muted);">pts</span>
+                </div>
+            `;
+        }
+
+        function recalcularPromedioCard(cardId) {
+            let inputs = document.querySelectorAll(`.grade-input-${cardId}`);
+            let suma = 0;
+            let completados = 0;
+            inputs.forEach(inp => {
+                let val = inp.value.trim();
+                if (val !== "" && !isNaN(Number(val))) {
+                    let num = Math.max(0, Math.min(100, Number(val)));
+                    suma += num;
+                    completados++;
+                }
+            });
+
+            let displayEl = document.getElementById(`avg_display_${cardId}`);
+            if (displayEl) {
+                if (completados === 0) {
+                    displayEl.innerText = "Sin calificar";
+                } else {
+                    let prom = Math.round(suma / completados);
+                    displayEl.innerText = `${prom} pts (${completados}/${inputs.length} puntos evaluados)`;
+                }
+            }
+        }
+
+        function guardarCalificacionActividad(globalIdx, cardId) {
+            let reg = datosGlobales[globalIdx];
+            if (!reg) return;
+
+            let inputs = document.querySelectorAll(`.grade-input-${cardId}`);
+            if (inputs.length === 0) return;
+
+            let notas = [];
+            for (let i = 0; i < inputs.length; i++) {
+                let val = inputs[i].value.trim();
+                if (val === "" || isNaN(Number(val))) {
+                    alert(`⚠️ Por favor ingresá un puntaje (0 a 100) en el punto ${i + 1} antes de guardar.`);
+                    inputs[i].focus();
+                    return;
+                }
+                let num = Math.max(0, Math.min(100, Number(val)));
+                notas.push(num);
+            }
+
+            let puntajeFinal = Math.round(notas.reduce((a, b) => a + b, 0) / notas.length);
+            let clasificacion = puntajeFinal >= 90 ? "DOMINADO" : (puntajeFinal >= 65 ? "PRESENTA OPORTUNIDADES" : (puntajeFinal >= 40 ? "REQUIERE REFUERZO" : "CRÍTICO"));
+            let claseCss = puntajeFinal >= 90 ? "bg-dominado" : (puntajeFinal >= 65 ? "bg-oportunidades" : (puntajeFinal >= 40 ? "bg-refuerzo" : "bg-critico"));
+
+            let nuevoDetalle = actualizarDetalleConNotas(reg.actividad, reg.detalleRespuestas || "", notas);
+
+            reg.puntaje = puntajeFinal;
+            reg.clasificacion = clasificacion;
+            reg.claseCss = claseCss;
+            reg.detalleRespuestas = nuevoDetalle;
+
+            let payload = {
+                accion: "calificar",
+                fila: reg.fila || (globalIdx + 2),
+                fecha: reg.fecha,
+                asesor: reg.asesor,
+                actividad: reg.actividad,
+                puntaje: puntajeFinal,
+                clasificacion: clasificacion,
+                claseCss: claseCss,
+                detalleRespuestas: nuevoDetalle
+            };
+
+            let btn = document.getElementById(`btn_save_${cardId}`);
+            if (btn) {
+                btn.disabled = true;
+                btn.innerText = "⏳ Guardando...";
+            }
+
+            fetch(urlGoogleSheet, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                alert(`✅ Calificación guardada: ${puntajeFinal} pts (${clasificacion}).`);
+                renderizarResumenGeneral();
+                renderizarVisualCategoria('sistemas');
+                renderizarVisualCategoria('proc');
+                renderizarVisualCategoria('gestion');
+            }).catch(err => {
+                console.error("Error al guardar calificación:", err);
+                alert("❌ Ocurrió un error al enviar la calificación.");
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerText = "💾 Guardar Calificación";
+                }
+            });
+        }
+
+        function actualizarDetalleConNotas(actividad, detalleOriginal, notas) {
+            let lineas = detalleOriginal.split('\n');
+            let idxNota = 0;
+
+            if (actividad.includes("Tipificaciones")) {
+                return lineas.map(l => {
+                    if (l.includes("Respuesta:") && idxNota < notas.length) {
+                        let base = limpiarEtiquetaNota(l);
+                        return `${base} [Nota: ${notas[idxNota++]} pts]`;
+                    }
+                    return l;
+                }).join('\n');
+            }
+
+            if (actividad.includes("Creación de Speech para Objeciones")) {
+                return lineas.map(l => {
+                    if (l.trim().startsWith("Speech:") && idxNota < notas.length) {
+                        let base = limpiarEtiquetaNota(l);
+                        return `  ${base} [Nota: ${notas[idxNota++]} pts]`;
+                    }
+                    return l;
+                }).join('\n');
+            }
+
+            if (actividad.includes("responderías")) {
+                return lineas.map(l => {
+                    if (l.trim().startsWith("• Caso ") && idxNota < notas.length) {
+                        let base = limpiarEtiquetaNota(l);
+                        return `${base} [Nota: ${notas[idxNota++]} pts]`;
+                    }
+                    return l;
+                }).join('\n');
+            }
+
+            if (actividad.includes("Investigá al cliente")) {
+                return lineas.map(l => {
+                    if (l.trim().startsWith("- ") && idxNota < notas.length) {
+                        let base = limpiarEtiquetaNota(l);
+                        return `  ${base} [Nota: ${notas[idxNota++]} pts]`;
+                    }
+                    return l;
+                }).join('\n');
+            }
+
+            return detalleOriginal;
         }
 
         function renderizarVisualCategoria(cat) {
@@ -512,10 +751,17 @@
                 return;
             }
 
-            filtrados.forEach(r => {
-                let claseCss = Number(r.puntaje) >= 90 ? "bg-dominado" : (Number(r.puntaje) >= 65 ? "bg-oportunidades" : (Number(r.puntaje) >= 40 ? "bg-refuerzo" : "bg-critico"));
+            filtrados.forEach((r, localIdx) => {
+                let cardId = `${cat}_${r._globalIdx}_${localIdx}`;
+                let pendiente = esPuntajePendiente(r.puntaje);
+                let esCalificable = requiereCalificacionManual(r.actividad);
+
+                let claseCss = pendiente ? "bg-oportunidades" : (Number(r.puntaje) >= 90 ? "bg-dominado" : (Number(r.puntaje) >= 65 ? "bg-oportunidades" : (Number(r.puntaje) >= 40 ? "bg-refuerzo" : "bg-critico")));
+                let badgeTexto = pendiente ? "⏳ PENDIENTE DE REVISIÓN" : `${r.clasificacion} (${r.puntaje} pts)`;
+
                 let lineas = (r.detalleRespuestas || "").split('\n').filter(l => l.trim() !== "");
                 let contenidoHtml = "";
+                let contadorItemsCalificables = 0;
 
                 if(r.actividad.includes("Planes de Pago (Paso a Paso)")) {
                     let condicionesMap = {};
@@ -678,45 +924,54 @@
                     contenidoHtml += `</div>`;
 
                 } else if(r.actividad.includes("Tipificaciones")) {
-                    // Renderizado visual ordenado en tarjetas para la Actividad 4 de Tipificaciones
                     contenidoHtml = `<div style="display:flex; flex-direction:column; gap:10px;">`;
                     let preguntaActual = "";
                     let respuestaActual = "";
+                    let notaActual = "";
+
+                    const renderBloqueTipif = () => {
+                        let idx = contadorItemsCalificables++;
+                        return `
+                            <div style="background:var(--white); padding:14px 18px; border-radius:10px; border:1px solid var(--border-color); border-left:4px solid var(--galicia-orange);">
+                                <div class="grading-item-row" style="margin-bottom:8px;">
+                                    <div style="font-size:13px; font-weight:700; color:var(--galicia-orange); flex:1;">${preguntaActual}</div>
+                                    ${crearInputCalificacionHTML(cardId, idx, notaActual)}
+                                </div>
+                                <div style="font-size:13px; color:var(--text-main); line-height:1.5; background:var(--neutral-bg); padding:10px; border-radius:6px; border:1px solid var(--border-color);">${respuestaActual.trim() || "Sin respuesta"}</div>
+                            </div>
+                        `;
+                    };
 
                     lineas.forEach(linea => {
-                        if (linea.startsWith("• 1.") || linea.startsWith("• 2.") || linea.startsWith("• 3.") || linea.startsWith("• 4.") || linea.startsWith("• 5.") || linea.startsWith("• 6.") || linea.startsWith("• 7.") || linea.startsWith("• 8.") || linea.startsWith("• 9.") || linea.startsWith("• 10.") || linea.startsWith("• 11.") || linea.startsWith("• 12.")) {
+                        if (/^•\s*\d+\./.test(linea.trim())) {
                             if (preguntaActual) {
-                                contenidoHtml += `
-                                    <div style="background:var(--white); padding:14px 18px; border-radius:10px; border:1px solid var(--border-color); border-left:4px solid var(--galicia-orange);">
-                                        <div style="font-size:13px; font-weight:700; color:var(--galicia-orange); margin-bottom:6px;">${preguntaActual}</div>
-                                        <div style="font-size:13px; color:var(--text-main); line-height:1.5; background:var(--neutral-bg); padding:10px; border-radius:6px; border:1px solid var(--border-color);">${respuestaActual || "Sin respuesta"}</div>
-                                    </div>
-                                `;
+                                contenidoHtml += renderBloqueTipif();
                             }
                             preguntaActual = linea.replace('•', '').trim();
                             respuestaActual = "";
+                            notaActual = "";
                         } else if (linea.includes("Respuesta:")) {
-                            respuestaActual = linea.split("Respuesta:")[1].replace(/["']/g, "").trim();
+                            notaActual = extraerNotaItem(linea);
+                            respuestaActual = limpiarEtiquetaNota(linea.split("Respuesta:")[1]).replace(/["']/g, "").trim();
                         } else {
-                            respuestaActual += " " + linea.trim();
+                            let extraNota = extraerNotaItem(linea);
+                            if (extraNota) notaActual = extraNota;
+                            respuestaActual += " " + limpiarEtiquetaNota(linea);
                         }
                     });
 
                     if (preguntaActual) {
-                        contenidoHtml += `
-                            <div style="background:var(--white); padding:14px 18px; border-radius:10px; border:1px solid var(--border-color); border-left:4px solid var(--galicia-orange);">
-                                <div style="font-size:13px; font-weight:700; color:var(--galicia-orange); margin-bottom:6px;">${preguntaActual}</div>
-                                <div style="font-size:13px; color:var(--text-main); line-height:1.5; background:var(--neutral-bg); padding:10px; border-radius:6px; border:1px solid var(--border-color);">${respuestaActual.trim() || "Sin respuesta"}</div>
-                            </div>
-                        `;
+                        contenidoHtml += renderBloqueTipif();
                     }
                     contenidoHtml += `</div>`;
 
                 } else {
                     contenidoHtml = `<div style="display:flex; flex-direction:column; gap:8px;">`;
                     lineas.forEach(linea => {
-                        let textoLimpio = linea.replace('•', '').trim();
-                        let esConsignaObjecion = r.actividad.includes("Creación de Speech para Objeciones") && (textoLimpio.startsWith("1.") || textoLimpio.startsWith("2.") || textoLimpio.startsWith("3.") || textoLimpio.startsWith("4.") || textoLimpio.startsWith("5.") || textoLimpio.startsWith("6.") || textoLimpio.startsWith("7.") || textoLimpio.startsWith("8.") || textoLimpio.startsWith("9.") || textoLimpio.startsWith("10."));
+                        let notaItem = extraerNotaItem(linea);
+                        let textoSinNota = limpiarEtiquetaNota(linea);
+                        let textoLimpio = textoSinNota.replace('•', '').trim();
+                        let esConsignaObjecion = r.actividad.includes("Creación de Speech para Objeciones") && (/^\d+\./.test(textoLimpio));
 
                         if (esConsignaObjecion) {
                             contenidoHtml += `
@@ -725,6 +980,27 @@
                                     <span style="flex:1; color:var(--galicia-orange); font-weight:700;">${textoLimpio}</span>
                                 </div>
                             `;
+                        } else if (esCalificable) {
+                            let esTituloSeccion = (textoSinNota.trim().endsWith(":") || (textoSinNota.trim().startsWith("[") && textoSinNota.trim().endsWith("]"))) && !textoSinNota.includes("Paso");
+                            let esClaveBusqueda = textoSinNota.trim().startsWith("Clave búsqueda:");
+
+                            if (esTituloSeccion || esClaveBusqueda) {
+                                contenidoHtml += `
+                                    <div style="background:var(--neutral-bg); padding:10px 14px; border-radius:8px; font-size:13px; font-weight:700; color:var(--text-main); border:1px solid var(--border-color); margin-top:5px;">
+                                        ${textoLimpio}
+                                    </div>
+                                `;
+                            } else {
+                                let idx = contadorItemsCalificables++;
+                                contenidoHtml += `
+                                    <div style="background:var(--white); padding:12px 16px; border-radius:8px; font-size:13px; border:1px solid var(--border-color); border-left:4px solid var(--galicia-orange);">
+                                        <div class="grading-item-row">
+                                            <span style="flex:1; color:var(--text-main); font-weight:600; line-height:1.45;">${textoLimpio}</span>
+                                            ${crearInputCalificacionHTML(cardId, idx, notaItem)}
+                                        </div>
+                                    </div>
+                                `;
+                            }
                         } else {
                             let esCorrecto = true;
                             let lineaUpper = linea.toUpperCase();
@@ -781,6 +1057,21 @@
                     contenidoHtml += `</div>`;
                 }
 
+                let barraCalificacionHtml = "";
+                if (esCalificable && contadorItemsCalificables > 0) {
+                    let textoPromedioInicial = pendiente ? "Sin calificar" : `${r.puntaje} pts (${contadorItemsCalificables}/${contadorItemsCalificables} puntos evaluados)`;
+                    barraCalificacionHtml = `
+                        <div class="grading-footer-bar">
+                            <div style="font-size:13px; font-weight:700; color:var(--text-main);">
+                                🧮 Puntaje Final Promedio: <span id="avg_display_${cardId}" style="color:var(--galicia-orange);">${textoPromedioInicial}</span>
+                            </div>
+                            <button type="button" id="btn_save_${cardId}" class="btn-galicia" onclick="guardarCalificacionActividad(${r._globalIdx}, '${cardId}')">
+                                💾 Guardar Calificación
+                            </button>
+                        </div>
+                    `;
+                }
+
                 let fechaFormateada = formatearFechaHora(r.fecha);
 
                 container.innerHTML += `
@@ -791,10 +1082,11 @@
                                 <span style="font-size: 13px; color: var(--text-muted);">🎯 ${r.actividad} | 📅 ${fechaFormateada}</span>
                             </div>
                             <div>
-                                <span class="badge ${claseCss}">${r.clasificacion} (${r.puntaje} pts)</span>
+                                <span class="badge ${claseCss}">${badgeTexto}</span>
                             </div>
                         </div>
                         ${contenidoHtml}
+                        ${barraCalificacionHtml}
                     </div>
                 `;
             });
